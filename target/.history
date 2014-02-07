@@ -1,0 +1,30 @@
+eclipse with-source=true
+exit
+clean
+eclipse with-source=true
+clean
+compile
+eclipse with-source=true
+compile
+clean
+eclipse
+compile
+debug ~run
+exit
+clean
+compile
+clean
+compile
+clean
+compile
+clean
+eclipse with-source=true
+clean
+compile
+~run
+clean
+eclipse with-source=true
+exit
+clean
+eclipse with-source=true
+exit

@@ -1,0 +1,8 @@
+[0m[[0mdebug[0m] [0mCopy play resource mappings: [0m
+[0m[[0mdebug[0m] [0m	(D:\developer\workspace\projects\medicine\public\images\favicon.png,D:\developer\workspace\projects\medicine\target\scala-2.10\classes\public\images\favicon.png)[0m
+[0m[[0mdebug[0m] [0m	(D:\developer\workspace\projects\medicine\public\javascripts\jquery-1.9.0.min.js,D:\developer\workspace\projects\medicine\target\scala-2.10\classes\public\javascripts\jquery-1.9.0.min.js)[0m
+[0m[[0mdebug[0m] [0m	(D:\developer\workspace\projects\medicine\public\stylesheets\main.css,D:\developer\workspace\projects\medicine\target\scala-2.10\classes\public\stylesheets\main.css)[0m
+[0m[[0mdebug[0m] [0m	(D:\developer\workspace\projects\medicine\target\scala-2.10\resource_managed\main\public\javascripts\index.js,D:\developer\workspace\projects\medicine\target\scala-2.10\classes\public\javascripts\index.js)[0m
+[0m[[0mdebug[0m] [0m	(D:\developer\workspace\projects\medicine\target\scala-2.10\resource_managed\main\public\javascripts\index.min.js,D:\developer\workspace\projects\medicine\target\scala-2.10\classes\public\javascripts\index.min.js)[0m
+[0m[[0mdebug[0m] [0m	(D:\developer\workspace\projects\medicine\target\scala-2.10\resource_managed\main\public\javascripts\jIndex.js,D:\developer\workspace\projects\medicine\target\scala-2.10\classes\public\javascripts\jIndex.js)[0m
+[0m[[0mdebug[0m] [0m	(D:\developer\workspace\projects\medicine\target\scala-2.10\resource_managed\main\public\javascripts\jIndex.min.js,D:\developer\workspace\projects\medicine\target\scala-2.10\classes\public\javascripts\jIndex.min.js)[0m

@@ -1,0 +1,51 @@
+@(message : String)(medicine : List[models.Medicine])
+
+@main("Medicine") {
+
+ 	<script src='@routes.Assets.at("javascripts/jIndex.js")'></script>
+	<h1>@message</h1>
+	<div class="container" style="width: 85%;">
+		<div  class="medicineList" style="float: right; display: inline;">
+			<h2>Medicine List</h2>
+			<table class="dataContainer" border="1">
+				  <tr>
+				    <th>Medicine Name</th>
+				    <th>Stock Quantity</th>
+				    <th>Allowed Per Employee</th>
+				    <th>Alert Quantity</th>
+				    <th>Critical Alert Quantity</th>
+				    <th>Delete</th>
+				    <th>Update</th>
+				  </tr>
+				  @for(m <- medicine){
+				  	<tr>
+				  		<td hidden="true" class="objectId">@m.getId</td>
+				  		<td class="name">@m.getName</td>
+				  		<td class="stockQunatity">@m.getStockQunatity</td>
+				  		<td class="allowedPerEmployee">@m.getAllowedPerEmployee</td>
+				  		<td class="alertQuantity">@m.getAlertQuantity</td>
+				  		<td class="criticalAlertQuantity">@m.getCriticalAlertQuantity</td>
+				  		<td><a href="@controllers.routes.MedicineController.removeMedicine(m.getId)">Delete</a></td>
+				  		<td><a class="update" href="#">Update</a></td>
+				  	</tr>
+				  }	
+			</table>
+		</div>
+		<div style="float: left; display: inline;">
+			<form action="@controllers.routes.MedicineController.setMedicine()" method="post">
+				<p>
+					<h2>Medicine Details</h2>
+					Object Id : <input readonly="readonly" id="objectId" name="id"> </br>
+					Medicine Name : <input id="name" name="name"> </br>
+					Stock Quantity : <input id="stockQunatity" name="stockQunatity"> </br>
+					Allowed Per Employee : <input id="allowedPerEmployee" name="allowedPerEmployee"> </br>
+					Alert Quantity : <input id="alertQuantity" name="alertQuantity"> </br>					
+					Critical Alert Quantity : <input id="criticalAlertQuantity" name="criticalAlertQuantity"> </br>					
+					<input type="submit" value="Submit">
+					<input type="reset">
+				</p>
+			</form>
+		</div>
+	</div>
+
+}
