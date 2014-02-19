@@ -16,6 +16,7 @@ public class MedicineController extends Controller{
 	
 	static JongoDAO<Medicine> medicineDao = new JongoDAO<>(Medicine.class);
 	
+	// get all medicine
 	public static Result getMedicine(){
 		List<Medicine> medicines = medicineDao.findAll();
 		return ok(medicine.render("Medicine List",medicines));
