@@ -6,19 +6,21 @@ import models.Employee;
 
 import org.bson.types.ObjectId;
 
-import dao.JongoDAO;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.employee;
+import dao.JongoDAO;
 
 public class EmployeeController extends Controller {
 	
 	static JongoDAO<Employee> employeeDao = new JongoDAO<>(Employee.class);
+	static Form<Employee> empForm = Form.form(Employee.class);
 	
 	 public static Result getEmployee() {
 		List<Employee> employees = employeeDao.findAll();
-	    return ok(employee.render("Employee List",employees));
+//	    return ok(employee.render("Employee List",employees));
+	    return ok(employee.render("Employee List",employees, empForm));
 	 }
 	 
 	 public static Result setEmployee() {

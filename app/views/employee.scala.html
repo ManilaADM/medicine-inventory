@@ -1,10 +1,11 @@
-@(message : String)(employees : List[models.Employee])
+@(message : String)(employees : List[models.Employee])(empForm: Form[Employee])
+@import helper._
 
 @main("Employee") {
 
  	<script src='@routes.Assets.at("javascripts/jIndex.js")')></script>
 	<h1>@message</h1>
-	<div name="container" style="width: 55%;">
+	<div name="container" style="width: 70%;">
 		<div  name="employeeList" style="float: right; display: inline;">
 			<h2>Employee List</h2>
 			<table class="dataContainer" border="1">
@@ -29,19 +30,25 @@
 				  }	
 			</table>
 		</div>
-		<div style="float: left; display: inline;">
-			<form action="@controllers.routes.EmployeeController.setEmployee()" method="post">
+		<div style="float: left; display: inline;" >
+			@form(routes.EmployeeController.setEmployee()){
+	
 				<p>
 					<h2>Employee Details</h2>
-					Object Id : <input readonly="readonly" id="objectId" name="id"> </br>
-					Employee Id : <input id="employeeId" name="employeeId"> </br>
+					<!-- Object Id : <input readonly="readonly" id="objectId" name="id"> </br> -->
+					@inputText(empForm("objectId"), 'readonly -> "readonly")
+					@inputText(empForm("employeeId"))
+					@inputText(empForm("lastName"))
+					@inputText(empForm("firstName"))
+					@inputText(empForm("middleName"))
+					<!-- Employee Id : <input id="employeeId" name="employeeId"> </br>
 					Last Name : <input id="lastName" name="lastName"> </br>
 					First Name : <input id="firstName" name="firstName"> </br>
-					Middle Name : <input id="middleName" name="middleName"> </br>					
+					Middle Name : <input id="middleName" name="middleName"> </br>		 -->			
 					<input type="submit" value="Submit">
 					<input type="reset">
 				</p>
-			</form>
+			}
 		</div>
 	</div>
 
