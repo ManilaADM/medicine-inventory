@@ -12,7 +12,6 @@
 				  <tr>
 				    <th>Employee Id</th>
 				    <th>First Name</th>
-				    <th>Middle Name</th>
 				    <th>Last Name</th>
 				    <th>Delete</th>
 				    <th>Update</th>
@@ -20,9 +19,8 @@
 				  @for(e <- employees){
 				  	<tr>
 				  		<td hidden="true" class="objectId">@e.getId</td>
-				  		<td class="employeeId">@e.getEmployeeId</td>
+				  		<td class="employeeId">@e.getEmployeeCode</td>
 				  		<td class="firstName">@e.getFirstName</td>
-				  		<td class="middleName">@e.getMiddleName</td>
 				  		<td class="lastName">@e.getLastName</td>
 				  		<td><a href="@controllers.routes.EmployeeController.removeEmployee(e.getId)">Delete</a></td>
 				  		<td><a class="update" href="#">Update</a></td>
@@ -37,10 +35,12 @@
 					<h2>Employee Details</h2>
 					<!-- Object Id : <input readonly="readonly" id="objectId" name="id"> </br> -->
 					@inputText(empForm("objectId"), 'readonly -> "readonly")
-					@inputText(empForm("employeeId"))
+					@inputText(empForm("employeeCode"))
 					@inputText(empForm("lastName"))
 					@inputText(empForm("firstName"))
 					@inputText(empForm("middleName"))
+					@inputText(empForm("emps[0].employeeCode"))
+					@inputText(empForm("emps[0].firstName"))
 					<!-- Employee Id : <input id="employeeId" name="employeeId"> </br>
 					Last Name : <input id="lastName" name="lastName"> </br>
 					First Name : <input id="firstName" name="firstName"> </br>
