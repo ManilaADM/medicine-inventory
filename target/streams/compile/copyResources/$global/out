@@ -1,9 +1,0 @@
-[0m[[0mdebug[0m] [0mCopy resource mappings: [0m
-[0m[[0mdebug[0m] [0m	(D:\developer\workspace\projects\medicine\target\scala-2.10\resource_managed\main\public\javascripts\index.js,D:\developer\workspace\projects\medicine\target\scala-2.10\classes\public\javascripts\index.js)[0m
-[0m[[0mdebug[0m] [0m	(D:\developer\workspace\projects\medicine\target\scala-2.10\resource_managed\main\public\javascripts\index.min.js,D:\developer\workspace\projects\medicine\target\scala-2.10\classes\public\javascripts\index.min.js)[0m
-[0m[[0mdebug[0m] [0m	(D:\developer\workspace\projects\medicine\target\scala-2.10\resource_managed\main\public\javascripts\jIndex.js,D:\developer\workspace\projects\medicine\target\scala-2.10\classes\public\javascripts\jIndex.js)[0m
-[0m[[0mdebug[0m] [0m	(D:\developer\workspace\projects\medicine\target\scala-2.10\resource_managed\main\public\javascripts\jIndex.min.js,D:\developer\workspace\projects\medicine\target\scala-2.10\classes\public\javascripts\jIndex.min.js)[0m
-[0m[[0mdebug[0m] [0m	(D:\developer\workspace\projects\medicine\conf\application.conf,D:\developer\workspace\projects\medicine\target\scala-2.10\classes\application.conf)[0m
-[0m[[0mdebug[0m] [0m	(D:\developer\workspace\projects\medicine\conf\database.conf,D:\developer\workspace\projects\medicine\target\scala-2.10\classes\database.conf)[0m
-[0m[[0mdebug[0m] [0m	(D:\developer\workspace\projects\medicine\conf\logger.conf,D:\developer\workspace\projects\medicine\target\scala-2.10\classes\logger.conf)[0m
-[0m[[0mdebug[0m] [0m	(D:\developer\workspace\projects\medicine\conf\routes,D:\developer\workspace\projects\medicine\target\scala-2.10\classes\routes)[0m
