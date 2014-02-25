@@ -23,12 +23,15 @@ public class Transaction implements JongoModel{
 	public ObjectId getObjectId() {
 		return objectId;
 	}
+	
 	public void setObjectId(ObjectId objectId) {
 		this.objectId = objectId;
 	}
+	
 	public Employee getEmployee() {
 		return employee;
 	}
+	
 	public void setEmployee(Employee employee) {
 		this.employee = employee;
 	}
@@ -41,12 +44,15 @@ public class Transaction implements JongoModel{
 	public Date getTimeStamp() {
 		return timeStamp;
 	}
+	
 	public void setTimeStamp(Date timeStamp) {
 		this.timeStamp = timeStamp;
 	}
+	
 	public List<MedSupQty> getItemsRequested() {
 		return itemsRequested;
 	}
+	
 	public void setItemsRequested(List<MedSupQty> itemsRequested) {
 		this.itemsRequested = itemsRequested;
 	}
