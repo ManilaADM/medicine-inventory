@@ -6,7 +6,9 @@ import org.bson.types.ObjectId;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class Logs {
+import dao.JongoModel;
+
+public class Logs implements JongoModel{
 		
 	@JsonProperty("_id")
 	private ObjectId objectId;
@@ -48,6 +50,10 @@ public class Logs {
 	}
 	public void setDate(String date) {
 		this.date = date;
+	}
+	@Override
+	public String getCollectionName() {
+		return "logs";
 	}
 	
 }

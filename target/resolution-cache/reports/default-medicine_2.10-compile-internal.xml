@@ -7,8 +7,102 @@
 		revision="1.0-SNAPSHOT"
 		conf="compile-internal"
 		confs="compile, runtime, test, provided, optional, compile-internal, runtime-internal, test-internal, plugin, sources, docs, pom, scala-tool"
-		date="20140204140301"/>
+		date="20140217153410"/>
 	<dependencies>
+		<module organisation="com.lowagie" name="itext">
+			<revision name="4.2.1" status="release" pubdate="20130706050125" resolver="public" artresolver="public" homepage="https://github.com/weiyeh/iText-4.2.0" downloaded="true" searched="true" default="false" conf="default(compile), default, compile, runtime, master" position="87">
+				<license name="GNU General Lesser Public License (LGPL) version 3.0" url="http://www.gnu.org/licenses/lgpl.html"/>
+				<license name="Mozilla Public License Version 2.0" url="http://www.mozilla.org/MPL/2.0/"/>
+				<metadata-artifact status="successful" details="" size="4111" time="1810" location="D:\developer\tools\play-2.2.1\framework\..\repository\cache\com.lowagie\itext\ivy-4.2.1.xml" searched="true" original-local-location="D:\developer\tools\play-2.2.1\framework\..\repository\cache\com.lowagie\itext\ivy-4.2.1.xml.original" origin-is-local="false" origin-location="http://repo1.maven.org/maven2/com/lowagie/itext/4.2.1/itext-4.2.1.pom"/>
+				<caller organisation="default" name="medicine_2.10" conf="optional, compile, provided, compile-internal" rev="4.2.1" rev-constraint-default="4.2.1" rev-constraint-dynamic="4.2.1" callerrev="1.0-SNAPSHOT"/>
+				<artifacts>
+					<artifact name="itext" type="jar" ext="jar" status="successful" details="" size="2243307" time="47240" location="D:\developer\tools\play-2.2.1\framework\..\repository\cache\com.lowagie\itext\jars\itext-4.2.1.jar">
+						<origin-location is-local="false" location="http://repo1.maven.org/maven2/com/lowagie/itext/4.2.1/itext-4.2.1.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="org.swinglabs" name="pdf-renderer">
+			<revision name="1.0.5" status="release" pubdate="20091128042544" resolver="public" artresolver="public" homepage="http://www.swinglabs.org/" downloaded="true" searched="true" default="false" conf="compile, master(*), runtime, compile(*), runtime(*), master" position="95">
+				<license name="Lesser General Public License (LGPL)" url="http://www.gnu.org/copyleft/lesser.html"/>
+				<metadata-artifact status="successful" details="" size="2518" time="1780" location="D:\developer\tools\play-2.2.1\framework\..\repository\cache\org.swinglabs\pdf-renderer\ivy-1.0.5.xml" searched="true" original-local-location="D:\developer\tools\play-2.2.1\framework\..\repository\cache\org.swinglabs\pdf-renderer\ivy-1.0.5.xml.original" origin-is-local="false" origin-location="http://repo1.maven.org/maven2/org/swinglabs/pdf-renderer/1.0.5/pdf-renderer-1.0.5.pom"/>
+				<caller organisation="com.lowagie" name="itext" conf="default, compile, runtime, master" rev="1.0.5" rev-constraint-default="1.0.5" rev-constraint-dynamic="1.0.5" callerrev="4.2.1"/>
+				<artifacts>
+					<artifact name="pdf-renderer" type="jar" ext="jar" status="successful" details="" size="2087109" time="27513" location="D:\developer\tools\play-2.2.1\framework\..\repository\cache\org.swinglabs\pdf-renderer\jars\pdf-renderer-1.0.5.jar">
+						<origin-location is-local="false" location="http://repo1.maven.org/maven2/org/swinglabs/pdf-renderer/1.0.5/pdf-renderer-1.0.5.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="jfree" name="jfreechart">
+			<revision name="1.0.12" status="release" pubdate="20090520053731" resolver="public" artresolver="public" homepage="http://www.jfree.org/jfreechart/" downloaded="true" searched="true" default="false" conf="compile, master(*), runtime, compile(*), runtime(*), master" position="93">
+				<license name="GNU Lesser General Public Licence" url="http://www.gnu.org/licenses/lgpl.txt"/>
+				<metadata-artifact status="successful" details="" size="2724" time="1790" location="D:\developer\tools\play-2.2.1\framework\..\repository\cache\jfree\jfreechart\ivy-1.0.12.xml" searched="true" original-local-location="D:\developer\tools\play-2.2.1\framework\..\repository\cache\jfree\jfreechart\ivy-1.0.12.xml.original" origin-is-local="false" origin-location="http://repo1.maven.org/maven2/jfree/jfreechart/1.0.12/jfreechart-1.0.12.pom"/>
+				<caller organisation="com.lowagie" name="itext" conf="default, compile, runtime, master" rev="1.0.12" rev-constraint-default="1.0.12" rev-constraint-dynamic="1.0.12" callerrev="4.2.1"/>
+				<artifacts>
+					<artifact name="jfreechart" type="jar" ext="jar" status="successful" details="" size="1368681" time="15609" location="D:\developer\tools\play-2.2.1\framework\..\repository\cache\jfree\jfreechart\jars\jfreechart-1.0.12.jar">
+						<origin-location is-local="false" location="http://repo1.maven.org/maven2/jfree/jfreechart/1.0.12/jfreechart-1.0.12.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="jfree" name="jcommon">
+			<revision name="1.0.15" status="release" pubdate="20090709042641" resolver="public" artresolver="public" homepage="http://www.jfree.org/jcommon/" downloaded="true" searched="true" default="false" conf="compile, master(*), runtime, compile(*), runtime(*), master" position="94">
+				<license name="GNU Lesser General Public Licence" url="http://www.gnu.org/licenses/lgpl.txt"/>
+				<metadata-artifact status="successful" details="" size="1369" time="1787" location="D:\developer\tools\play-2.2.1\framework\..\repository\cache\jfree\jcommon\ivy-1.0.15.xml" searched="true" original-local-location="D:\developer\tools\play-2.2.1\framework\..\repository\cache\jfree\jcommon\ivy-1.0.15.xml.original" origin-is-local="false" origin-location="http://repo1.maven.org/maven2/jfree/jcommon/1.0.15/jcommon-1.0.15.pom"/>
+				<caller organisation="jfree" name="jfreechart" conf="compile, runtime" rev="1.0.15" rev-constraint-default="1.0.15" rev-constraint-dynamic="1.0.15" callerrev="1.0.12"/>
+				<artifacts>
+					<artifact name="jcommon" type="jar" ext="jar" status="successful" details="" size="309294" time="3219" location="D:\developer\tools\play-2.2.1\framework\..\repository\cache\jfree\jcommon\jars\jcommon-1.0.15.jar">
+						<origin-location is-local="false" location="http://repo1.maven.org/maven2/jfree/jcommon/1.0.15/jcommon-1.0.15.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="bouncycastle" name="bctsp-jdk14">
+			<revision name="138" status="release" pubdate="20090903213229" resolver="public" artresolver="public" homepage="" downloaded="true" searched="true" default="false" conf="compile, master(*), runtime, compile(*), runtime(*), master" position="88">
+				<metadata-artifact status="successful" details="" size="363" time="1740" location="D:\developer\tools\play-2.2.1\framework\..\repository\cache\bouncycastle\bctsp-jdk14\ivy-138.xml" searched="true" original-local-location="D:\developer\tools\play-2.2.1\framework\..\repository\cache\bouncycastle\bctsp-jdk14\ivy-138.xml.original" origin-is-local="false" origin-location="http://repo1.maven.org/maven2/bouncycastle/bctsp-jdk14/138/bctsp-jdk14-138.pom"/>
+				<caller organisation="com.lowagie" name="itext" conf="default, compile, runtime, master" rev="138" rev-constraint-default="138" rev-constraint-dynamic="138" callerrev="4.2.1"/>
+				<artifacts>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="org.bouncycastle" name="bctsp-jdk14">
+			<revision name="1.38" status="release" pubdate="20090730094101" resolver="public" artresolver="public" homepage="http://www.bouncycastle.org/java.html" downloaded="true" searched="true" default="false" conf="compile, runtime, master" position="89">
+				<license name="Bouncy Castle Licence" url="http://www.bouncycastle.org/licence.html"/>
+				<metadata-artifact status="successful" details="" size="1254" time="1670" location="D:\developer\tools\play-2.2.1\framework\..\repository\cache\org.bouncycastle\bctsp-jdk14\ivy-1.38.xml" searched="true" original-local-location="D:\developer\tools\play-2.2.1\framework\..\repository\cache\org.bouncycastle\bctsp-jdk14\ivy-1.38.xml.original" origin-is-local="false" origin-location="http://repo1.maven.org/maven2/org/bouncycastle/bctsp-jdk14/1.38/bctsp-jdk14-1.38.pom"/>
+				<caller organisation="bouncycastle" name="bctsp-jdk14" conf="compile, runtime, master" rev="1.38" rev-constraint-default="1.38" rev-constraint-dynamic="1.38" callerrev="138"/>
+				<artifacts>
+					<artifact name="bctsp-jdk14" type="jar" ext="jar" status="successful" details="" size="22994" time="1294" location="D:\developer\tools\play-2.2.1\framework\..\repository\cache\org.bouncycastle\bctsp-jdk14\jars\bctsp-jdk14-1.38.jar">
+						<origin-location is-local="false" location="http://repo1.maven.org/maven2/org/bouncycastle/bctsp-jdk14/1.38/bctsp-jdk14-1.38.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="org.bouncycastle" name="bcmail-jdk14">
+			<revision name="1.38" status="release" pubdate="20090709121957" resolver="public" artresolver="public" homepage="http://www.bouncycastle.org/java.html" downloaded="true" searched="true" default="false" conf="compile, master(*), runtime, compile(*), runtime(*), master" position="91">
+				<license name="Bouncy Castle Licence" url="http://www.bouncycastle.org/licence.html"/>
+				<metadata-artifact status="successful" details="" size="1210" time="1840" location="D:\developer\tools\play-2.2.1\framework\..\repository\cache\org.bouncycastle\bcmail-jdk14\ivy-1.38.xml" searched="true" original-local-location="D:\developer\tools\play-2.2.1\framework\..\repository\cache\org.bouncycastle\bcmail-jdk14\ivy-1.38.xml.original" origin-is-local="false" origin-location="http://repo1.maven.org/maven2/org/bouncycastle/bcmail-jdk14/1.38/bcmail-jdk14-1.38.pom"/>
+				<caller organisation="org.bouncycastle" name="bctsp-jdk14" conf="compile, runtime" rev="1.38" rev-constraint-default="1.38" rev-constraint-dynamic="1.38" callerrev="1.38"/>
+				<artifacts>
+					<artifact name="bcmail-jdk14" type="jar" ext="jar" status="successful" details="" size="192035" time="3095" location="D:\developer\tools\play-2.2.1\framework\..\repository\cache\org.bouncycastle\bcmail-jdk14\jars\bcmail-jdk14-1.38.jar">
+						<origin-location is-local="false" location="http://repo1.maven.org/maven2/org/bouncycastle/bcmail-jdk14/1.38/bcmail-jdk14-1.38.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="org.bouncycastle" name="bcprov-jdk14">
+			<revision name="1.38" status="release" pubdate="20090709121815" resolver="public" artresolver="public" homepage="http://www.bouncycastle.org/java.html" downloaded="true" searched="true" default="false" conf="compile, master(*), runtime, compile(*), runtime(*), master" position="90">
+				<license name="Bouncy Castle Licence" url="http://www.bouncycastle.org/licence.html"/>
+				<metadata-artifact status="successful" details="" size="819" time="1710" location="D:\developer\tools\play-2.2.1\framework\..\repository\cache\org.bouncycastle\bcprov-jdk14\ivy-1.38.xml" searched="true" original-local-location="D:\developer\tools\play-2.2.1\framework\..\repository\cache\org.bouncycastle\bcprov-jdk14\ivy-1.38.xml.original" origin-is-local="false" origin-location="http://repo1.maven.org/maven2/org/bouncycastle/bcprov-jdk14/1.38/bcprov-jdk14-1.38.pom"/>
+				<caller organisation="org.bouncycastle" name="bctsp-jdk14" conf="compile, runtime" rev="1.38" rev-constraint-default="1.38" rev-constraint-dynamic="1.38" callerrev="1.38"/>
+				<caller organisation="org.bouncycastle" name="bcmail-jdk14" conf="compile, runtime" rev="1.38" rev-constraint-default="1.38" rev-constraint-dynamic="1.38" callerrev="1.38"/>
+				<artifacts>
+					<artifact name="bcprov-jdk14" type="jar" ext="jar" status="successful" details="" size="1551468" time="10494" location="D:\developer\tools\play-2.2.1\framework\..\repository\cache\org.bouncycastle\bcprov-jdk14\jars\bcprov-jdk14-1.38.jar">
+						<origin-location is-local="false" location="http://repo1.maven.org/maven2/org/bouncycastle/bcprov-jdk14/1.38/bcprov-jdk14-1.38.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
 		<module organisation="se.radley" name="play-plugins-salat_2.10">
 			<revision name="1.3.0" status="release" pubdate="20130826131454" resolver="sbt-chain" artresolver="sbt-chain" homepage="https://github.com/leon/play-salat" downloaded="false" searched="false" default="false" conf="default(compile), default, compile, runtime, master" position="72">
 				<license name="Apache 2.0" url="http://www.apache.org/licenses/LICENSE-2.0"/>
@@ -748,11 +842,18 @@
 				<license name="The SAX License" url="http://www.saxproject.org/copying.html"/>
 				<license name="The W3C License" url="http://www.w3.org/TR/2004/REC-DOM-Level-3-Core-20040407/java-binding.zip"/>
 				<metadata-artifact status="no" details="" size="3121" time="0" location="D:\developer\tools\play-2.2.1\framework\..\repository\cache\xml-apis\xml-apis\ivy-1.4.01.xml" searched="false" origin-is-local="true" origin-location="D:\developer\tools\play-2.2.1\repository\local\xml-apis\xml-apis\1.4.01\ivys\ivy.xml"/>
+				<caller organisation="dom4j" name="dom4j" conf="compile, runtime" rev="1.0.b2" rev-constraint-default="1.0.b2" rev-constraint-dynamic="1.0.b2" callerrev="1.6.1"/>
 				<caller organisation="xerces" name="xercesImpl" conf="default, compile, runtime, master" rev="1.4.01" rev-constraint-default="1.4.01" rev-constraint-dynamic="1.4.01" callerrev="2.11.0"/>
 				<artifacts>
 					<artifact name="xml-apis" type="jar" ext="jar" status="no" details="" size="220536" time="0" location="D:\developer\tools\play-2.2.1\repository\local\xml-apis\xml-apis\1.4.01\jars\xml-apis.jar">
 						<origin-location is-local="true" location="D:\developer\tools\play-2.2.1\repository\local\xml-apis\xml-apis\1.4.01\jars\xml-apis.jar"/>
 					</artifact>
+				</artifacts>
+			</revision>
+			<revision name="1.0.b2" evicted="latest-revision" evicted-reason="" downloaded="false" searched="false" conf="compile, master(*), runtime, compile(*), runtime(*), master" position="-1">
+				<evicted-by rev="1.4.01"/>
+				<caller organisation="dom4j" name="dom4j" conf="compile, runtime" rev="1.0.b2" rev-constraint-default="1.0.b2" rev-constraint-dynamic="1.0.b2" callerrev="1.6.1"/>
+				<artifacts>
 				</artifacts>
 			</revision>
 		</module>
@@ -874,6 +975,17 @@
 				<artifacts>
 					<artifact name="logback-classic" type="jar" ext="jar" status="no" details="" size="264600" time="0" location="D:\developer\tools\play-2.2.1\repository\local\ch.qos.logback\logback-classic\1.0.13\jars\logback-classic.jar">
 						<origin-location is-local="true" location="D:\developer\tools\play-2.2.1\repository\local\ch.qos.logback\logback-classic\1.0.13\jars\logback-classic.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="dom4j" name="dom4j">
+			<revision name="1.6.1" status="release" pubdate="20130918154400" resolver="Maven2 Local" artresolver="Maven2 Local" homepage="http://dom4j.org" downloaded="true" searched="true" default="false" conf="compile, master(*), runtime, compile(*), runtime(*), master" position="92">
+				<metadata-artifact status="successful" details="" size="6765" time="60" location="D:\developer\tools\play-2.2.1\framework\..\repository\cache\dom4j\dom4j\ivy-1.6.1.xml" searched="true" original-local-location="D:\developer\tools\play-2.2.1\framework\..\repository\cache\dom4j\dom4j\ivy-1.6.1.xml.original" origin-is-local="false" origin-location="file:/C:/Users/admin/.m2/repository/dom4j/dom4j/1.6.1/dom4j-1.6.1.pom"/>
+				<caller organisation="com.lowagie" name="itext" conf="default, compile, runtime, master" rev="1.6.1" rev-constraint-default="1.6.1" rev-constraint-dynamic="1.6.1" callerrev="4.2.1"/>
+				<artifacts>
+					<artifact name="dom4j" type="jar" ext="jar" status="successful" details="" size="313898" time="15" location="D:\developer\tools\play-2.2.1\framework\..\repository\cache\dom4j\dom4j\jars\dom4j-1.6.1.jar">
+						<origin-location is-local="false" location="file:/C:/Users/admin/.m2/repository/dom4j/dom4j/1.6.1/dom4j-1.6.1.jar"/>
 					</artifact>
 				</artifacts>
 			</revision>

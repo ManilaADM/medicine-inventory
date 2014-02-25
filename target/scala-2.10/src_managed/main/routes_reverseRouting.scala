@@ -1,6 +1,6 @@
 // @SOURCE:D:/developer/workspace/projects/medicine/conf/routes
-// @HASH:c174fd2b8eec4643efb8c9fd58a7716e6ad57ab3
-// @DATE:Tue Feb 04 14:03:13 CST 2014
+// @HASH:ec8091bee3919e2c281ca1b24a73544a50ad7172
+// @DATE:Mon Feb 17 15:36:37 CST 2014
 
 import Routes.{prefix => _prefix, defaultPrefix => _defaultPrefix}
 import play.core._
@@ -14,7 +14,8 @@ import se.radley.plugin.salat.Binders._
 import Router.queryString
 
 
-// @LINE:17
+// @LINE:19
+// @LINE:16
 // @LINE:14
 // @LINE:13
 // @LINE:12
@@ -51,11 +52,11 @@ def setEmployee(): Call = {
 }
                           
 
-// @LINE:17
+// @LINE:19
 class ReverseAssets {
     
 
-// @LINE:17
+// @LINE:19
 def at(file:String): Call = {
    Call("GET", _prefix + { _defaultPrefix } + "assets/" + implicitly[PathBindable[String]].unbind("file", file))
 }
@@ -64,6 +65,7 @@ def at(file:String): Call = {
 }
                           
 
+// @LINE:16
 // @LINE:14
 // @LINE:13
 // @LINE:12
@@ -87,6 +89,12 @@ def setMedicine(): Call = {
    Call("POST", _prefix + { _defaultPrefix } + "medicine")
 }
                                                 
+
+// @LINE:16
+def test(): Call = {
+   Call("GET", _prefix + { _defaultPrefix } + "test")
+}
+                                                
     
 }
                           
@@ -107,7 +115,8 @@ def index(): Call = {
                   
 
 
-// @LINE:17
+// @LINE:19
+// @LINE:16
 // @LINE:14
 // @LINE:13
 // @LINE:12
@@ -159,11 +168,11 @@ def setEmployee : JavascriptReverseRoute = JavascriptReverseRoute(
 }
               
 
-// @LINE:17
+// @LINE:19
 class ReverseAssets {
     
 
-// @LINE:17
+// @LINE:19
 def at : JavascriptReverseRoute = JavascriptReverseRoute(
    "controllers.Assets.at",
    """
@@ -177,6 +186,7 @@ def at : JavascriptReverseRoute = JavascriptReverseRoute(
 }
               
 
+// @LINE:16
 // @LINE:14
 // @LINE:13
 // @LINE:12
@@ -215,6 +225,17 @@ def setMedicine : JavascriptReverseRoute = JavascriptReverseRoute(
    """
 )
                         
+
+// @LINE:16
+def test : JavascriptReverseRoute = JavascriptReverseRoute(
+   "controllers.MedicineController.test",
+   """
+      function() {
+      return _wA({method:"GET", url:"""" + _prefix + { _defaultPrefix } + """" + "test"})
+      }
+   """
+)
+                        
     
 }
               
@@ -240,7 +261,8 @@ def index : JavascriptReverseRoute = JavascriptReverseRoute(
         
 
 
-// @LINE:17
+// @LINE:19
+// @LINE:16
 // @LINE:14
 // @LINE:13
 // @LINE:12
@@ -278,11 +300,11 @@ def setEmployee(): play.api.mvc.HandlerRef[_] = new play.api.mvc.HandlerRef(
 }
                           
 
-// @LINE:17
+// @LINE:19
 class ReverseAssets {
     
 
-// @LINE:17
+// @LINE:19
 def at(path:String, file:String): play.api.mvc.HandlerRef[_] = new play.api.mvc.HandlerRef(
    controllers.Assets.at(path, file), HandlerDef(this, "controllers.Assets", "at", Seq(classOf[String], classOf[String]), "GET", """ Map static resources from the /public folder to the /assets URL path""", _prefix + """assets/$file<.+>""")
 )
@@ -291,6 +313,7 @@ def at(path:String, file:String): play.api.mvc.HandlerRef[_] = new play.api.mvc.
 }
                           
 
+// @LINE:16
 // @LINE:14
 // @LINE:13
 // @LINE:12
@@ -312,6 +335,12 @@ def removeMedicine(id:ObjectId): play.api.mvc.HandlerRef[_] = new play.api.mvc.H
 // @LINE:13
 def setMedicine(): play.api.mvc.HandlerRef[_] = new play.api.mvc.HandlerRef(
    controllers.MedicineController.setMedicine(), HandlerDef(this, "controllers.MedicineController", "setMedicine", Seq(), "POST", """""", _prefix + """medicine""")
+)
+                      
+
+// @LINE:16
+def test(): play.api.mvc.HandlerRef[_] = new play.api.mvc.HandlerRef(
+   controllers.MedicineController.test(), HandlerDef(this, "controllers.MedicineController", "test", Seq(), "GET", """""", _prefix + """test""")
 )
                       
     

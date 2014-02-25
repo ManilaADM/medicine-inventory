@@ -16,7 +16,8 @@ libraryDependencies ++= Seq(
   "org.mongodb" % "mongo-java-driver" % "2.11.3",
   "org.jongo" % "jongo" % "0.4",
   "uk.co.panaxiom" %% "play-jongo" % "0.6.0-jongo0.4",
-  "se.radley" %% "play-plugins-salat" % "1.3.0"
+  "se.radley" %% "play-plugins-salat" % "1.3.0",
+  "com.lowagie" % "itext" % "4.2.1"
 )     
 
 play.Project.playJavaSettings

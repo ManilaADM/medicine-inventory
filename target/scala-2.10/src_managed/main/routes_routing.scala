@@ -1,6 +1,6 @@
 // @SOURCE:D:/developer/workspace/projects/medicine/conf/routes
-// @HASH:c174fd2b8eec4643efb8c9fd58a7716e6ad57ab3
-// @DATE:Tue Feb 04 14:03:13 CST 2014
+// @HASH:ec8091bee3919e2c281ca1b24a73544a50ad7172
+// @DATE:Mon Feb 17 15:36:37 CST 2014
 
 
 import play.core._
@@ -57,10 +57,14 @@ private[this] lazy val controllers_MedicineController_setMedicine5 = Route("POST
 private[this] lazy val controllers_MedicineController_removeMedicine6 = Route("GET", PathPattern(List(StaticPart(Routes.prefix),StaticPart(Routes.defaultPrefix),StaticPart("medicine/"),DynamicPart("id", """[^/]+""",true))))
         
 
-// @LINE:17
-private[this] lazy val controllers_Assets_at7 = Route("GET", PathPattern(List(StaticPart(Routes.prefix),StaticPart(Routes.defaultPrefix),StaticPart("assets/"),DynamicPart("file", """.+""",false))))
+// @LINE:16
+private[this] lazy val controllers_MedicineController_test7 = Route("GET", PathPattern(List(StaticPart(Routes.prefix),StaticPart(Routes.defaultPrefix),StaticPart("test"))))
         
-def documentation = List(("""GET""", prefix,"""controllers.Application.index()"""),("""GET""", prefix + (if(prefix.endsWith("/")) "" else "/") + """employee""","""controllers.EmployeeController.getEmployee()"""),("""POST""", prefix + (if(prefix.endsWith("/")) "" else "/") + """employee""","""controllers.EmployeeController.setEmployee()"""),("""GET""", prefix + (if(prefix.endsWith("/")) "" else "/") + """employee/$id<[^/]+>""","""controllers.EmployeeController.removeEmployee(id:ObjectId)"""),("""GET""", prefix + (if(prefix.endsWith("/")) "" else "/") + """medicine""","""controllers.MedicineController.getMedicine()"""),("""POST""", prefix + (if(prefix.endsWith("/")) "" else "/") + """medicine""","""controllers.MedicineController.setMedicine()"""),("""GET""", prefix + (if(prefix.endsWith("/")) "" else "/") + """medicine/$id<[^/]+>""","""controllers.MedicineController.removeMedicine(id:ObjectId)"""),("""GET""", prefix + (if(prefix.endsWith("/")) "" else "/") + """assets/$file<.+>""","""controllers.Assets.at(path:String = "/public", file:String)""")).foldLeft(List.empty[(String,String,String)]) { (s,e) => e.asInstanceOf[Any] match {
+
+// @LINE:19
+private[this] lazy val controllers_Assets_at8 = Route("GET", PathPattern(List(StaticPart(Routes.prefix),StaticPart(Routes.defaultPrefix),StaticPart("assets/"),DynamicPart("file", """.+""",false))))
+        
+def documentation = List(("""GET""", prefix,"""controllers.Application.index()"""),("""GET""", prefix + (if(prefix.endsWith("/")) "" else "/") + """employee""","""controllers.EmployeeController.getEmployee()"""),("""POST""", prefix + (if(prefix.endsWith("/")) "" else "/") + """employee""","""controllers.EmployeeController.setEmployee()"""),("""GET""", prefix + (if(prefix.endsWith("/")) "" else "/") + """employee/$id<[^/]+>""","""controllers.EmployeeController.removeEmployee(id:ObjectId)"""),("""GET""", prefix + (if(prefix.endsWith("/")) "" else "/") + """medicine""","""controllers.MedicineController.getMedicine()"""),("""POST""", prefix + (if(prefix.endsWith("/")) "" else "/") + """medicine""","""controllers.MedicineController.setMedicine()"""),("""GET""", prefix + (if(prefix.endsWith("/")) "" else "/") + """medicine/$id<[^/]+>""","""controllers.MedicineController.removeMedicine(id:ObjectId)"""),("""GET""", prefix + (if(prefix.endsWith("/")) "" else "/") + """test""","""controllers.MedicineController.test()"""),("""GET""", prefix + (if(prefix.endsWith("/")) "" else "/") + """assets/$file<.+>""","""controllers.Assets.at(path:String = "/public", file:String)""")).foldLeft(List.empty[(String,String,String)]) { (s,e) => e.asInstanceOf[Any] match {
   case r @ (_,_,_) => s :+ r.asInstanceOf[(String,String,String)]
   case l => s ++ l.asInstanceOf[List[(String,String,String)]] 
 }}
@@ -124,8 +128,16 @@ case controllers_MedicineController_removeMedicine6(params) => {
 }
         
 
-// @LINE:17
-case controllers_Assets_at7(params) => {
+// @LINE:16
+case controllers_MedicineController_test7(params) => {
+   call { 
+        invokeHandler(controllers.MedicineController.test(), HandlerDef(this, "controllers.MedicineController", "test", Nil,"GET", """""", Routes.prefix + """test"""))
+   }
+}
+        
+
+// @LINE:19
+case controllers_Assets_at8(params) => {
    call(Param[String]("path", Right("/public")), params.fromPath[String]("file", None)) { (path, file) =>
         invokeHandler(controllers.Assets.at(path, file), HandlerDef(this, "controllers.Assets", "at", Seq(classOf[String], classOf[String]),"GET", """ Map static resources from the /public folder to the /assets URL path""", Routes.prefix + """assets/$file<.+>"""))
    }
