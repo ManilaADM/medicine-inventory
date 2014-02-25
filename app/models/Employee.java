@@ -11,17 +11,22 @@ public class Employee implements JongoModel {
 	@JsonProperty("_id")
 	private ObjectId id;	
 	
-	@JsonProperty("empCode")
+	@JsonProperty("emp_code")
 	private String employeeCode;		
 	
+	@JsonProperty("first_name")
 	private String firstName;
 	
+	@JsonProperty("last_name")
 	private String lastName;
 
+	@JsonProperty("gender")
 	private String gender;
 	
+	@JsonProperty("team")
 	private String team;
 	
+	@JsonProperty("category")
 	private String category;
 	
 	public Employee() {

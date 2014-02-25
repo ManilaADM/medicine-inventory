@@ -11,20 +11,28 @@ public class Medicine implements JongoModel {
 	@JsonProperty("_id")
 	private ObjectId id;
 	
+	@JsonProperty("brand_name")
 	private String brandName;
 	
+	@JsonProperty("generic_name")
 	private String genericName;
 	
+	@JsonProperty("description")
 	private String description;
 	
+	@JsonProperty("available")
 	private boolean available;
 	
+	@JsonProperty("count")
 	private int count;
 	
+	@JsonProperty("notification_alert_count")
 	private int notificationAlertCount;
 
+	@JsonProperty("daily_qty_limit_per_user")
 	private int dailyQtyLimitPerUser;
 	
+	@JsonProperty("quantifiable")
 	private boolean quantifiable;
 	
 	public ObjectId getId() {
