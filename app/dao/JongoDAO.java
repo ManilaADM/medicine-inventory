@@ -2,6 +2,7 @@ package dao;
 
 import java.lang.reflect.Method;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import org.bson.types.ObjectId;
 import org.jongo.MongoCollection;
@@ -30,32 +31,44 @@ public class JongoDAO<T extends JongoModel> implements JongoCRUD<T> {
 		this.clazz = clazz;
 	}
 	
+	@Override
 	public void save(T obj) {
 		collections.save(obj);
     }
 	
+	@Override
 	public void update(ObjectId id, T object){
 		collections.update(id).merge(object);
 	}
 	
+	@Override
 	public void delete(ObjectId id) {
 		collections.remove(id);
 	}
 		
+	@Override
 	public List<T> findAll(){
 		return Lists.newArrayList(collections.find().as(clazz));
 	}
 	
+	@Override
 	public T findOne(ObjectId objectId){
 		return (T) collections.findOne(objectId).as(clazz);
 	}    
 	
+	@Override
 	public List<T> search(String fieldName, String value){
-		return Lists.newArrayList(collections.find("{"+fieldName+":#}",value).as(clazz));
+		return Lists.newArrayList(collections.find("{"+fieldName+":#}",Pattern.compile("*"+value+"*")).as(clazz));
 	}
 	
+	@Override
 	public T searchOne(String fieldName, String value){
-		return (T) collections.findOne("{"+fieldName+":#}",value).as(clazz);
+		return (T) collections.findOne("{"+fieldName+":#}",Pattern.compile("*"+value+"*")).as(clazz);
+	}
+
+	@Override
+	public long count(String fieldName, String value) {
+		return collections.count("{"+fieldName+":#}",value);
 	}
 	
 }

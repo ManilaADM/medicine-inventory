@@ -2,8 +2,6 @@ package controllers;
 
 import java.util.List;
 
-import models.Employee;
-import models.Logs;
 import models.Medicine;
 
 import org.bson.types.ObjectId;
@@ -37,31 +35,6 @@ public class MedicineController extends Controller{
 	public static Result removeMedicine(ObjectId id) {
 		medicineDao.delete(id);
 		return redirect(routes.MedicineController.getMedicine());
-	 }
-	
-	public static Result test(){
-		
-		JongoDAO<Employee> employeeDao = new JongoDAO<>(Employee.class);
-		
-		List<Medicine> medicines = medicineDao.findAll();
-		Employee employees = employeeDao.findAll().get(0);
-		
-		Logs logs = new Logs();
-		
-		logs.setEmployee(employees);
-		logs.setMedicines(medicines);
-		
-		logs.setDate("now");
-		
-		JongoDAO<Logs> logsDao = new JongoDAO<>(Logs.class);
-		
-		logsDao.save(logs);
-		
-		
-		return redirect(routes.MedicineController.getMedicine());
-	}
-
-	
-	
+	 }	
 	
 }

@@ -20,7 +20,6 @@ public class EmployeeController extends Controller {
 	
 	 public static Result getEmployee() {
 		List<Employee> employees = employeeDao.findAll();
-//	    return ok(employee.render("Employee List",employees));
 	   
 		Play.application().configuration().getString("application.langs");
 		

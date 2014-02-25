@@ -20,5 +20,7 @@ public interface JongoCRUD <T extends JongoModel> {
 	public List<T> search(String fieldName, String value);
 	
 	public T searchOne(String fieldName, String value);
+	
+	public long count(String fieldName, String value);
 
 }
