@@ -6,7 +6,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import dao.JongoModel;
 
-
 public class Employee implements JongoModel {
 	
 	@JsonProperty("_id")
