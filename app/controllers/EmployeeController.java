@@ -6,6 +6,7 @@ import models.Employee;
 
 import org.bson.types.ObjectId;
 
+import play.Play;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -20,7 +21,10 @@ public class EmployeeController extends Controller {
 	 public static Result getEmployee() {
 		List<Employee> employees = employeeDao.findAll();
 //	    return ok(employee.render("Employee List",employees));
-	    return ok(employee.render("Employee List",employees, empForm));
+	   
+		Play.application().configuration().getString("application.langs");
+		
+		return ok(employee.render("Employee List",employees, empForm));
 	 }
 	 
 	 public static Result setEmployee() {

@@ -10,55 +10,97 @@ public class Medicine implements JongoModel {
 	
 	@JsonProperty("_id")
 	private ObjectId id;
-	@JsonProperty("name")
-	private String name;
-	@JsonProperty("stock_quantity")
-	private long stockQunatity;
-	@JsonProperty("allowed_per_employee")
-	private int allowedPerEmployee;
-	@JsonProperty("alert_quantity")
-	private int alertQuantity;
-	@JsonProperty("critical_alert_quantity")
-	private int criticalAlertQuantity;
+	
+	private String brandName;
+	
+	private String genericName;
+	
+	private String description;
+	
+	private boolean available;
+	
+	private int count;
+	
+	private int notificationAlertCount;
+
+	private int dailyQtyLimitPerUser;
+	
+	private boolean quantifiable;
 	
 	public ObjectId getId() {
 		return id;
 	}
+	
 	public void setId(ObjectId id) {
 		this.id = id;
 	}
-	public String getName() {
-		return name;
+	
+	public String getBrandName() {
+		return brandName;
 	}
-	public void setName(String name) {
-		this.name = name;
+	
+	public void setBrandName(String brandName) {
+		this.brandName = brandName;
 	}
-	public long getStockQunatity() {
-		return stockQunatity;
+	
+	public String getGenericName() {
+		return genericName;
 	}
-	public void setStockQunatity(long qunatity) {
-		this.stockQunatity = qunatity;
+	
+	public void setGenericName(String genericName) {
+		this.genericName = genericName;
 	}
-	public int getAllowedPerEmployee() {
-		return allowedPerEmployee;
+	
+	public String getDescription() {
+		return description;
 	}
-	public void setAllowedPerEmployee(int allowedPerEmployee) {
-		this.allowedPerEmployee = allowedPerEmployee;
+	
+	public void setDescription(String description) {
+		this.description = description;
 	}
-	public int getAlertQuantity() {
-		return alertQuantity;
+	
+	public boolean isAvailable() {
+		return available;
 	}
-	public void setAlertQuantity(int alertQuantity) {
-		this.alertQuantity = alertQuantity;
+	
+	public void setAvailable(boolean available) {
+		this.available = available;
 	}
-	public int getCriticalAlertQuantity() {
-		return criticalAlertQuantity;
+	
+	public int getCount() {
+		return count;
 	}
-	public void setCriticalAlertQuantity(int criticalAlertQuantity) {
-		this.criticalAlertQuantity = criticalAlertQuantity;
+	
+	public void setCount(int count) {
+		this.count = count;
 	}
+	
+	public int getNotificationAlertCount() {
+		return notificationAlertCount;
+	}
+	
+	public void setNotificationAlertCount(int notificationAlertCount) {
+		this.notificationAlertCount = notificationAlertCount;
+	}
+	
+	public int getDailyQtyLimitPerUser() {
+		return dailyQtyLimitPerUser;
+	}
+	
+	public void setDailyQtyLimitPerUser(int dailyQtyLimitPerUser) {
+		this.dailyQtyLimitPerUser = dailyQtyLimitPerUser;
+	}
+	
+	public boolean isQuantifiable() {
+		return quantifiable;
+	}
+	
+	public void setQuantifiable(boolean quantifiable) {
+		this.quantifiable = quantifiable;
+	}	
+	
 	@Override
 	public String getCollectionName() {
 		return "medicine";
-	}	
+	}
 }
