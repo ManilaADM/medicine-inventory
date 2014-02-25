@@ -20,11 +20,11 @@
 				  @for(m <- medicine){
 				  	<tr>
 				  		<td hidden="true" class="objectId">@m.getId</td>
-				  		<td class="name">@m.getName</td>
-				  		<td class="stockQunatity">@m.getStockQunatity</td>
-				  		<td class="allowedPerEmployee">@m.getAllowedPerEmployee</td>
-				  		<td class="alertQuantity">@m.getAlertQuantity</td>
-				  		<td class="criticalAlertQuantity">@m.getCriticalAlertQuantity</td>
+				  		<td class="name">@m.getBrandName</td>
+				  		<td class="stockQunatity">@m.getGenericName</td>
+				  		<td class="allowedPerEmployee">@m.getDescription</td>
+				  		<td class="alertQuantity">@m.getCount</td>
+				  		<td class="criticalAlertQuantity">@m.getNotificationAlertCount</td>
 				  		<td><a href="@controllers.routes.MedicineController.removeMedicine(m.getId)">Delete</a></td>
 				  		<td><a class="update" href="#">Update</a></td>
 				  	</tr>

@@ -39,7 +39,12 @@ Seq[Any](format.raw/*1.32*/("""
         <script src=""""),_display_(Seq[Any](/*10.23*/routes/*10.29*/.Assets.at("javascripts/jquery-1.9.0.min.js"))),format.raw/*10.74*/("""" type="text/javascript"></script>
     </head>
     <body>
-        """),_display_(Seq[Any](/*13.10*/content)),format.raw/*13.17*/("""
+        <header>
+            <a href=""""),_display_(Seq[Any](/*14.23*/routes/*14.29*/.Application.index)),format.raw/*14.47*/("""">"""),_display_(Seq[Any](/*14.50*/title)),format.raw/*14.55*/("""</a>
+        </header>
+        <section>
+            """),_display_(Seq[Any](/*17.14*/content)),format.raw/*17.21*/("""
+        </section>
     </body>
 </html>
 """))}
@@ -54,11 +59,11 @@ Seq[Any](format.raw/*1.32*/("""
 }
                 /*
                     -- GENERATED --
-                    DATE: Tue Feb 04 14:03:22 CST 2014
+                    DATE: Tue Feb 25 11:18:54 CST 2014
                     SOURCE: D:/developer/workspace/projects/medicine/app/views/main.scala.html
-                    HASH: b51bc523f5e1367e158e20a8e8e73f151fac4b9a
-                    MATRIX: 809->1|933->31|1021->84|1047->89|1144->151|1158->157|1213->191|1309->252|1323->258|1376->290|1437->315|1452->321|1519->366|1622->433|1651->440
-                    LINES: 27->1|30->1|36->7|36->7|37->8|37->8|37->8|38->9|38->9|38->9|39->10|39->10|39->10|42->13|42->13
+                    HASH: 43a9bcf1c8b365f5eeaf9aee2ba9048a0f1cf888
+                    MATRIX: 809->1|933->31|1021->84|1047->89|1144->151|1158->157|1213->191|1309->252|1323->258|1376->290|1437->315|1452->321|1519->366|1652->463|1667->469|1707->487|1746->490|1773->495|1863->549|1892->556
+                    LINES: 27->1|30->1|36->7|36->7|37->8|37->8|37->8|38->9|38->9|38->9|39->10|39->10|39->10|43->14|43->14|43->14|43->14|43->14|46->17|46->17
                     -- GENERATED --
                 */
             

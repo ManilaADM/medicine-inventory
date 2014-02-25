@@ -6,22 +6,30 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import dao.JongoModel;
 
-
 public class Employee implements JongoModel {
-	
 	
 	@JsonProperty("_id")
 	private ObjectId id;	
-	@JsonProperty("employee_id")
-	private long employeeId;		
-	@JsonProperty("first_name")
+	
+	@JsonProperty("empCode")
+	private String employeeCode;		
+	
 	private String firstName;
-	@JsonProperty("last_name")
+	
 	private String lastName;
-	@JsonProperty("middle_name")
-	private String middleName;
+
+	private String gender;
+	
+	private String team;
+	
+	private String category;
 	
 	public Employee() {
+	}
+	
+	public Employee(String firstName, String lastName) {
+		this.firstName = firstName;
+		this.lastName = lastName;
 	}
 	
 	public ObjectId getId() {
@@ -32,12 +40,12 @@ public class Employee implements JongoModel {
 		this.id = id;
 	}
 
-	public long getEmployeeId() {
-		return employeeId;
+	public String getEmployeeCode() {
+		return employeeCode;
 	}
 
-	public void setEmployeeId(long employeeId) {
-		this.employeeId = employeeId;
+	public void setEmployeeCode(String employeeCode) {
+		this.employeeCode = employeeCode;
 	}
 
 	public String getFirstName() {
@@ -56,17 +64,32 @@ public class Employee implements JongoModel {
 		this.lastName = lastName;
 	}
 
-	public String getMiddleName() {
-		return middleName;
+	public String getGender() {
+		return gender;
 	}
 
-	public void setMiddleName(String middleName) {
-		this.middleName = middleName;
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+
+	public String getTeam() {
+		return team;
+	}
+
+	public void setTeam(String team) {
+		this.team = team;
+	}
+
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
 	}
 
 	@Override
 	public String getCollectionName() {
 		return "employee";
 	}
-	
 }

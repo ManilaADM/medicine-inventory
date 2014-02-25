@@ -1,17 +1,17 @@
-@(message : String)(employees : List[models.Employee])
+@(message : String)(employees : List[models.Employee])(empForm: Form[Employee])
+@import helper._
 
 @main("Employee") {
 
  	<script src='@routes.Assets.at("javascripts/jIndex.js")')></script>
 	<h1>@message</h1>
-	<div name="container" style="width: 55%;">
+	<div name="container" style="width: 70%;">
 		<div  name="employeeList" style="float: right; display: inline;">
 			<h2>Employee List</h2>
 			<table class="dataContainer" border="1">
 				  <tr>
 				    <th>Employee Id</th>
 				    <th>First Name</th>
-				    <th>Middle Name</th>
 				    <th>Last Name</th>
 				    <th>Delete</th>
 				    <th>Update</th>
@@ -19,9 +19,8 @@
 				  @for(e <- employees){
 				  	<tr>
 				  		<td hidden="true" class="objectId">@e.getId</td>
-				  		<td class="employeeId">@e.getEmployeeId</td>
+				  		<td class="employeeId">@e.getEmployeeCode</td>
 				  		<td class="firstName">@e.getFirstName</td>
-				  		<td class="middleName">@e.getMiddleName</td>
 				  		<td class="lastName">@e.getLastName</td>
 				  		<td><a href="@controllers.routes.EmployeeController.removeEmployee(e.getId)">Delete</a></td>
 				  		<td><a class="update" href="#">Update</a></td>
@@ -29,19 +28,27 @@
 				  }	
 			</table>
 		</div>
-		<div style="float: left; display: inline;">
-			<form action="@controllers.routes.EmployeeController.setEmployee()" method="post">
+		<div style="float: left; display: inline;" >
+			@form(routes.EmployeeController.setEmployee(), 'id -> "empForm"){
+	
 				<p>
 					<h2>Employee Details</h2>
-					Object Id : <input readonly="readonly" id="objectId" name="id"> </br>
-					Employee Id : <input id="employeeId" name="employeeId"> </br>
+					<!-- Object Id : <input readonly="readonly" id="objectId" name="id"> </br> -->
+					@inputText(empForm("objectId"), 'readonly -> "readonly")
+					@inputText(empForm("employeeCode"))
+					@inputText(empForm("lastName"))
+					@inputText(empForm("firstName"))
+					@inputText(empForm("middleName"))
+					@inputText(empForm("emps[0].employeeCode"))
+					@inputText(empForm("emps[0].firstName"))
+					<!-- Employee Id : <input id="employeeId" name="employeeId"> </br>
 					Last Name : <input id="lastName" name="lastName"> </br>
 					First Name : <input id="firstName" name="firstName"> </br>
-					Middle Name : <input id="middleName" name="middleName"> </br>					
+					Middle Name : <input id="middleName" name="middleName"> </br>		 -->			
 					<input type="submit" value="Submit">
 					<input type="reset">
 				</p>
-			</form>
+			}
 		</div>
 	</div>
 

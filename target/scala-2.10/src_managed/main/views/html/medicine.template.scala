@@ -49,11 +49,11 @@ Seq[Any](format.raw/*1.54*/("""
 				  """),_display_(Seq[Any](/*20.8*/for(m <- medicine) yield /*20.26*/{_display_(Seq[Any](format.raw/*20.27*/("""
 				  	<tr>
 				  		<td hidden="true" class="objectId">"""),_display_(Seq[Any](/*22.45*/m/*22.46*/.getId)),format.raw/*22.52*/("""</td>
-				  		<td class="name">"""),_display_(Seq[Any](/*23.27*/m/*23.28*/.getName)),format.raw/*23.36*/("""</td>
-				  		<td class="stockQunatity">"""),_display_(Seq[Any](/*24.36*/m/*24.37*/.getStockQunatity)),format.raw/*24.54*/("""</td>
-				  		<td class="allowedPerEmployee">"""),_display_(Seq[Any](/*25.41*/m/*25.42*/.getAllowedPerEmployee)),format.raw/*25.64*/("""</td>
-				  		<td class="alertQuantity">"""),_display_(Seq[Any](/*26.36*/m/*26.37*/.getAlertQuantity)),format.raw/*26.54*/("""</td>
-				  		<td class="criticalAlertQuantity">"""),_display_(Seq[Any](/*27.44*/m/*27.45*/.getCriticalAlertQuantity)),format.raw/*27.70*/("""</td>
+				  		<td class="name">"""),_display_(Seq[Any](/*23.27*/m/*23.28*/.getBrandName)),format.raw/*23.41*/("""</td>
+				  		<td class="stockQunatity">"""),_display_(Seq[Any](/*24.36*/m/*24.37*/.getGenericName)),format.raw/*24.52*/("""</td>
+				  		<td class="allowedPerEmployee">"""),_display_(Seq[Any](/*25.41*/m/*25.42*/.getDescription)),format.raw/*25.57*/("""</td>
+				  		<td class="alertQuantity">"""),_display_(Seq[Any](/*26.36*/m/*26.37*/.getCount)),format.raw/*26.46*/("""</td>
+				  		<td class="criticalAlertQuantity">"""),_display_(Seq[Any](/*27.44*/m/*27.45*/.getNotificationAlertCount)),format.raw/*27.71*/("""</td>
 				  		<td><a href=""""),_display_(Seq[Any](/*28.23*/controllers/*28.34*/.routes.MedicineController.removeMedicine(m.getId))),format.raw/*28.84*/("""">Delete</a></td>
 				  		<td><a class="update" href="#">Update</a></td>
 				  	</tr>
@@ -89,10 +89,10 @@ Seq[Any](format.raw/*1.54*/("""
 }
                 /*
                     -- GENERATED --
-                    DATE: Mon Feb 17 16:00:45 CST 2014
+                    DATE: Tue Feb 25 11:33:23 CST 2014
                     SOURCE: D:/developer/workspace/projects/medicine/app/views/medicine.scala.html
-                    HASH: 35439cc9026e34edd3a83165a0d8dc0316af20ab
-                    MATRIX: 830->1|976->53|1015->58|1039->74|1078->76|1133->96|1147->102|1203->137|1256->156|1284->163|1775->619|1809->637|1848->638|1943->697|1953->698|1981->704|2050->737|2060->738|2090->746|2168->788|2178->789|2217->806|2300->853|2310->854|2354->876|2432->918|2442->919|2481->936|2567->986|2577->987|2624->1012|2689->1041|2709->1052|2781->1102|2908->1198|3035->1289|3055->1300|3117->1340
+                    HASH: 7c66650fdcb8ea4fd8323b7f3467121802875714
+                    MATRIX: 830->1|976->53|1015->58|1039->74|1078->76|1133->96|1147->102|1203->137|1256->156|1284->163|1775->619|1809->637|1848->638|1943->697|1953->698|1981->704|2050->737|2060->738|2095->751|2173->793|2183->794|2220->809|2303->856|2313->857|2350->872|2428->914|2438->915|2469->924|2555->974|2565->975|2613->1001|2678->1030|2698->1041|2770->1091|2897->1187|3024->1278|3044->1289|3106->1329
                     LINES: 27->1|30->1|32->3|32->3|32->3|34->5|34->5|34->5|35->6|35->6|49->20|49->20|49->20|51->22|51->22|51->22|52->23|52->23|52->23|53->24|53->24|53->24|54->25|54->25|54->25|55->26|55->26|55->26|56->27|56->27|56->27|57->28|57->28|57->28|60->31|64->35|64->35|64->35
                     -- GENERATED --
                 */
