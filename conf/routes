@@ -15,3 +15,6 @@ GET		/medicine/:id				controllers.MedicineController.removeMedicine(id: ObjectId
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
+
+# User Authentication
+GET     /login                      controllers.Application.login()
