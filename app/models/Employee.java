@@ -11,22 +11,17 @@ public class Employee implements JongoModel {
 	@JsonProperty("_id")
 	private ObjectId id;	
 	
-	@JsonProperty("emp_code")
+	@JsonProperty("empCode")
 	private String employeeCode;		
 	
-	@JsonProperty("first_name")
 	private String firstName;
 	
-	@JsonProperty("last_name")
 	private String lastName;
 
-	@JsonProperty("gender")
 	private String gender;
 	
-	@JsonProperty("team")
 	private String team;
 	
-	@JsonProperty("category")
 	private String category;
 	
 	public Employee() {
@@ -95,6 +90,6 @@ public class Employee implements JongoModel {
 
 	@Override
 	public String getCollectionName() {
-		return "employee";
+		return "employees";
 	}
 }

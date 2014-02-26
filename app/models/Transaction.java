@@ -14,13 +14,10 @@ public class Transaction implements JongoModel{
 	@JsonProperty("_id")
 	private ObjectId objectId;
 	
-	@JsonProperty("employee")
 	private Employee employee;
 	
-	@JsonProperty("medicine_list")
-	private List<MedSupQty> medicineList;
+	private List<MedSupQty> medSupItems;
 	
-	@JsonProperty("time_stamp")
 	private Date timeStamp;
 	
 	public ObjectId getObjectId() {
@@ -47,12 +44,12 @@ public class Transaction implements JongoModel{
 		this.timeStamp = timeStamp;
 	}
 	
-	public List<MedSupQty> getItemsRequested() {
-		return medicineList;
+	public List<MedSupQty> getMedSupItems() {
+		return medSupItems;
 	}
 	
-	public void setItemsRequested(List<MedSupQty> itemsRequested) {
-		this.medicineList = itemsRequested;
+	public void setMedSupItems(List<MedSupQty> medSupItems) {
+		this.medSupItems = medSupItems;
 	}
 	
 	@Override
