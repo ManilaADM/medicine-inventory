@@ -1,9 +1,9 @@
-NIIT Medicine Project
+Medical Supply Logbook Project
 =====================================
-Hi team! Let's build our killer app!
-Lorem ipsum here... 5
 
-Hello - world! 3
+Tip 1
 
-After cloning repository:
-  Build project. Do "play eclipse".
+1. Clone repo:
+   git clone git://github.com/ManilaADM/medicine-inventory.git
+   
+2. Change dir to medicine-inventory then run "play eclipse"
