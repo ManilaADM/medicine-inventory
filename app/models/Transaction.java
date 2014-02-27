@@ -14,11 +14,13 @@ public class Transaction implements JongoModel{
 	@JsonProperty("_id")
 	private ObjectId objectId;
 	
-	private Employee employee;
+	private String employeeName; 
 	
 	private List<MedSupQty> medSupItems;
 	
 	private Date timeStamp;
+	
+	private boolean returned;
 	
 	public ObjectId getObjectId() {
 		return objectId;
@@ -26,14 +28,6 @@ public class Transaction implements JongoModel{
 	
 	public void setObjectId(ObjectId objectId) {
 		this.objectId = objectId;
-	}
-	
-	public Employee getEmployee() {
-		return employee;
-	}
-	
-	public void setEmployee(Employee employee) {
-		this.employee = employee;
 	}
 	
 	public Date getTimeStamp() {
@@ -51,7 +45,23 @@ public class Transaction implements JongoModel{
 	public void setMedSupItems(List<MedSupQty> medSupItems) {
 		this.medSupItems = medSupItems;
 	}
-	
+
+	public String getEmployeeName() {
+		return employeeName;
+	}
+
+	public void setEmployeeName(String employeeName) {
+		this.employeeName = employeeName;
+	}
+
+	public boolean isReturned() {
+		return returned;
+	}
+
+	public void setReturned(boolean returned) {
+		this.returned = returned;
+	}
+
 	@Override
 	public String getCollectionName() {
 		return "transactions";
