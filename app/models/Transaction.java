@@ -1,5 +1,6 @@
 package models;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -12,7 +13,7 @@ import dao.JongoModel;
 public class Transaction implements JongoModel{
 		
 	@JsonProperty("_id")
-	private ObjectId objectId;
+	private ObjectId id;
 	
 	private String employeeName; 
 	
@@ -20,18 +21,13 @@ public class Transaction implements JongoModel{
 	
 	private Date timeStamp;
 	
-	private boolean returned;
-	
-	public ObjectId getObjectId() {
-		return objectId;
-	}
-	
-	public void setObjectId(ObjectId objectId) {
-		this.objectId = objectId;
-	}
-	
 	public Date getTimeStamp() {
 		return timeStamp;
+	}
+	
+	public String getFormattedTimeStamp() {
+		SimpleDateFormat format  = new SimpleDateFormat("MM/dd/yyyy h:mm a");
+		return format.format(timeStamp);
 	}
 	
 	public void setTimeStamp(Date timeStamp) {
@@ -54,16 +50,16 @@ public class Transaction implements JongoModel{
 		this.employeeName = employeeName;
 	}
 
-	public boolean isReturned() {
-		return returned;
-	}
-
-	public void setReturned(boolean returned) {
-		this.returned = returned;
-	}
-
 	@Override
 	public String getCollectionName() {
 		return "transactions";
+	}
+
+	public ObjectId getId() {
+		return id;
+	}
+
+	public void setId(ObjectId id) {
+		this.id = id;
 	}
 }

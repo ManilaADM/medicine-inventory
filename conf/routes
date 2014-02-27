@@ -5,6 +5,8 @@
 # Home page
 GET     /                           controllers.Application.index()
 
+GET		/transaction			    controllers.TransactionController.getTransactions()
+
 GET		/employee					controllers.EmployeeController.getEmployee()
 POST	/employee					controllers.EmployeeController.setEmployee()
 GET		/employee/:id				controllers.EmployeeController.removeEmployee(id: ObjectId)

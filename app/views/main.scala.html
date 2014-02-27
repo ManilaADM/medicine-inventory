@@ -10,11 +10,20 @@
         <script src="@routes.Assets.at("javascripts/jquery-1.9.0.min.js")" type="text/javascript"></script>
     </head>
     <body>
-        <header>
-            <a href="@routes.Application.index">@title</a>
-        </header>
+    	<header>
+			<a href="#"><span id="pageTitle">@title</span></a>
+			<dl id="user">
+				<dt id="user">Hello (Frances)</dt>
+				<dd id="user">
+					<a href="#">Logout</a>
+				</dd>
+			</dl>
+		</header>
         <section>
             @content
         </section>
+        <footer>
+       		<p>Copyright 2014 NIIT Philippines Inc. All rights reserved.</p>
+ 		</footer>	
     </body>
 </html>
