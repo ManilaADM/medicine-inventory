@@ -18,3 +18,4 @@ GET     /assets/*file               controllers.Assets.at(path="/public", file)
 
 # User Authentication
 GET     /login                      controllers.Application.login()
+POST    /login                      controllers.Application.authenticate()
