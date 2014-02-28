@@ -2,28 +2,35 @@
 
 @main("Medicine") {
 
- 	<script src='@routes.Assets.at("javascripts/jIndex.js")'></script>
+ 	<script src='@routes.Assets.at("javascripts/employee.js")'></script>
 	<h1>@message</h1>
-	<div class="container" style="width: 85%;">
+	<div class="container" style="width: 90%;">
 		<div  class="medicineList" style="float: right; display: inline;">
 			<h2>Medicine List</h2>
 			<table class="dataContainer" border="1">
 				  <tr>
-				    <th>Medicine Name</th>
-				    <th>Stock Quantity</th>
-				    <th>Allowed Per Employee</th>
-				    <th>Alert Quantity</th>
-				    <th>Critical Alert Quantity</th>
+				    <th>Brand Name</th>
+				    <th>Generic Name</th>
+				    <th>Desc</th>
+				    <th>Count</th>
+				    <th>Alert Count</th>
+				    <th>Daily Limit</th>
+				    <th>Available</th>
+				    <th>Quantifiable</th>
 				    <th>Delete</th>
 				    <th>Update</th>
 				  </tr>
 				  @for(m <- medicine){
 				  	<tr>
-				  		<td hidden="true" class="objectId">@m.getId</td>
-				  		<td class="name">@m.getBrandName</td>
-				  		<td class="stockQunatity">@m.getGenericName</td>
-				  		<td class="allowedPerEmployee">@m.getDescription</td>
-				  		<td class="alertQuantity">@m.getCount</td>
+				  		<td hidden="true" class="id">@m.getId</td>
+				  		<td class="brandName">@m.getBrandName</td>
+				  		<td class="genericName">@m.getGenericName</td>
+				  		<td class="description">@m.getDescription</td>
+				  		<td class="count">@m.getCount</td>
+				  		<td class="notificationAlertCount">@m.getNotificationAlertCount</td>
+				  		<td class="dailyQtyLimitPerUser">@m.getDailyQtyLimitPerUser</td>
+				  		<td class="available">@m.isAvailable</td>
+				  		<td class="quantifiable">@m.isQuantifiable</td>
 				  		<td><a href="@controllers.routes.MedicineController.removeMedicine(m.getId)">Delete</a></td>
 				  		<td><a class="update" href="#">Update</a></td>
 				  	</tr>
@@ -34,12 +41,15 @@
 			<form action="@controllers.routes.MedicineController.setMedicine()" method="post">
 				<p>
 					<h2>Medicine Details</h2>
-					Object Id : <input readonly="readonly" id="objectId" name="id"> </br>
-					Medicine Name : <input id="name" name="name"> </br>
-					Stock Quantity : <input id="stockQunatity" name="stockQunatity"> </br>
-					Allowed Per Employee : <input id="allowedPerEmployee" name="allowedPerEmployee"> </br>
-					Alert Quantity : <input id="alertQuantity" name="alertQuantity"> </br>					
-					Critical Alert Quantity : <input id="criticalAlertQuantity" name="criticalAlertQuantity"> </br>					
+					Medicine Name : <input id="brandName" name="brandName"> </br>
+					Generic Name: <input id="genericName" name="genericName"> </br>
+					Description: <input id="description" name="description"> </br>
+					Stock Count : <input id="count" name="count"> </br>
+					Daily Limit : <input id="dailyQtyLimitPerUser" name="dailyQtyLimitPerUser"> </br>
+					Alert Quantity : <input id="notificationAlertCount" name="notificationAlertCount"> </br>					
+					Available: <input type="checkbox" id="available" name="available" checked="checked"><br>
+					Quantifiable: <input type="checkbox" id="quantifiable" name="quantifiable" checked="checked"><br>
+					
 					<input type="submit" value="Submit">
 					<input type="reset">
 				</p>

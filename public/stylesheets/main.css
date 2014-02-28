@@ -14,8 +14,12 @@ header {
 footer{
 	padding: 10px 30px;
     background: orange;
-    font-size: 10px;
+    font-size: 15px;
+    position:fixed;
+    bottom:0;
+    width:100%;
 }
+
 header a {
     color: #1A1E20;
     text-decoration: none;
@@ -60,6 +64,7 @@ section {
     width: 160px;
 }
 
-
-
-
+table
+{
+border-collapse:collapse;
+}
