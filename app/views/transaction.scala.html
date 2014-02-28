@@ -1,0 +1,42 @@
+@(transactions: List[Transaction])
+
+@main(play.Play.application().configuration().getString("transaction.title")) {
+
+	<div name="container" style="width: 70%;">
+	    <div id="">
+	       <label>Log Transaction For: </label>
+	       <button type="button" >Employee</button>&nbsp;
+	       <button type="button" >Visitor</button>
+	    </div>
+	
+		<div  name="transactions" style="display: inline;">
+			<table class="dataContainer" border="1">
+				  <tr>
+				    <th>@play.Play.application().configuration().getString("transaction.table.col1")</th>
+				    <th>@play.Play.application().configuration().getString("transaction.table.col2")</th>
+				    <th>@play.Play.application().configuration().getString("transaction.table.col3")</th>
+				    <th>@play.Play.application().configuration().getString("transaction.table.col4")</th>
+				    <th>&nbsp;</th>
+				  </tr>
+				   
+			       @for(txn <- transactions){
+				  	  @for(med <- txn.getMedSupItems()){
+					  	<tr>
+					  		<td hidden="true" class="id">@txn.getId</td>
+					  		<td class="empName">@txn.getEmployeeName()</td>
+					  		<td class="medSupply">@med.getBrandName</td>
+					  		<td class="quantity">@med.getQuantity</td>
+					  		<td class="timeStamp">@txn.getFormattedTimeStamp</td>
+					  		@if(med.isReturned) {
+							  <td class="return"><button type="button" disabled="disabled" >Return</button></td>
+							} else {
+							  <td class="return"><button type="button">Return</button></td>
+							}
+					  	</tr>
+					  }
+				  }	
+			</table>
+		</div>
+
+
+}

@@ -32,7 +32,6 @@
 			@form(routes.EmployeeController.setEmployee(), 'id -> "empForm"){
 				<p>
 					<h2>Employee Details</h2>
-					@inputText(empForm("id"), 'readonly -> "readonly")
 					@inputText(empForm("employeeCode"))
 					@inputText(empForm("lastName"))
 					@inputText(empForm("firstName"))
