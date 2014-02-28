@@ -1,12 +1,10 @@
 @(message : String)(medicine : List[models.Medicine])
 
-@main("Medicine") {
+@main("Medical Supply") {
 
  	<script src='@routes.Assets.at("javascripts/employee.js")'></script>
-	<h1>@message</h1>
 	<div class="container" style="width: 90%;">
 		<div  class="medicineList" style="float: right; display: inline;">
-			<h2>Medicine List</h2>
 			<table class="dataContainer" border="1">
 				  <tr>
 				    <th>Brand Name</th>
@@ -40,15 +38,14 @@
 		<div style="float: left; display: inline;">
 			<form action="@controllers.routes.MedicineController.setMedicine()" method="post">
 				<p>
-					<h2>Medicine Details</h2>
 					Medicine Name : <input id="brandName" name="brandName"> </br>
 					Generic Name: <input id="genericName" name="genericName"> </br>
 					Description: <input id="description" name="description"> </br>
 					Stock Count : <input id="count" name="count"> </br>
 					Daily Limit : <input id="dailyQtyLimitPerUser" name="dailyQtyLimitPerUser"> </br>
 					Alert Quantity : <input id="notificationAlertCount" name="notificationAlertCount"> </br>					
-					Available: <input type="checkbox" id="available" name="available" checked="checked"><br>
-					Quantifiable: <input type="checkbox" id="quantifiable" name="quantifiable" checked="checked"><br>
+					Available: <input type="checkbox" id="available" name="available" ><br>
+					Quantifiable: <input type="checkbox" id="quantifiable" name="quantifiable" ><br>
 					
 					<input type="submit" value="Submit">
 					<input type="reset">

@@ -22,13 +22,20 @@ public class MedicineController extends Controller{
 	}
 	
 	public static Result setMedicine(){
-		Medicine medicine = Form.form(Medicine.class).bindFromRequest().get();
-		if(medicine.getId() == null){
-			medicineDao.save(medicine);
-		}else{
-			medicineDao.update(medicine.getId(), medicine);
+		List<Medicine> medicines = medicineDao.findAll();
+		Form<Medicine> form = Form.form(Medicine.class).bindFromRequest();
+
+		if(form.hasErrors()) {
+			return badRequest(medicine.render("Medicine List", medicines));
+	    }
+		else {
+			Medicine medicineObj = form.get();
+			if(medicineObj.getId() == null){
+				medicineDao.save(medicineObj);
+			}else{
+				medicineDao.update(medicineObj.getId(), medicineObj);
+			}
 		}
-		
 		return redirect(routes.MedicineController.getMedicine());
 	}
 	
