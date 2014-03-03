@@ -51,11 +51,6 @@ public class JongoDAO<T extends JongoModel> implements JongoCRUD<T> {
 		return Lists.newArrayList(collections.find().as(clazz));
 	}
 	
-	public List<T> sortBy(String fieldName, boolean ascending, int sizeLimit){
-		String order = ascending ? "1" : "-1";
-		return Lists.newArrayList(collections.find().sort("{"+ fieldName + ":" + order + "}").limit(sizeLimit).as(clazz));
-	}
-	
 	@Override
 	public T findOne(ObjectId objectId){
 		return (T) collections.findOne(objectId).as(clazz);

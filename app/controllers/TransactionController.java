@@ -3,21 +3,21 @@ package controllers;
 import java.util.List;
 
 import models.Transaction;
-import play.Play;
+import models.dto.TransactionVO;
+import play.Configuration;
 import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.transaction;
-import dao.JongoDAO;
+import dao.TransactionDAO;
 
 public class TransactionController extends Controller {
 	
-	static JongoDAO<Transaction> transactionDao = new JongoDAO<>(Transaction.class);
+	static TransactionDAO transactionDao = new TransactionDAO(Transaction.class);
 	
     public static Result getTransactions() {
-
-    	int rowLimit = Integer.parseInt(Play.application().configuration().getString("transaction.table.rowLimit"));
-    	List<Transaction> medLogs = transactionDao.sortBy("timeStamp", false, rowLimit);
+    	int rowLimit = Integer.parseInt(Configuration.root().getString("transaction.table.rowLimit"));
+    	List<TransactionVO> medLogs = transactionDao.sortBy("timeStamp", false, rowLimit);
     	
-    	return ok(transaction.render(medLogs));
+    	return ok(transaction.render(medLogs, rowLimit));
 	 }
 }
