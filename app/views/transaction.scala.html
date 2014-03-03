@@ -1,4 +1,4 @@
-@(transactions: List[models.dto.TransactionVO])(rowLimit: Integer)
+@(transactions: List[models.dto.TransactionVO])(rowLimit: Integer)(employeeNames : List[String])
 
 @import play.Configuration
 
@@ -7,9 +7,9 @@
 	<div name="container" style="width: 100%;">
 		<div id="">
 			<label>Log Transaction For: </label>
-			<button type="button">Employee</button>
+			<button type="button" onclick="displayOverlay();">Employee</button>
 			&nbsp;
-			<button type="button">Visitor</button>
+			<button type="button" onclick="displayOverlay();">Visitor</button>
 		</div>
 		<br>
 		<div name="transactions"  style="">
@@ -46,5 +46,45 @@
 				 </table>
 		      }
 		</div>
+		
+		<div class="bgCover">&nbsp;</div>
+	<div class="overlayBox">
+	  <div class="overlayContent">
+		<!--the close button-->
+		<div class="top">Get Medical Supply <input type="button" onclick="closeOverlay();" value="X" style="float: right;"/></div>
+		<!--normal content-->
+		  <div class="overlay-content">
+		  	<div class="clear">
+			    <label class="overlay-text">Name:</label> 
+			    <select>
+			    @for(empName <- employeeNames){
+					<option>@empName</option>
+				}
+			    </select>
+			</div>
+		    
+		    @for(i <- 0 to 2) {
+		    	<div class="clear">
+				    <label class="overlay-text">Medical Supply:</label> 
+				    <select>
+				    @for(empName <- employeeNames){
+						<option>@empName</option>
+					}
+				    </select>
+				    
+				    <select>
+				    	<option>1</option>
+				    </select>
+			    </div>
+		    }
+		    <div>
+ 			  <center>		    	
+		      <input class="button" type="button" onclick="" value="Save" />
+		      <input class="button" type="button" onclick="closeOverlay();" value="Close"/>
+		      </center>
+		    </div>
+		  </div>
+	  </div>
+	</div>
 	</div>	
 }
