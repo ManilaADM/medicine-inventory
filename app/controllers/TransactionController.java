@@ -20,4 +20,9 @@ public class TransactionController extends Controller {
     	
     	return ok(transaction.render(medLogs, rowLimit));
 	 }
+    
+    public static Result returnMedSupply() {
+    	
+    	return getTransactions();
+    }
 }
