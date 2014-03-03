@@ -1,4 +1,4 @@
-@(transactions: List[models.dto.TransactionVO])(rowLimit: Integer)
+@(transactions: List[models.dto.TransactionVO])(rowLimit: Integer)(employeeNames : List[String])
 
 @import play.Configuration
 
@@ -7,9 +7,9 @@
 	<div name="container" style="width: 100%;">
 		<div id="">
 			<label>Log Transaction For: </label>
-			<button type="button">Employee</button>
+			<button type="button" onclick="displayOverlay();">Employee</button>
 			&nbsp;
-			<button type="button">Visitor</button>
+			<button type="button" onclick="displayOverlay();">Visitor</button>
 		</div>
 		<br>
 		<div name="transactions"  style="">
@@ -46,5 +46,7 @@
 				 </table>
 		      }
 		</div>
+		
+		@transactionOverlay(employeeNames : List[String])
 	</div>	
 }

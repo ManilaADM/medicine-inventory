@@ -82,3 +82,27 @@ border-collapse:collapse;
 	font-weight: ;
 	font-size: 12px;
 }
+
+.bgCover { background:#000; position:absolute; left:0; top:0; display:none; overflow:hidden }
+.overlayBox {
+	border:1px solid black;
+	position:absolute;
+	display:none;
+	width:400px;
+	background:#D7D9D7;
+}
+
+.top {
+  height:30px;
+  background-color: #323832;
+  color: white;
+  padding: 6px 5px 0;
+}
+
+.overlay-content {
+  padding: 20px 20px 20px 20px;
+}
+
+.overlay-text {
+	font-weight:bold;
+}
