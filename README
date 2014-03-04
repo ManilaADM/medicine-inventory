@@ -10,4 +10,5 @@ Tip 1
 
 Tip 2
 
-In EGit, use Replace with HEAD Revision to revert your changes.
+In EGit, use Replace with HEAD Revision to revert your changes and restore file
+to synched status.
