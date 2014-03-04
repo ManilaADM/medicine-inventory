@@ -1,23 +1,46 @@
 package controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import models.Employee;
 import models.Transaction;
-import play.Play;
+import models.dto.TransactionVO;
+import play.Configuration;
 import play.mvc.Controller;
 import play.mvc.Result;
-import views.html.transaction;
 import dao.JongoDAO;
+import dao.TransactionDAO;
+import views.html.transaction;
 
 public class TransactionController extends Controller {
 	
-	static JongoDAO<Transaction> transactionDao = new JongoDAO<>(Transaction.class);
+	static JongoDAO<Employee> employeeDao = new JongoDAO<>(Employee.class);
+	static TransactionDAO transactionDao = new TransactionDAO(Transaction.class);
 	
     public static Result getTransactions() {
-
-    	int rowLimit = Integer.parseInt(Play.application().configuration().getString("transaction.table.rowLimit"));
-    	List<Transaction> medLogs = transactionDao.sortBy("timeStamp", false, rowLimit);
+    	int rowLimit = Integer.parseInt(Configuration.root().getString("transaction.table.rowLimit"));
+    	List<TransactionVO> medLogs = transactionDao.sortBy("timeStamp", false, rowLimit);
     	
-    	return ok(transaction.render(medLogs));
+    	List<Employee> employees = employeeDao.findAll();
+		List<String> employeeNames = getEmployeeNames(employees);
+    	
+    	return ok(transaction.render(medLogs, rowLimit, employeeNames));
 	 }
+    
+    public static Result returnMedSupply() {
+    	
+    	return getTransactions();
+    }
+    
+    private static List<String> getEmployeeNames(List<Employee> employees) {
+		List<String> employeeNames = new ArrayList<String>();
+		for (Employee employee : employees) 
+		{
+			employeeNames.add(employee.getFirstName() + " "
+					+ employee.getLastName());
+		}
+
+		return employeeNames;
+	}
 }

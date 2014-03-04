@@ -7,14 +7,12 @@ html, body {
 
 header {
     padding: 10px 30px;
-    background: aqua;
     font-size: 15px;
 }
 
 footer{
 	padding: 10px 30px;
     background: orange;
-    font-size: 15px;
     position:fixed;
     bottom:0;
     width:100%;
@@ -67,4 +65,44 @@ section {
 table
 {
 border-collapse:collapse;
+}
+
+.logsTable tr th {
+	padding: 0px 5px 0px 5px;
+	text-align: center;
+	font-family: Arial, Helvetica, sans-serif;
+	font-weight: bold;
+	font-size: 15px;
+}
+
+.logsTable tr td {
+	padding: 0px 10px 0px 10px;
+	text-align: center;
+	font-family: Verdana, Geneva, sans-serif;
+	font-weight: ;
+	font-size: 12px;
+}
+
+.bgCover { background:#000; position:absolute; left:0; top:0; display:none; overflow:hidden }
+.overlayBox {
+	border:1px solid black;
+	position:absolute;
+	display:none;
+	width:400px;
+	background:#D7D9D7;
+}
+
+.top {
+  height:30px;
+  background-color: #323832;
+  color: white;
+  padding: 6px 5px 0;
+}
+
+.overlay-content {
+  padding: 20px 20px 20px 20px;
+}
+
+.overlay-text {
+	font-weight:bold;
 }

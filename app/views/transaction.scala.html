@@ -1,42 +1,90 @@
-@(transactions: List[Transaction])
+@(transactions: List[models.dto.TransactionVO])(rowLimit: Integer)(employeeNames : List[String])
 
-@main(play.Play.application().configuration().getString("transaction.title")) {
+@import play.Configuration
 
-	<div name="container" style="width: 70%;">
-	    <div id="">
-	       <label>Log Transaction For: </label>
-	       <button type="button" >Employee</button>&nbsp;
-	       <button type="button" >Visitor</button>
-	    </div>
-	
-		<div  name="transactions" style="display: inline;">
-			<table class="dataContainer" border="1">
-				  <tr>
-				    <th>@play.Play.application().configuration().getString("transaction.table.col1")</th>
-				    <th>@play.Play.application().configuration().getString("transaction.table.col2")</th>
-				    <th>@play.Play.application().configuration().getString("transaction.table.col3")</th>
-				    <th>@play.Play.application().configuration().getString("transaction.table.col4")</th>
-				    <th>&nbsp;</th>
-				  </tr>
-				   
-			       @for(txn <- transactions){
-				  	  @for(med <- txn.getMedSupItems()){
-					  	<tr>
-					  		<td hidden="true" class="id">@txn.getId</td>
-					  		<td class="empName">@txn.getEmployeeName()</td>
-					  		<td class="medSupply">@med.getBrandName</td>
-					  		<td class="quantity">@med.getQuantity</td>
-					  		<td class="timeStamp">@txn.getFormattedTimeStamp</td>
-					  		@if(med.isReturned) {
-							  <td class="return"><button type="button" disabled="disabled" >Return</button></td>
-							} else {
-							  <td class="return"><button type="button">Return</button></td>
-							}
-					  	</tr>
-					  }
-				  }	
-			</table>
+@main(Configuration.root().getString("transaction.title")) {
+
+	<div name="container" style="width: 100%;">
+		<div id="">
+			<label>Log Transaction For: </label>
+			<button type="button" onclick="displayOverlay();">Employee</button>
+			&nbsp;
+			<button type="button" onclick="displayOverlay();">Visitor</button>
 		</div>
-
-
+		<br>
+		<div name="transactions"  style="">
+			
+			@if(transactions.size() == 0){
+				<h4 style="color: red;">@Configuration.root().getString("transaction.table.empty.msg")</h4>
+		    } else {
+		    	<table class="logsTable" border="1">
+					  <thead>
+						  <tr class="logsHeaders">
+						    <th>@Configuration.root().getString("transaction.table.col1")</th>
+						    <th>@Configuration.root().getString("transaction.table.col2")</th>
+						    <th>@Configuration.root().getString("transaction.table.col3")</th>
+						    <th>@Configuration.root().getString("transaction.table.col4")</th>
+						    <th>&nbsp;</th>
+						  </tr>
+					  </thead>
+				      <tbody>  
+        					 @for((txn,idx) <- transactions.zipWithIndex){
+						  	 <tr>
+						  		<td hidden="true" class="id">@txn.getId</td>
+						  		<td class="empName">@txn.getEmployeeName</td>
+				  				<td class="medSupply">@txn.getMedSupItems.getBrandName</td>
+						  		<td class="quantity">@txn.getMedSupItems.getQuantity</td>
+						  		<td class="timeStamp">@txn.getFormattedTimeStamp</td>
+						  		@if(txn.getMedSupItems.isReturned) {
+								  <td class="return"><input type="button" value="Return" disabled="disabled"/></td>
+								} else {
+								   <td class="return"><input type="button" value="Return"/></td>
+								}
+						  	</tr>
+          				  }
+				        </tbody>    
+				 </table>
+		      }
+		</div>
+		
+		<div class="bgCover">&nbsp;</div>
+	<div class="overlayBox">
+	  <div class="overlayContent">
+		<!--the close button-->
+		<div class="top">Get Medical Supply <input type="button" onclick="closeOverlay();" value="X" style="float: right;"/></div>
+		<!--normal content-->
+		  <div class="overlay-content">
+		  	<div class="clear">
+			    <label class="overlay-text">Name:</label> 
+			    <select>
+			    @for(empName <- employeeNames){
+					<option>@empName</option>
+				}
+			    </select>
+			</div>
+		    
+		    @for(i <- 0 to 2) {
+		    	<div class="clear">
+				    <label class="overlay-text">Medical Supply:</label> 
+				    <select>
+				    @for(empName <- employeeNames){
+						<option>@empName</option>
+					}
+				    </select>
+				    
+				    <select>
+				    	<option>1</option>
+				    </select>
+			    </div>
+		    }
+		    <div>
+ 			  <center>		    	
+		      <input class="button" type="button" onclick="" value="Save" />
+		      <input class="button" type="button" onclick="closeOverlay();" value="Close"/>
+		      </center>
+		    </div>
+		  </div>
+	  </div>
+	</div>
+	</div>	
 }

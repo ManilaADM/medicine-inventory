@@ -1,8 +1,8 @@
 package models;
 
-
 public class MedSupQty {
 	
+	private String id;
 	private String brandName;
 	private Integer quantity;
 	private boolean returned;
@@ -38,5 +38,13 @@ public class MedSupQty {
 
 	public void setReturned(boolean returned) {
 		this.returned = returned;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
 	}
 }
