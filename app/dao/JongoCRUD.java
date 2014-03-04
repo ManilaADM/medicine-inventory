@@ -22,5 +22,4 @@ public interface JongoCRUD <T extends JongoModel> {
 	public T searchOne(String fieldName, String value);
 	
 	public long count(String fieldName, String value);
-
 }

@@ -1,0 +1,52 @@
+@(transactions: List[models.dto.TransactionVO])(rowLimit: Integer)(employeeNames : List[String])
+
+@import play.Configuration
+
+@main(Configuration.root().getString("transaction.title")) {
+
+	<div name="container" style="width: 100%;">
+		<div id="">
+			<label>Log Transaction For: </label>
+			<button type="button" onclick="displayOverlay();">Employee</button>
+			&nbsp;
+			<button type="button" onclick="displayOverlay();">Visitor</button>
+		</div>
+		<br>
+		<div name="transactions"  style="">
+			
+			@if(transactions.size() == 0){
+				<h4 style="color: red;">@Configuration.root().getString("transaction.table.empty.msg")</h4>
+		    } else {
+		    	<table class="logsTable" border="1">
+					  <thead>
+						  <tr class="logsHeaders">
+						    <th>@Configuration.root().getString("transaction.table.col1")</th>
+						    <th>@Configuration.root().getString("transaction.table.col2")</th>
+						    <th>@Configuration.root().getString("transaction.table.col3")</th>
+						    <th>@Configuration.root().getString("transaction.table.col4")</th>
+						    <th>&nbsp;</th>
+						  </tr>
+					  </thead>
+				      <tbody>  
+        					 @for((txn,idx) <- transactions.zipWithIndex){
+						  	 <tr>
+						  		<td hidden="true" class="id">@txn.getId</td>
+						  		<td class="empName">@txn.getEmployeeName</td>
+				  				<td class="medSupply">@txn.getMedSupItems.getBrandName</td>
+						  		<td class="quantity">@txn.getMedSupItems.getQuantity</td>
+						  		<td class="timeStamp">@txn.getFormattedTimeStamp</td>
+						  		@if(txn.getMedSupItems.isReturned) {
+								  <td class="return"><input type="button" value="Return" disabled="disabled"/></td>
+								} else {
+								   <td class="return"><input type="button" value="Return"/></td>
+								}
+						  	</tr>
+          				  }
+				        </tbody>    
+				 </table>
+		      }
+		</div>
+		
+		@transactionOverlay(employeeNames : List[String])
+	</div>	
+}

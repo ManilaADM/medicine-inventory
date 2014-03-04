@@ -1,8 +1,9 @@
-package models;
+package models.dto;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
+
+import models.MedSupQty;
 
 import org.bson.types.ObjectId;
 
@@ -10,14 +11,14 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import dao.JongoModel;
 
-public class Transaction implements JongoModel{
+public class TransactionVO implements JongoModel{
 		
 	@JsonProperty("_id")
 	private ObjectId id;
 	
 	private String employeeName; 
 	
-	private List<MedSupQty> medSupItems;
+	private MedSupQty medSupItems;
 	
 	private Date timeStamp;
 	
@@ -34,14 +35,6 @@ public class Transaction implements JongoModel{
 		this.timeStamp = timeStamp;
 	}
 	
-	public List<MedSupQty> getMedSupItems() {
-		return medSupItems;
-	}
-	
-	public void setMedSupItems(List<MedSupQty> medSupItems) {
-		this.medSupItems = medSupItems;
-	}
-
 	public String getEmployeeName() {
 		return employeeName;
 	}
@@ -62,4 +55,13 @@ public class Transaction implements JongoModel{
 	public void setId(ObjectId id) {
 		this.id = id;
 	}
+
+	public MedSupQty getMedSupItems() {
+		return medSupItems;
+	}
+
+	public void setMedSupItems(MedSupQty medSupItems) {
+		this.medSupItems = medSupItems;
+	}
+
 }
