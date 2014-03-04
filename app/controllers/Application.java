@@ -1,7 +1,5 @@
 package controllers;
 
-import static play.data.Form.*;
-
 import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.index;
@@ -34,7 +32,18 @@ public class Application extends Controller {
     
     public static Result authenticate() {
         Form<Login> loginForm = Form.form(Login.class).bindFromRequest();
-        return ok();
+        
+//        Form<Login> loginForm = Form.form(Login.class);
+        
+        if (loginForm.hasErrors()) {
+            return badRequest(login.render(loginForm));
+        } else {
+            session().clear();
+            session("email", loginForm.get().email);
+            return redirect(
+                routes.Application.index()
+            );
+        }
     }
     
     

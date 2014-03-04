@@ -11,6 +11,12 @@
             <span>Digital Log Login</span>
         </header>
         
+        @if(form.hasGlobalErrors) {
+    		<p class="error">
+        		@form.globalError.message
+    		</p>
+		}
+        
         @helper.form(routes.Application.authenticate) {
    		<h1>Sign in</h1>
 

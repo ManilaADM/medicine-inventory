@@ -1,15 +1,24 @@
 package models;
 
-import javax.persistence.*;
+
+import org.bson.types.ObjectId;
 import play.db.ebean.*;
-import com.avaje.ebean.*;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import dao.JongoModel;
 
-@Entity
-public class User extends Model {
 
-    @Id
+public class User extends Model implements JongoModel {
+
+	@JsonProperty("_id")
+	private ObjectId id;
+	
+	@JsonProperty("email")
     public String email;
+	
+	@JsonProperty("name")
     public String name;
+	
+	@JsonProperty("password")
     public String password;
     
     public User(String email, String name, String password) {
@@ -26,4 +35,10 @@ public class User extends Model {
         return find.where().eq("email", email)
             .eq("password", password).findUnique();
     }
+
+	@Override
+	public String getCollectionName() {
+		// TODO Auto-generated method stub
+		return "user";
+	}
 }
