@@ -14,9 +14,9 @@
     	<header>
 			<a href="#"><span id="pageTitle">@title</span></a>
 			<dl id="user">
-				<dt id="user">Hello (Frances)</dt>
+				<dt id="user">Hello @UserController.name </dt>
 				<dd id="user">
-					<a href="#">Logout</a>
+					<a href="@routes.UserController.logout()">Logout</a>
 				</dd>
 			</dl>
 		</header>
