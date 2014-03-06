@@ -9,13 +9,13 @@ import models.dto.TransactionVO;
 import play.Configuration;
 import play.mvc.Controller;
 import play.mvc.Result;
-import views.html.transaction;
 import dao.JongoDAO;
 import dao.TransactionDAO;
+import views.html.transaction;
 
 public class TransactionController extends Controller {
 	
-	static JongoDAO<Employee> employeeDao = new JongoDAO<Employee>(Employee.class);
+	static JongoDAO<Employee> employeeDao = new JongoDAO<>(Employee.class);
 	static TransactionDAO transactionDao = new TransactionDAO(Transaction.class);
 	
     public static Result getTransactions() {

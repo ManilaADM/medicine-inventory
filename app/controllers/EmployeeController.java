@@ -15,7 +15,7 @@ import dao.JongoDAO;
 
 public class EmployeeController extends Controller {
 	
-	static JongoDAO<Employee> employeeDao = new JongoDAO<Employee>(Employee.class);
+	static JongoDAO<Employee> employeeDao = new JongoDAO<>(Employee.class);
 	static Form<Employee> empForm = Form.form(Employee.class);
 	
 	 public static Result getEmployee() {

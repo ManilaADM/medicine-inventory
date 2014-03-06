@@ -14,7 +14,7 @@ import dao.JongoDAO;
 
 public class MedicineController extends Controller{
 	
-	private static JongoDAO<Medicine> medicineDao = new JongoDAO<Medicine>(Medicine.class);
+	private static JongoDAO<Medicine> medicineDao = new JongoDAO<>(Medicine.class);
 	
 	public static Result getMedicine(){
 		List<Medicine> medicines = medicineDao.findAll();
