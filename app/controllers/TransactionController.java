@@ -9,6 +9,7 @@ import models.dto.TransactionVO;
 import play.Configuration;
 import play.mvc.Controller;
 import play.mvc.Result;
+import play.mvc.Security;
 import dao.JongoDAO;
 import dao.TransactionDAO;
 import views.html.transaction;
@@ -18,6 +19,7 @@ public class TransactionController extends Controller {
 	static JongoDAO<Employee> employeeDao = new JongoDAO<>(Employee.class);
 	static TransactionDAO transactionDao = new TransactionDAO(Transaction.class);
 	
+	@Security.Authenticated(Secured.class)
     public static Result getTransactions() {
     	int rowLimit = Integer.parseInt(Configuration.root().getString("transaction.table.rowLimit"));
     	List<TransactionVO> medLogs = transactionDao.sortBy("timeStamp", false, rowLimit);
