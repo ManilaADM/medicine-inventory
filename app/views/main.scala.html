@@ -13,12 +13,12 @@
     <body>
     	<header>
 			<a href="#"><span id="pageTitle">@title</span></a>
-			<dl id="user">
-				<dt id="user">Hello @UserController.name </dt>
-				<dd id="user">
+			<div id="user">
+				<div id="userName">Hello @UserController.name </div>
+				<div id="logout">
 					<a href="@routes.UserController.logout()">Logout</a>
-				</dd>
-			</dl>
+				</div>
+			</div>
 		</header>
         <section>
             @content
