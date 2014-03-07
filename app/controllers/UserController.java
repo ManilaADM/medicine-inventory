@@ -47,7 +47,7 @@ public class UserController extends Controller {
 			session().clear();
 			session("email", loginForm.get().email);
 			session("name", user.name);
-			return redirect(routes.Application.index());
+			return redirect(routes.TransactionController.getTransactions());
 		}
 	}
 
