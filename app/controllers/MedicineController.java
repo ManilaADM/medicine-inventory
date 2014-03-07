@@ -9,6 +9,7 @@ import org.bson.types.ObjectId;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
+import play.mvc.Security;
 import views.html.medicine;
 import dao.JongoDAO;
 
@@ -16,6 +17,7 @@ public class MedicineController extends Controller{
 	
 	private static JongoDAO<Medicine> medicineDao = new JongoDAO<>(Medicine.class);
 	
+	@Security.Authenticated(Secured.class)
 	public static Result getMedicine(){
 		List<Medicine> medicines = medicineDao.findAll();
 		return ok(medicine.render("Medicine List",medicines));

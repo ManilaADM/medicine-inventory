@@ -20,5 +20,6 @@ GET		/medicine/:id				controllers.MedicineController.removeMedicine(id: ObjectId
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
 
 # User Authentication
-GET     /login                      controllers.Application.login()
-POST    /login                      controllers.Application.authenticate()
+GET     /login                      controllers.UserController.login()
+POST    /login                      controllers.UserController.authenticate()
+GET     /logout                     controllers.UserController.logout()

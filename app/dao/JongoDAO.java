@@ -58,12 +58,12 @@ public class JongoDAO<T extends JongoModel> implements JongoCRUD<T> {
 	
 	@Override
 	public List<T> search(String fieldName, String value){
-		return Lists.newArrayList(collections.find("{"+fieldName+":#}",Pattern.compile("*"+value+"*")).as(clazz));
+		return Lists.newArrayList(collections.find("{"+fieldName+":#}",Pattern.compile(value)).as(clazz));
 	}
 	
 	@Override
 	public T searchOne(String fieldName, String value){
-		return (T) collections.findOne("{"+fieldName+":#}",Pattern.compile("*"+value+"*")).as(clazz);
+		return (T) collections.findOne("{"+fieldName+":#}",value).as(clazz);
 	}
 
 	@Override

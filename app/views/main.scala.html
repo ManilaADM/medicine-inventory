@@ -1,4 +1,4 @@
-@(title: String)(content: Html)
+@(title: String, scripts: Html = Html(""))(content: Html)
 
 <!DOCTYPE html>
 
@@ -8,15 +8,15 @@
         <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
         <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
         <script src="@routes.Assets.at("javascripts/jquery-1.9.0.min.js")" type="text/javascript"></script>
-        <script src="@routes.Assets.at("javascripts/transaction.js")" type="text/javascript"></script>
+    	@scripts
     </head>
     <body>
     	<header>
 			<a href="#"><span id="pageTitle">@title</span></a>
 			<dl id="user">
-				<dt id="user">Hello (Frances)</dt>
+				<dt id="user">Hello @UserController.name </dt>
 				<dd id="user">
-					<a href="#">Logout</a>
+					<a href="@routes.UserController.logout()">Logout</a>
 				</dd>
 			</dl>
 		</header>

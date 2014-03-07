@@ -7,19 +7,52 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import dao.JongoModel;
 
 
-public class User extends Model implements JongoModel {
+public class User implements JongoModel {
 
 	@JsonProperty("_id")
 	private ObjectId id;
 	
-	@JsonProperty("email")
     public String email;
 	
-	@JsonProperty("name")
     public String name;
 	
-	@JsonProperty("password")
-    public String password;
+	public String password;
+
+	public User () {
+		
+	}
+	
+	public ObjectId getId() {
+		return id;
+	}
+
+	public void setId(ObjectId id) {
+		this.id = id;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
     
     public User(String email, String name, String password) {
       this.email = email;
@@ -27,18 +60,8 @@ public class User extends Model implements JongoModel {
       this.password = password;
     }
 
-    public static Finder<String,User> find = new Finder<String,User>(
-        String.class, User.class
-    );
-    
-    public static User authenticate(String email, String password) {
-        return find.where().eq("email", email)
-            .eq("password", password).findUnique();
-    }
-
 	@Override
 	public String getCollectionName() {
-		// TODO Auto-generated method stub
-		return "user";
+		return "users";
 	}
 }
