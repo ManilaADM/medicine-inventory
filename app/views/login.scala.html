@@ -1,14 +1,15 @@
 @(loginForm: Form[LoginForm])
+@import play.Configuration
 
 <html>
     <head>
-        <title>Digital Log</title>
+        <title>@Configuration.root().getString("login.text.digitalLog")</title>
         <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
         <link rel="stylesheet" type="text/css" media="screen" href="@routes.Assets.at("stylesheets/login.css")">
     </head>
     <body>
         <header>
-            <span>Digital Log Login</span>
+            <span>@Configuration.root().getString("login.text.digitalLog")</span>
         </header>
         
         @if(loginForm.hasGlobalErrors) {
@@ -24,16 +25,16 @@
 		}
         
         @helper.form(routes.UserController.authenticate) {
-   		<h1>Sign in</h1>
+   		<h1>@Configuration.root().getString("login.text.signIn")</h1>
 
    		<p>
-        	<input type="email" name="email" placeholder="Email" value="@loginForm("email").value">
+        	<input type="email" name="email" placeholder="@Configuration.root().getString("login.label.email")" value="@loginForm("email").value">
    		</p>
    		<p>
-       		<input type="password" name="password" placeholder="Password">
+       		<input type="password" name="password" placeholder="@Configuration.root().getString("login.label.password")">
    		</p>
    		<p>
-       		<button type="submit">Login</button>
+       		<button type="submit">@Configuration.root().getString("login.label.button")</button>
    		</p>
 		}
         
