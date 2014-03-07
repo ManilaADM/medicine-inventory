@@ -1,9 +1,10 @@
 @(loginForm: Form[LoginForm])
 @import play.Configuration
 
-@main(Configuration.root().getString("login.text.logIn")) {
 	<html>
+		<title>@Configuration.root().getString("login.text.logIn")</title>
 	    <head>
+	    	<h1>@Configuration.root().getString("login.text.logIn")</h1>
 	        <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
 	        <link rel="stylesheet" type="text/css" media="screen" href="@routes.Assets.at("stylesheets/login.css")">
 	    </head>
@@ -31,9 +32,7 @@
 	       		<button type="submit">@Configuration.root().getString("login.label.button")</button>
 	   		</p>
 			}
-	        
-	    
+			
 	    </body>
 	</html>
 
-}
