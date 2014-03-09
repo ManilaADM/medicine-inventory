@@ -1,4 +1,9 @@
-@(employeeNames: List[String])
+@(employeeNames: String, medicinesJson: String)
+
+<script type="text/javascript">
+  var employeeNamesObj = $.parseJSON('@employeeNames'.replace(/&quot;/ig,'"'));
+  var medicineJsonObj = $.parseJSON('@medicinesJson'.replace(/&quot;/ig,'"'));
+</script>
 
 <div class="bgCover">&nbsp;</div>
 <div class="overlayBox">
@@ -9,31 +14,30 @@
 				value="X" style="float: right;" />
 		</div>
 		<!--normal content-->
+		<form action="@controllers.routes.TransactionController.setTransaction()"  method="post">
 		<div class="overlay-content">
-			<div class="clear">
-				<label class="overlay-text">Name:</label> <select>
-					@for(empName <- employeeNames){
-					<option>@empName</option> }
-				</select>
+			<div class="clear transactionFields">
+				<label class="overlay-text">Name:</label>
+				<input name="employeeName" id="employeeNameId" value="" placeholder="predictive-text"/>
 			</div>
 
 			@for(i <- 0 to 2) {
-			<div class="clear">
-				<label class="overlay-text">Medical Supply:</label> <select>
-					<option></option> @for(empName <- employeeNames){
-					<option>@empName</option> }
-				</select> <select>
-					<option>1</option>
+			<div class="clear transactionFields">
+				<label class="overlay-text">Medical Supply:</label>
+				<input name="medSupItems[@i].brandName" id="medicineInput@i" value="" placeholder="predictive-text" onblur="(this.value == '') && updateMedicineQty('', '#medicineQty@i')" />
+				
+				<select name="medSupItems[@i].quantity" id="medicineQty@i">
+					  <option>0</option>
 				</select>
 			</div>
 			}
-			<div>
+			<div class="transactioButtons">
 				<center>
-					<input class="button" type="button" onclick="" value="Save" /> <input
-						class="button" type="button" onclick="closeOverlay();"
-						value="Close" />
+					<input type="submit" value="Save" /> 
+					<input class="button" type="button" onclick="closeOverlay();" value="Cancel" />
 				</center>
 			</div>
 		</div>
+		</form>
 	</div>
 </div>

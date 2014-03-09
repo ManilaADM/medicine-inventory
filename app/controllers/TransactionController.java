@@ -1,33 +1,44 @@
 package controllers;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import models.Employee;
+import models.Medicine;
 import models.Transaction;
 import models.dto.TransactionVO;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import play.Configuration;
+import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
-import play.mvc.Security;
+import views.html.transaction;
 import dao.JongoDAO;
 import dao.TransactionDAO;
-import views.html.transaction;
 
 public class TransactionController extends Controller {
 	
-	static JongoDAO<Employee> employeeDao = new JongoDAO<>(Employee.class);
-	static TransactionDAO transactionDao = new TransactionDAO(Transaction.class);
+	private static JongoDAO<Employee> employeeDao = new JongoDAO<>(Employee.class);
+	private static TransactionDAO transactionDao = new TransactionDAO(Transaction.class);
+	private static JongoDAO<Medicine> medicineDao = new JongoDAO<>(Medicine.class);
 	
-	@Security.Authenticated(Secured.class)
     public static Result getTransactions() {
     	int rowLimit = Integer.parseInt(Configuration.root().getString("transaction.table.rowLimit"));
     	List<TransactionVO> medLogs = transactionDao.sortBy("timeStamp", false, rowLimit);
     	
     	List<Employee> employees = employeeDao.findAll();
-		List<String> employeeNames = getEmployeeNames(employees);
+		String employeeNames = getEmployeeNames(employees);
+		
+		List<Medicine> medicines = medicineDao.findAll();
+		String medicinesJson = getMedicinesJson(medicines);
     	
-    	return ok(transaction.render(medLogs, rowLimit, employeeNames));
+    	return ok(transaction.render(medLogs, rowLimit, employeeNames, medicinesJson));
 	 }
     
     public static Result returnMedSupply() {
@@ -35,14 +46,60 @@ public class TransactionController extends Controller {
     	return getTransactions();
     }
     
-    private static List<String> getEmployeeNames(List<Employee> employees) {
+    private static String getEmployeeNames(List<Employee> employees) {
 		List<String> employeeNames = new ArrayList<String>();
 		for (Employee employee : employees) 
 		{
 			employeeNames.add(employee.getFirstName() + " "
 					+ employee.getLastName());
 		}
+		
+		JSONArray jsonArray = new JSONArray(employeeNames);
 
-		return employeeNames;
+		return jsonArray.toString();
+	}
+    
+    private static String getMedicinesJson(List<Medicine> medicines) {
+		Map<String, Medicine> medicinesMap = new HashMap<String, Medicine>();
+		for (Medicine medicine : medicines) 
+		{
+			if(medicine.isAvailable())
+			{
+				medicinesMap.put(medicine.getBrandName(), medicine);
+			}
+			
+		}
+		
+		JSONObject jsonObject = new JSONObject(medicinesMap);
+
+		return jsonObject.toString();
+	}
+    
+    public static Result setTransaction(){
+		
+    	int rowLimit = Integer.parseInt(Configuration.root().getString("transaction.table.rowLimit"));
+    	List<TransactionVO> medLogs = transactionDao.sortBy("timeStamp", false, rowLimit);
+    	
+    	List<Employee> employees = employeeDao.findAll();
+		String employeeNames = getEmployeeNames(employees);
+		
+		List<Medicine> medicines = medicineDao.findAll();
+		String medicinesJson = getMedicinesJson(medicines);
+		
+		Form<Transaction> form = Form.form(Transaction.class).bindFromRequest();
+		
+		if(form.hasErrors()) {
+			return badRequest(transaction.render(medLogs, rowLimit, employeeNames, medicinesJson));
+	    }
+		else {
+			Transaction transactionObj = form.get();
+			transactionObj.setTimeStamp(new Date());
+			if(transactionObj.getId() == null){
+				transactionDao.save(transactionObj);
+			}else{
+				transactionDao.update(transactionObj.getId(), transactionObj);
+			}
+		}
+		return redirect(routes.TransactionController.getTransactions());
 	}
 }

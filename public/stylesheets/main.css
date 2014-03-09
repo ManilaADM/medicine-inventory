@@ -90,3 +90,12 @@ border-collapse:collapse;
 .overlay-text {
 	font-weight:bold;
 }
+.ui-menu-item {
+	font-size:12px;
+}
+.transactionFields {
+	padding:3px;
+}
+.transactioButtons {
+	padding:5px;
+}
