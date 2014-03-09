@@ -83,12 +83,17 @@ function closeOverlay() {
 
 function updateMedicineQty(medicineBrandName, selectMedicineQtyId) {
 	var options;
-	if(medicineBrandName)
-	{
-		var maxQty = medicineJsonObj[medicineBrandName].dailyQtyLimitPerUser;
-		for(i = 0; i< maxQty; i++)
-		{
-			options = options + '<option value="'+i+'">'+i+'</option>';
+	if(medicineBrandName) {
+		var medicine = medicineJsonObj[medicineBrandName];
+		if(medicine.quantifiable !== true) {
+			options = '<option value="1">1</option>';
+		}
+		else {
+			var maxQty = medicineJsonObj[medicineBrandName].dailyQtyLimitPerUser;
+			for(i = 0; i< maxQty; i++)
+			{
+				options = options + '<option value="'+i+'">'+i+'</option>';
+			}
 		}
 	}
 	else {
