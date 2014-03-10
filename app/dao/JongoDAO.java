@@ -54,7 +54,12 @@ public class JongoDAO<T extends JongoModel> implements JongoCRUD<T> {
 	@Override
 	public T findOne(ObjectId objectId){
 		return (T) collections.findOne(objectId).as(clazz);
-	}    
+	}
+	
+	@Override
+	public T findUser(String email, String password) {
+		return (T) collections.findOne("{email:#, password:#}", email, password).as(clazz);
+	}
 	
 	@Override
 	public List<T> search(String fieldName, String value){

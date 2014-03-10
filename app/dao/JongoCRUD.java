@@ -15,7 +15,9 @@ public interface JongoCRUD <T extends JongoModel> {
 		
 	public List<T> findAll();
 	
-	public T findOne(ObjectId objectId);    
+	public T findOne(ObjectId objectId);
+	
+	public T findUser(String email, String password);
 	
 	public List<T> search(String fieldName, String value);
 	

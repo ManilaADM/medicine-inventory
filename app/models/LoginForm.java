@@ -9,10 +9,10 @@ public class LoginForm {
     public String password;
     
     public String validate() {
-    	if (UserController.authenticate(email, password)) {
-    		return Play.application().configuration().getString("login.error.message.invalid");
+    	if (UserController.isValidUser(email, password)) {
+    		return null;
     	}
-    	return null;
+    	return Play.application().configuration().getString("login.error.message.invalid");
     }
 
 }

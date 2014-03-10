@@ -17,15 +17,11 @@ public class UserController extends Controller {
 		return ok(login.render(loginForm));
 	}
 
-	public static boolean authenticate(String email, String password) {
-		if ((currentUserEmail(email) == null) || (currentUserPassword(password) == null)) {
+	public static boolean isValidUser(String email, String password) {
+		if (userDao.findUser(email, password) != null) {
 			return true;
 		}
 		return false;
-	}
-
-	private static User currentUserPassword(String password) {
-		return userDao.searchOne("password", password);
 	}
 
 	private static User currentUserEmail(String email) {
