@@ -5,6 +5,7 @@
 <html>
     <head>
         <title>@title</title>
+        <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/jquery-ui.css")">
         <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
         <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
         <script src="@routes.Assets.at("javascripts/jquery-1.9.0.min.js")" type="text/javascript"></script>
@@ -13,12 +14,12 @@
     <body>
     	<header>
 			<a href="#"><span id="pageTitle">@title</span></a>
-			<dl id="user">
-				<dt id="user">Hello @UserController.name </dt>
-				<dd id="user">
+			<div id="user">
+				<div id="userName">Hello @UserController.name </div>
+				<div id="logout">
 					<a href="@routes.UserController.logout()">Logout</a>
-				</dd>
-			</dl>
+				</div>
+			</div>
 		</header>
         <section>
             @content

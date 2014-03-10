@@ -1,42 +1,38 @@
 @(loginForm: Form[LoginForm])
+@import play.Configuration
 
-<html>
-    <head>
-        <title>Digital Log</title>
-        <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
-        <link rel="stylesheet" type="text/css" media="screen" href="@routes.Assets.at("stylesheets/login.css")">
-    </head>
-    <body>
-        <header>
-            <span>Digital Log Login</span>
-        </header>
-        
-        @if(loginForm.hasGlobalErrors) {
-    		<p class="error">
-        		@loginForm.globalError.message
-    		</p>
-		}
-		
-		@if(flash.contains("success")) {
-		    <p class="success">
-		        @flash.get("success")
-		    </p>
-		}
-        
-        @helper.form(routes.UserController.authenticate) {
-   		<h1>Sign in</h1>
+	<html>
+		<title>@Configuration.root().getString("login.text.logIn")</title>
+	    <head>
+	    	<h1>@Configuration.root().getString("login.text.logIn")</h1>
+	        <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
+	        <link rel="stylesheet" type="text/css" media="screen" href="@routes.Assets.at("stylesheets/login.css")">
+	    </head>
+	    <body>
+	        @if(loginForm.hasGlobalErrors) {
+	    		<p class="error">
+	        		@loginForm.globalError.message
+	    		</p>
+			}
+			
+			@if(flash.contains("success")) {
+			    <p class="success">
+			        @flash.get("success")
+			    </p>
+			}
+	        
+	        @helper.form(routes.UserController.authenticate) {
+	   		<p>
+	        	<input type="email" name="email" placeholder="@Configuration.root().getString("login.label.email")" value="@loginForm("email").value">
+	   		</p>
+	   		<p>
+	       		<input type="password" name="password" placeholder="@Configuration.root().getString("login.label.password")">
+	   		</p>
+	   		<p>
+	       		<button type="submit">@Configuration.root().getString("login.label.button")</button>
+	   		</p>
+			}
+			
+	    </body>
+	</html>
 
-   		<p>
-        	<input type="email" name="email" placeholder="Email" value="@loginForm("email").value">
-   		</p>
-   		<p>
-       		<input type="password" name="password" placeholder="Password">
-   		</p>
-   		<p>
-       		<button type="submit">Login</button>
-   		</p>
-		}
-        
-    
-    </body>
-</html>
