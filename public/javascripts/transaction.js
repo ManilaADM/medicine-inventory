@@ -17,7 +17,7 @@ $( document ).ready(function() {
 	var medBrandAndGenericName = [];
 	$.each(medicineJsonObj, function(key,value){
 		var genericName = value.genericName;
-		medBrandAndGenericName.push({ "value" : key, "label": '<' + key + '> (<'+genericName+'>)' });
+		medBrandAndGenericName.push({ "value" : key, "label": '' + key + ' ('+genericName+')' });
 		
 	});
 		
@@ -43,10 +43,22 @@ function updateMedicineFields(medBrandAndGenericName, index)
 	    select: function (event, ui) {
 	        var value = ui.item.value;
 	    	updateMedicineQty(value, '#medicineQty' + index);
+	    	var medicineDesc = medicineJsonObj[value].description;
+	    	var medicineGenName = medicineJsonObj[value].genericName;
+	    	$('#medicineTooltip' + index).attr('title', value + ", " + medicineGenName + ", " + medicineDesc );
 	   }
 	})
 	.focus(function() {
 	    $(this).autocomplete('search', $(this).val())
+	})
+	.blur(function() {
+		var medicineInputField = $('#medicineInput'+ index).val();
+		var selectedMedicine = medicineJsonObj[medicineInputField];
+		if(!selectedMedicine)
+		{
+			$('#medicineTooltip' + index).attr('title', '');
+			updateMedicineQty('', '#medicineQty' + index);
+		}
 	});
 }
 

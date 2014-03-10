@@ -106,3 +106,6 @@ div .error {
 .overlayError {
 	border: 2px solid #c00;	    
 }
+.medicine-tooltip {
+	padding-left:5px;
+}
