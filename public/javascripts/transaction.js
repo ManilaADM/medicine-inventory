@@ -26,7 +26,7 @@ $( document ).ready(function() {
 		updateMedicineFields(medBrandAndGenericName, i);
 	}
 	
-	$('#saveTransactions').submit(function(event) {
+	$('#transactionForm').submit(function(event) {
 		cleanTransactionValidation();
 		event.preventDefault();
 		if (isValid()) {
