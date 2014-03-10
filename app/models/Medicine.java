@@ -31,6 +31,11 @@ public class Medicine implements JongoModel {
 		return id;
 	}
 	
+	public String getIdAsString()
+	{
+		return id.toString();
+	}
+	
 	public void setId(ObjectId id) {
 		this.id = id;
 	}

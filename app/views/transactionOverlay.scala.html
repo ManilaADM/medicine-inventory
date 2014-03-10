@@ -30,8 +30,9 @@
 			<div class="medicineTransactions">
 				@for(i <- 0 to 2) {
 				<div class="clear transactionFields">
-					<label class="overlay-text">@Configuration.root().getString("transaction.overlay.medName"):</label>	
-					<input name="medSupItems[@i].brandName" id="medicineInput@i" value="" placeholder="predictive-text" onblur="(this.value == '') && updateMedicineQty('', '#medicineQty@i')" />
+					<label class="overlay-text">@Configuration.root().getString("transaction.overlay.medName"):</label>
+					<input name="medSupItems[@i].id" id="medicineId@i" value="" type="hidden"/>	
+					<input name="medSupItems[@i].brandName" id="medicineInput@i" value="" placeholder="predictive-text"/>
 
 					<select name="medSupItems[@i].quantity" id="medicineQty@i">
 					  <option>0</option>

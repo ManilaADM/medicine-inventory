@@ -26,7 +26,7 @@ $( document ).ready(function() {
 		updateMedicineFields(medBrandAndGenericName, i);
 	}
 	
-	$('#transactionForm').submit(function(event) {
+	$('#saveTransactions').submit(function(event) {
 		cleanTransactionValidation();
 		event.preventDefault();
 		if (isValid()) {
@@ -45,7 +45,9 @@ function updateMedicineFields(medBrandAndGenericName, index)
 	    	updateMedicineQty(value, '#medicineQty' + index);
 	    	var medicineDesc = medicineJsonObj[value].description;
 	    	var medicineGenName = medicineJsonObj[value].genericName;
+	    	var medicineId = medicineJsonObj[value].idAsString;
 	    	$('#medicineTooltip' + index).attr('title', value + ", " + medicineGenName + ", " + medicineDesc );
+	    	$('#medicineId' + index).val(medicineId);
 	   }
 	})
 	.focus(function() {
@@ -58,6 +60,7 @@ function updateMedicineFields(medBrandAndGenericName, index)
 		{
 			$('#medicineTooltip' + index).attr('title', '');
 			updateMedicineQty('', '#medicineQty' + index);
+			$('#medicineId' + index).val('');
 		}
 	});
 }

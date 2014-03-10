@@ -1,7 +1,6 @@
 @(transactions: List[models.dto.TransactionVO])(rowLimit: Integer)(employeeNames : String)(medicinesJson : String)
 @import play.Configuration
 @scripts = {
-	<script src="@routes.Assets.at("javascripts/jquery-ui.js")" type="text/javascript"></script>
 	<script src="@routes.Assets.at("javascripts/transaction.js")" type="text/javascript"></script>
 }
 @hasRecords = @{if(transactions.size() == 0) false else true}
