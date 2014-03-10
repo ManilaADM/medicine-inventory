@@ -1,5 +1,7 @@
 @(employeeNames: String, medicinesJson: String)
 
+@import play.Configuration
+
 <script type="text/javascript">
   var employeeNamesObj = $.parseJSON('@employeeNames'.replace(/&quot;/ig,'"'));
   var medicineJsonObj = $.parseJSON('@medicinesJson'.replace(/&quot;/ig,'"'));
@@ -10,31 +12,38 @@
 	<div class="overlayContent">
 		<!--the close button-->
 		<div class="top">
-			Get Medical Supply <input type="button" onclick="closeOverlay();"
-				value="X" style="float: right;" />
+			@Configuration.root().getString("transaction.overlay.title")
+			<input type="button" onclick="closeOverlay();" value="X" style="float: right;" />
 		</div>
 		<!--normal content-->
-		<form action="@controllers.routes.TransactionController.setTransaction()"  method="post">
+		<form action="@controllers.routes.TransactionController.setTransaction()"  method="post" id="transactionForm">
 		<div class="overlay-content">
+			<div class="clear">
+				<div id="errorMsg"></div>
+			</div>		
+			
 			<div class="clear transactionFields">
-				<label class="overlay-text">Name:</label>
+				<label class="overlay-text">@Configuration.root().getString("transaction.overlay.empName"):</label>
 				<input name="employeeName" id="employeeNameId" value="" placeholder="predictive-text"/>
 			</div>
-
-			@for(i <- 0 to 2) {
-			<div class="clear transactionFields">
-				<label class="overlay-text">Medical Supply:</label>
-				<input name="medSupItems[@i].brandName" id="medicineInput@i" value="" placeholder="predictive-text" onblur="(this.value == '') && updateMedicineQty('', '#medicineQty@i')" />
 				
-				<select name="medSupItems[@i].quantity" id="medicineQty@i">
+			<div class="medicineTransactions">
+				@for(i <- 0 to 2) {
+				<div class="clear transactionFields">
+					<label class="overlay-text">@Configuration.root().getString("transaction.overlay.medName"):</label>	
+					<input name="medSupItems[@i].brandName" id="medicineInput@i" value="" placeholder="predictive-text" onblur="(this.value == '') && updateMedicineQty('', '#medicineQty@i')" />
+
+					<select name="medSupItems[@i].quantity" id="medicineQty@i">
 					  <option>0</option>
-				</select>
+					</select>
+				</div>
+				}
 			</div>
-			}
+			
 			<div class="transactioButtons">
 				<center>
-					<input type="submit" value="Save" /> 
-					<input class="button" type="button" onclick="closeOverlay();" value="Cancel" />
+					<input type="submit" value='@Configuration.root().getString("overlay.save")' id="saveTransactions"/> 
+					<input class="button" type="button" onclick="closeOverlay(); "value='@Configuration.root().getString("overlay.close")' />
 				</center>
 			</div>
 		</div>

@@ -25,6 +25,14 @@ $( document ).ready(function() {
 	{
 		updateMedicineFields(medBrandAndGenericName, i);
 	}
+	
+	$('#saveTransactions').submit(function(event) {
+		cleanTransactionValidation();
+		event.preventDefault();
+		if (isValid()) {
+			proceedSavingTransaction('#transactionForm');
+		}
+	});
 });
 
 function updateMedicineFields(medBrandAndGenericName, index)
@@ -60,6 +68,7 @@ function showOverlayBox() {
 		width: $(window).width(),
 		height:$(window).height(),
 	});
+	cleanTransactionValidation();
 }
 
 
@@ -101,4 +110,126 @@ function updateMedicineQty(medicineBrandName, selectMedicineQtyId) {
 	}
 	
 	$(selectMedicineQtyId).html(options);
+}
+
+//clear previous error message and styles on invalid elements
+function cleanTransactionValidation() {
+	$('#errorMsg').empty();
+	$('input').removeClass('overlayError');
+}
+
+function isValid() {
+	var errorMsgList = [];
+	var isValid = false;
+	
+	validateEmployeeName($('#employeeNameId'), errorMsgList);
+	validateMedicineOption($('.medicineTransactions').children(), errorMsgList);
+	
+	if (errorMsgList.length > 0) {
+		$('#errorMsg').addClass('error');
+		$.each(errorMsgList, function(index, value) {
+			$('#errorMsg').append(value);
+		});
+	}
+	else {
+		isValid = true;
+	}
+	
+	return isValid;
+}
+
+function validateEmployeeName(empField, errorMsgList) {
+	if ($(empField).val() == "") {
+		$(empField).addClass('overlayError');
+		errorMsgList.push("Please enter Employee Name<br/>");
+	}
+	return errorMsgList;
+}
+
+function validateMedicineOption(options, errorMsgList) {
+	var noMedicineInp = false;
+	var medicineList = [];
+	var duplicateMedIndex = [];
+	
+	$.each(options, function(medOptIndex, medOptValue) {
+		var med = $(medOptValue).find('#medicineInput'+medOptIndex);
+		var medicineName = $(med).val();
+		var medicineQty = $(medOptValue).find('#medicineQty'+medOptIndex).val()
+		medicineList.push(medicineName);
+		
+		// validate if no medicine name was selected but with medicine quantity
+		if (medicineQty > 0 && medicineName == "") {
+			$(med).addClass('overlayError');
+			noMedicineInp = true;
+		}
+		// validate if duplicate medicine name were selected
+		// get array containing indexes of duplicate medicine
+		// merge found indexes to array of duplicateMedIndex
+		var duplicateMed = getDuplicateMedIndexes(medicineList, medicineName);
+		if (duplicateMed.length > 0) {
+			$.merge(duplicateMedIndex, duplicateMed);
+		}
+	});
+	
+	if (noMedicineInp == true) {
+		errorMsgList.push("Please select medical supply<br/>");
+	}
+	if (duplicateMedIndex.length > 0) {
+		styleDuplicateMedicine(options, duplicateMedIndex.sort());
+		errorMsgList.push("Dupe medical supplies");
+	}
+
+	return errorMsgList;
+}
+
+function getDuplicateMedIndexes(medicineList, medicineName) {
+	var indexes = [];
+	var numOccurences;
+	// find medicine name's number of occurrence
+	numOccurences = $.grep(medicineList, function (value) {
+		// disregard blank/no option selected
+		if (medicineName != "") {
+			return value === medicineName;
+		}
+	}).length;
+	// if more than 1 occurrence, search for the element indexes of all occurrences
+	if (numOccurences > 1) {
+		$.each (medicineList, function(listIndex, listValue) {
+			var index = $.inArray(medicineName, medicineList, listIndex);
+			// if found, check if index is present in indexes already
+			// else store it in array of indexes
+			if (index > -1 && ($.inArray(index, indexes) == -1)) {
+				indexes.push(index);
+			}
+		});
+	}
+	return indexes;
+}
+
+function styleDuplicateMedicine(options, duplicateMedIndex) {
+	// loop through the array containing the duplicate medicine index
+	// use the indexes for identifying input ids
+	$.each(duplicateMedIndex, function(dupeIndex, dupeValue) {
+		var med = options.find('#medicineInput'+dupeValue);
+		if (!$(med).hasClass('overlayError')) {
+			$(med).addClass('overlayError');
+		}
+	});
+}
+
+function proceedSavingTransaction(form) {
+	$.ajax({
+		url : $(form).attr("action"),
+		type: "POST",
+		data : $(form).serialize(),
+		success: function()
+		{			
+			closeOverlay();
+		},
+		error: function(xhr, status, error)
+		{
+			alert("fail" + error);
+		}
+	});
+	// add logic to prevent more than one submit
 }

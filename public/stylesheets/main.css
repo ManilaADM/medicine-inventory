@@ -99,3 +99,10 @@ border-collapse:collapse;
 .transactioButtons {
 	padding:5px;
 }
+div .error {
+    font-weight: bold;
+    color: #c00;
+}
+.overlayError {
+	border: 2px solid #c00;	    
+}
