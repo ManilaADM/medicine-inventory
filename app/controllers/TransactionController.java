@@ -19,6 +19,7 @@ import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security;
+import validator.TransactionValidator;
 import views.html.transaction;
 import dao.JongoDAO;
 import dao.TransactionDAO;
@@ -28,7 +29,7 @@ public class TransactionController extends Controller {
 	private static JongoDAO<Employee> employeeDao = new JongoDAO<>(Employee.class);
 	private static TransactionDAO transactionDao = new TransactionDAO(Transaction.class);
 	private static JongoDAO<Medicine> medicineDao = new JongoDAO<>(Medicine.class);
-
+	
 	@Security.Authenticated(Secured.class)
     public static Result getTransactions() {
     	int rowLimit = Integer.parseInt(Configuration.root().getString("transaction.table.rowLimit"));
@@ -39,8 +40,10 @@ public class TransactionController extends Controller {
 		
 		List<Medicine> medicines = medicineDao.findAll();
 		String medicinesJson = getMedicinesJson(medicines);
+		
+		Form<Transaction> transactionForm = Form.form(Transaction.class);
     	
-    	return ok(transaction.render(medLogs, rowLimit, employeeNames, medicinesJson));
+    	return ok(transaction.render(medLogs, rowLimit, employeeNames, medicinesJson, transactionForm));
 	 }
     
     public static Result returnMedSupply() {
@@ -88,13 +91,17 @@ public class TransactionController extends Controller {
 		List<Medicine> medicines = medicineDao.findAll();
 		String medicinesJson = getMedicinesJson(medicines);
 		
-		Form<Transaction> form = Form.form(Transaction.class).bindFromRequest();
 		
-		if(form.hasErrors()) {
-			return badRequest(transaction.render(medLogs, rowLimit, employeeNames, medicinesJson));
+		Form<Transaction> transactionForm = Form.form(Transaction.class).bindFromRequest();
+		TransactionValidator transactionValidator = new TransactionValidator();
+		transactionValidator.validate(transactionForm, employees, medicines);
+		
+		
+		if(transactionForm.hasErrors()) {
+			return badRequest(transaction.render(medLogs, rowLimit, employeeNames, medicinesJson, transactionForm));
 	    }
 		else {
-			Transaction transactionObj = form.get();
+			Transaction transactionObj = transactionForm.get();
 			transactionObj.setTimeStamp(new Date());
 			if(transactionObj.getId() == null){
 				transactionDao.save(transactionObj);
@@ -104,4 +111,5 @@ public class TransactionController extends Controller {
 		}
 		return redirect(routes.TransactionController.getTransactions());
 	}
+    
 }

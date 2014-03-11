@@ -1,7 +1,16 @@
-@(transactions: List[models.dto.TransactionVO])(rowLimit: Integer)(employeeNames : String)(medicinesJson : String)
+@(transactions: List[models.dto.TransactionVO])(rowLimit: Integer)(employeeNames : String)(medicinesJson : String)(transactionForm: Form[Transaction])
 @import play.Configuration
 @scripts = {
 	<script src="@routes.Assets.at("javascripts/transaction.js")" type="text/javascript"></script>
+	<script type="text/javascript">
+	  var employeeNamesObj = $.parseJSON('@employeeNames'.replace(/&quot;/ig,'"'));
+	  var medicineJsonObj = $.parseJSON('@medicinesJson'.replace(/&quot;/ig,'"'));
+	  var transactionFormHasError = @transactionForm.hasErrors;
+	  var errorFieldIds = [];
+	  @for((key, value) <- transactionForm.errors) {
+		  errorFieldIds.push('@key');
+	  }
+	</script>
 }
 @hasRecords = @{if(transactions.size() == 0) false else true}
 
@@ -49,6 +58,6 @@
 				 </table>
 		      }
 		</div>
-		@transactionOverlay(employeeNames : String, medicinesJson: String)
+		@transactionOverlay(transactionForm: Form[Transaction])
 	</div>	
 }

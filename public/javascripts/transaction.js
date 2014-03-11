@@ -12,8 +12,6 @@ $( document ).ready(function() {
 	    $(this).autocomplete('search', $(this).val())
 	});
 	
-	var medOptions;
-	
 	var medBrandAndGenericName = [];
 	$.each(medicineJsonObj, function(key,value){
 		var genericName = value.genericName;
@@ -26,13 +24,24 @@ $( document ).ready(function() {
 		updateMedicineFields(medBrandAndGenericName, i);
 	}
 	
-	$('#transactionForm').submit(function(event) {
-		cleanTransactionValidation();
-		event.preventDefault();
-		if (isValid()) {
-			proceedSavingTransaction('#transactionForm');
-		}
-	});
+	for(j = 0; j<numberOfMedicineFields;j++)
+	{
+		var fieldValue = $('#medicineInput' + j).val();
+		updateMedicineQty(fieldValue, '#medicineQty' +j);
+		updateTooltip(j, fieldValue);
+	}
+	
+	if(transactionFormHasError === true)
+	{
+		$.each(errorFieldIds, function(index, value) {
+			var field = $('#' + value);
+			if (!field.hasClass('overlayError')) {
+				field.addClass('overlayError');
+			}
+		});
+		
+		displayOverlay();
+	}
 });
 
 function updateMedicineFields(medBrandAndGenericName, index)
@@ -43,10 +52,8 @@ function updateMedicineFields(medBrandAndGenericName, index)
 	    select: function (event, ui) {
 	        var value = ui.item.value;
 	    	updateMedicineQty(value, '#medicineQty' + index);
-	    	var medicineDesc = medicineJsonObj[value].description;
-	    	var medicineGenName = medicineJsonObj[value].genericName;
+	    	updateTooltip(index, value);
 	    	var medicineId = medicineJsonObj[value].idAsString;
-	    	$('#medicineTooltip' + index).attr('title', value + ", " + medicineGenName + ", " + medicineDesc );
 	    	$('#medicineId' + index).val(medicineId);
 	   }
 	})
@@ -83,9 +90,7 @@ function showOverlayBox() {
 		width: $(window).width(),
 		height:$(window).height(),
 	});
-	cleanTransactionValidation();
 }
-
 
 function displayOverlay() {
 	//set status to open
@@ -109,16 +114,30 @@ function updateMedicineQty(medicineBrandName, selectMedicineQtyId) {
 	var options;
 	if(medicineBrandName) {
 		var medicine = medicineJsonObj[medicineBrandName];
-		if(medicine.quantifiable !== true) {
-			options = '<option value="1">1</option>';
-		}
-		else {
-			var maxQty = medicineJsonObj[medicineBrandName].dailyQtyLimitPerUser;
-			for(i = 0; i< maxQty; i++)
-			{
-				options = options + '<option value="'+i+'">'+i+'</option>';
+		if(medicine)
+		{
+			if(medicine.quantifiable !== true) {
+				options = '<option value="1">1</option>';
+			}
+			else {
+				var dailyQtyLimitPerUser = medicineJsonObj[medicineBrandName].dailyQtyLimitPerUser;
+				var medicineCount = medicineJsonObj[medicineBrandName].count;
+				var maxQty = dailyQtyLimitPerUser;
+				if(medicineCount < dailyQtyLimitPerUser)
+				{
+					maxQty = medicineCount;
+				}
+				
+				for(i = 0; i< maxQty; i++)
+				{
+					options = options + '<option value="'+i+'">'+i+'</option>';
+				}
 			}
 		}
+		else {
+			options = '<option value="0">0</option>';
+		}
+		
 	}
 	else {
 		options = '<option value="0">0</option>';
@@ -127,124 +146,13 @@ function updateMedicineQty(medicineBrandName, selectMedicineQtyId) {
 	$(selectMedicineQtyId).html(options);
 }
 
-//clear previous error message and styles on invalid elements
-function cleanTransactionValidation() {
-	$('#errorMsg').empty();
-	$('input').removeClass('overlayError');
-}
-
-function isValid() {
-	var errorMsgList = [];
-	var isValid = false;
-	
-	validateEmployeeName($('#employeeNameId'), errorMsgList);
-	validateMedicineOption($('.medicineTransactions').children(), errorMsgList);
-	
-	if (errorMsgList.length > 0) {
-		$('#errorMsg').addClass('error');
-		$.each(errorMsgList, function(index, value) {
-			$('#errorMsg').append(value);
-		});
+function updateTooltip(index, fieldValue) {
+	if(fieldValue) {
+	  var medicine = medicineJsonObj[fieldValue];
+	  if(medicine) {
+		var medicineDesc = medicine.description;
+		var medicineGenName = medicine.genericName;
+		$('#medicineTooltip' + index).attr('title', fieldValue + ", " + medicineGenName + ", " + medicineDesc );
+	  }
 	}
-	else {
-		isValid = true;
-	}
-	
-	return isValid;
-}
-
-function validateEmployeeName(empField, errorMsgList) {
-	if ($(empField).val() == "") {
-		$(empField).addClass('overlayError');
-		errorMsgList.push("Please enter Employee Name<br/>");
-	}
-	return errorMsgList;
-}
-
-function validateMedicineOption(options, errorMsgList) {
-	var noMedicineInp = false;
-	var medicineList = [];
-	var duplicateMedIndex = [];
-	
-	$.each(options, function(medOptIndex, medOptValue) {
-		var med = $(medOptValue).find('#medicineInput'+medOptIndex);
-		var medicineName = $(med).val();
-		var medicineQty = $(medOptValue).find('#medicineQty'+medOptIndex).val()
-		medicineList.push(medicineName);
-		
-		// validate if no medicine name was selected but with medicine quantity
-		if (medicineQty > 0 && medicineName == "") {
-			$(med).addClass('overlayError');
-			noMedicineInp = true;
-		}
-		// validate if duplicate medicine name were selected
-		// get array containing indexes of duplicate medicine
-		// merge found indexes to array of duplicateMedIndex
-		var duplicateMed = getDuplicateMedIndexes(medicineList, medicineName);
-		if (duplicateMed.length > 0) {
-			$.merge(duplicateMedIndex, duplicateMed);
-		}
-	});
-	
-	if (noMedicineInp == true) {
-		errorMsgList.push("Please select medical supply<br/>");
-	}
-	if (duplicateMedIndex.length > 0) {
-		styleDuplicateMedicine(options, duplicateMedIndex.sort());
-		errorMsgList.push("Dupe medical supplies");
-	}
-
-	return errorMsgList;
-}
-
-function getDuplicateMedIndexes(medicineList, medicineName) {
-	var indexes = [];
-	var numOccurences;
-	// find medicine name's number of occurrence
-	numOccurences = $.grep(medicineList, function (value) {
-		// disregard blank/no option selected
-		if (medicineName != "") {
-			return value === medicineName;
-		}
-	}).length;
-	// if more than 1 occurrence, search for the element indexes of all occurrences
-	if (numOccurences > 1) {
-		$.each (medicineList, function(listIndex, listValue) {
-			var index = $.inArray(medicineName, medicineList, listIndex);
-			// if found, check if index is present in indexes already
-			// else store it in array of indexes
-			if (index > -1 && ($.inArray(index, indexes) == -1)) {
-				indexes.push(index);
-			}
-		});
-	}
-	return indexes;
-}
-
-function styleDuplicateMedicine(options, duplicateMedIndex) {
-	// loop through the array containing the duplicate medicine index
-	// use the indexes for identifying input ids
-	$.each(duplicateMedIndex, function(dupeIndex, dupeValue) {
-		var med = options.find('#medicineInput'+dupeValue);
-		if (!$(med).hasClass('overlayError')) {
-			$(med).addClass('overlayError');
-		}
-	});
-}
-
-function proceedSavingTransaction(form) {
-	$.ajax({
-		url : $(form).attr("action"),
-		type: "POST",
-		data : $(form).serialize(),
-		success: function()
-		{			
-			closeOverlay();
-		},
-		error: function(xhr, status, error)
-		{
-			alert("fail" + error);
-		}
-	});
-	// add logic to prevent more than one submit
 }

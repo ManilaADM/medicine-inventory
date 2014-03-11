@@ -1,11 +1,6 @@
-@(employeeNames: String, medicinesJson: String)
+@(transactionForm: Form[Transaction])
 
 @import play.Configuration
-
-<script type="text/javascript">
-  var employeeNamesObj = $.parseJSON('@employeeNames'.replace(/&quot;/ig,'"'));
-  var medicineJsonObj = $.parseJSON('@medicinesJson'.replace(/&quot;/ig,'"'));
-</script>
 
 <div class="bgCover">&nbsp;</div>
 <div class="overlayBox">
@@ -18,21 +13,32 @@
 		<!--normal content-->
 		<form action="@controllers.routes.TransactionController.setTransaction()"  method="post" id="transactionForm">
 		<div class="overlay-content">
+			
 			<div class="clear">
-				<div id="errorMsg"></div>
-			</div>		
+				<div id="errorMsg">
+				@if(transactionForm.hasErrors) {
+					@for((key, value) <- transactionForm.errors) {
+						@for(err <- value) {
+					    <p class="error">
+					        @err.message().toString()
+				    	</p>
+					    }
+					}
+				}
+				</div>
+			</div>
 			
 			<div class="clear transactionFields">
 				<label class="overlay-text">@Configuration.root().getString("transaction.overlay.empName"):</label>
-				<input name="employeeName" id="employeeNameId" value="" placeholder="predictive-text"/>
+				<input name="employeeName" id="employeeNameId" value="@transactionForm("employeeName").value" placeholder="predictive-text"/>
 			</div>
 				
 			<div class="medicineTransactions">
 				@for(i <- 0 to 2) {
 				<div class="clear transactionFields">
 					<label class="overlay-text">@Configuration.root().getString("transaction.overlay.medName"):</label>
-					<input name="medSupItems[@i].id" id="medicineId@i" value="" type="hidden"/>	
-					<input name="medSupItems[@i].brandName" id="medicineInput@i" value="" placeholder="predictive-text"/>
+					<input name="medSupItems[@i].id" id="medicineId@i" value="@transactionForm("medSupItems["+ i +"].id").value" type="hidden"/>
+					<input name="medSupItems[@i].brandName" id="medicineInput@i" value="@transactionForm("medSupItems["+ i +"].brandName").value" placeholder="predictive-text"/>
 
 					<select name="medSupItems[@i].quantity" id="medicineQty@i">
 					  <option>0</option>
