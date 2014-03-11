@@ -18,6 +18,7 @@ import play.Configuration;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
+import play.mvc.Security;
 import views.html.transaction;
 import dao.JongoDAO;
 import dao.TransactionDAO;
@@ -27,7 +28,8 @@ public class TransactionController extends Controller {
 	private static JongoDAO<Employee> employeeDao = new JongoDAO<>(Employee.class);
 	private static TransactionDAO transactionDao = new TransactionDAO(Transaction.class);
 	private static JongoDAO<Medicine> medicineDao = new JongoDAO<>(Medicine.class);
-	
+
+	@Security.Authenticated(Secured.class)
     public static Result getTransactions() {
     	int rowLimit = Integer.parseInt(Configuration.root().getString("transaction.table.rowLimit"));
     	List<TransactionVO> medLogs = transactionDao.sortBy("timeStamp", false, rowLimit);
