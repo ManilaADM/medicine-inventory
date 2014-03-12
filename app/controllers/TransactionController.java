@@ -13,6 +13,8 @@ import models.dto.TransactionVO;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import play.Configuration;
 import play.data.Form;
@@ -30,9 +32,12 @@ public class TransactionController extends Controller {
 	private static TransactionDAO transactionDao = new TransactionDAO(Transaction.class);
 	private static JongoDAO<Medicine> medicineDao = new JongoDAO<>(Medicine.class);
 	
+	private static Logger log = LoggerFactory.getLogger(TransactionController.class);
+	
 	@Security.Authenticated(Secured.class)
     public static Result getTransactions() {
     	int rowLimit = Integer.parseInt(Configuration.root().getString("transaction.table.rowLimit"));
+    	log.debug("Current transaction row limit is :" + rowLimit);
     	List<TransactionVO> medLogs = transactionDao.sortBy("timeStamp", false, rowLimit);
     	
     	List<Employee> employees = employeeDao.findAll();
