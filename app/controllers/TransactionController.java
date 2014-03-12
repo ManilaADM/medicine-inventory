@@ -27,12 +27,13 @@ import dao.JongoDAO;
 import dao.TransactionDAO;
 
 public class TransactionController extends Controller {
+
+	private static Logger log = LoggerFactory.getLogger(TransactionController.class);
 	
 	private static JongoDAO<Employee> employeeDao = new JongoDAO<>(Employee.class);
 	private static TransactionDAO transactionDao = new TransactionDAO(Transaction.class);
 	private static JongoDAO<Medicine> medicineDao = new JongoDAO<>(Medicine.class);
 	
-	private static Logger log = LoggerFactory.getLogger(TransactionController.class);
 	
 	@Security.Authenticated(Secured.class)
     public static Result getTransactions() {
