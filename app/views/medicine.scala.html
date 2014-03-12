@@ -38,6 +38,7 @@
 		<div style="float: left; display: inline;">
 			<form action="@controllers.routes.MedicineController.setMedicine()" method="post">
 				<p>
+				    <input type="hidden" id="id" name="id">
 					Medicine Name : <input id="brandName" name="brandName"> </br>
 					Generic Name: <input id="genericName" name="genericName"> </br>
 					Description: <input id="description" name="description"> </br>
