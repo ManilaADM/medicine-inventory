@@ -54,6 +54,8 @@ public class TransactionController extends Controller {
     
     public static Result returnMedSupply() {
     	
+    	log.info("Returning med");
+    	
     	return getTransactions();
     }
     

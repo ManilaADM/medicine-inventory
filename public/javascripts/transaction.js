@@ -74,14 +74,15 @@ function updateMedicineFields(medBrandAndGenericName, index)
 
 //function to display the box
 
-function showOverlayBox() {
+function showOverlayBox(id) {
 	//if box is not set to open then don't do anything
 	if( isOpen == false ) return;
 	// set the properties of the overlay box, the left and top positions
-	$('.overlayBox').css({
+//	$('.overlayBox').css({
+		$(id).css({
 		display:'block',
-		left:( $(window).width() - $('.overlayBox').width() )/2,
-		top:( $(window).height() - $('.overlayBox').height() )/2 -20,
+		left:( $(window).width() - $(id).width() )/2,
+		top:( $(window).height() - $(id).height() )/2 -20,
 		position:'absolute'
 	});
 	// set the window background for the overlay. i.e the body becomes darker
@@ -92,19 +93,19 @@ function showOverlayBox() {
 	});
 }
 
-function displayOverlay() {
+function displayOverlay(id) {
 	//set status to open
 	isOpen = true;
-	showOverlayBox();
+	showOverlayBox(id);
 	$('.bgCover').css({opacity:0}).animate( {opacity:0.5, backgroundColor:'#000'} );
 	// dont follow the link : so return false.
 	return false;
 }
 
-function closeOverlay() {
+function closeOverlay(id) {
 	//set status to closed
 	isOpen = false;
-	$('.overlayBox').css( 'display', 'none' );
+	$(id).css( 'display', 'none' );
 	// now animate the background to fade out to opacity 0
 	// and then hide it after the animation is complete.
 	$('.bgCover').animate( {opacity:0}, null, null, function() { $(this).hide(); } );

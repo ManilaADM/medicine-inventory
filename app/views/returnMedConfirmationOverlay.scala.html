@@ -1,0 +1,34 @@
+@import play.Configuration
+
+<div class="retConfOverlayBox">
+	<div class="overlayContent">
+		<!--the close button-->
+		<div class="top">
+			@Configuration.root().getString("transaction.overlay.returnMed.title")
+			<input type="button" onclick="closeOverlay('.retConfOverlayBox');" value="X" style="float: right;" />
+		</div>
+		<!--normal content-->
+		<form action="@controllers.routes.TransactionController.returnMedSupply()"  method="post" id="returnMedSupForm">
+		<div class="overlay-content">
+			
+			<div class="clear">
+				<div id="errorMsg">
+				
+				</div>
+			</div>
+			
+			<div class="clear transactionFields">
+				<label class="overlay-text">@Configuration.root().getString("transaction.overlay.returnMed.message")</label> 
+				<label class="overlay-text" id="medSupToReturn" />
+			</div>
+			
+			<div class="transactionButtons">
+				<center>
+					<input type="submit" value='@Configuration.root().getString("overlay.ok")' id="saveTransactions"/> 
+					<input class="button" type="button" onclick="closeOverlay('.retConfOverlayBox'); "value='@Configuration.root().getString("overlay.close")' />
+				</center>
+			</div>
+		</div>
+		</form>
+	</div>
+</div>
