@@ -13,6 +13,9 @@
 				    <th>Employee Id</th>
 				    <th>First Name</th>
 				    <th>Last Name</th>
+				    <th>Gender</th>
+				    <th>Team</th>
+				    <th>Category</th>
 				    <th>Delete</th>
 				    <th>Update</th>
 				  </tr>
@@ -22,6 +25,9 @@
 				  		<td class="employeeCode">@e.getEmployeeCode</td>
 				  		<td class="firstName">@e.getFirstName</td>
 				  		<td class="lastName">@e.getLastName</td>
+				  		<td class="gender">@e.getGender</td>
+				  		<td class="team">@e.getTeam</td>
+				  		<td class="category">@e.getCategory</td>
 				  		<td><a href="@controllers.routes.EmployeeController.removeEmployee(e.getId)">Delete</a></td>
 				  		<td><a class="update" href="#">Update</a></td>
 				  	</tr>
@@ -35,6 +41,9 @@
 					@inputText(empForm("employeeCode"))
 					@inputText(empForm("lastName"))
 					@inputText(empForm("firstName"))
+					@inputText(empForm("gender"))
+					@inputText(empForm("team"))
+					@inputText(empForm("category"))
 					<input type="submit" value="Submit">
 					<input type="reset">
 				</p>
