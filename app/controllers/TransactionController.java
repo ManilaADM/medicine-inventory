@@ -97,11 +97,9 @@ public class TransactionController extends Controller {
 		List<Medicine> medicines = medicineDao.findAll();
 		String medicinesJson = getMedicinesJson(medicines);
 		
-		
 		Form<Transaction> transactionForm = Form.form(Transaction.class).bindFromRequest();
 		TransactionValidator transactionValidator = new TransactionValidator();
 		transactionValidator.validate(transactionForm, employees, medicines);
-		
 		
 		if(transactionForm.hasErrors()) {
 			return badRequest(transaction.render(medLogs, rowLimit, employeeNames, medicinesJson, transactionForm));
@@ -110,7 +108,14 @@ public class TransactionController extends Controller {
 			Transaction transactionObj = transactionForm.get();
 			transactionObj.setTimeStamp(new Date());
 			if(transactionObj.getId() == null){
-				transactionDao.save(transactionObj);
+				try 
+				{
+					transactionDao.save(transactionObj);
+				}
+				catch (Exception e)
+				{
+					transactionForm.reject("savingError", Configuration.root().getString("error.generic"));
+				}
 			}else{
 				transactionDao.update(transactionObj.getId(), transactionObj);
 			}

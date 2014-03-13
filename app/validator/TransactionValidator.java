@@ -5,6 +5,7 @@ import java.util.List;
 import models.Employee;
 import models.Medicine;
 import models.Transaction;
+import play.Configuration;
 import play.data.Form;
 
 public class TransactionValidator
@@ -15,12 +16,17 @@ public class TransactionValidator
 	{
 		Form<Transaction> form = (Form<Transaction>) obj;
 		
-		
-		EmployeeNameValidator empNameValidator = new EmployeeNameValidator();
-		empNameValidator.validateEmployeeName(employees, form);
-    	
-		MedicineValidator medicineValidator = new MedicineValidator(); 
-		medicineValidator.validateMedSupQty(form, medicines);
+		try
+		{
+			EmployeeNameValidator empNameValidator = new EmployeeNameValidator();
+			empNameValidator.validateEmployeeName(employees, form);
+	    	
+			MedicineValidator medicineValidator = new MedicineValidator();
+			medicineValidator.validateMedSupQty(form, medicines);
+		}
+		catch (Exception e){
+			form.reject("processingError", Configuration.root().getString("error.generic"));
+		}
 	}
 
 }

@@ -4,6 +4,7 @@ import java.util.List;
 
 import models.Employee;
 import models.Transaction;
+import play.Configuration;
 import play.data.Form;
 
 public class EmployeeNameValidator 
@@ -15,11 +16,11 @@ public class EmployeeNameValidator
 		String empName = transactionForm.getEmployeeName();
     	if(empName.isEmpty())
     	{
-    		form.reject("employeeNameId","error.empName.is.mandatory");
+    		form.reject("employeeNameId", Configuration.root().getString("error.empName.is.mandatory"));
     	}
     	else if(!hasMatchedEmployee(employees, empName))
     	{
-    		form.reject("employeeNameId","error.empName.no.matched");
+    		form.reject("employeeNameId", Configuration.root().getString("error.empName.no.matched"));
     	}
 	}
 	
