@@ -14,11 +14,11 @@
     </head>
     <body>
     	<header>
-			<a href="#"><span id="pageTitle">@title</span></a>
+			<div id="pageTitle"><a href="#">@title</a></div>
 			<div id="user">
-				<div id="userName">Hello @UserController.name </div>
+				<div id="userName">Hello, @UserController.name! </div>
 				<div id="logout">
-					<a href="@routes.UserController.logout()">Logout</a>
+					<a href="@routes.UserController.logout()"><em>Logout</em></a>
 				</div>
 			</div>
 		</header>
