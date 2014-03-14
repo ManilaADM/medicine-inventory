@@ -78,7 +78,6 @@ function showOverlayBox(id) {
 	//if box is not set to open then don't do anything
 	if( isOpen == false ) return;
 	// set the properties of the overlay box, the left and top positions
-//	$('.overlayBox').css({
 		$(id).css({
 		display:'block',
 		left:( $(window).width() - $(id).width() )/2,

@@ -17,6 +17,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import play.Configuration;
+import play.Routes;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -38,7 +39,6 @@ public class TransactionController extends Controller {
 	@Security.Authenticated(Secured.class)
     public static Result getTransactions() {
     	int rowLimit = Integer.parseInt(Configuration.root().getString("transaction.table.rowLimit"));
-    	log.debug("Current transaction row limit is :" + rowLimit);
     	List<TransactionVO> medLogs = transactionDao.sortBy("timeStamp", false, rowLimit);
     	
     	List<Employee> employees = employeeDao.findAll();
@@ -50,13 +50,27 @@ public class TransactionController extends Controller {
 		Form<Transaction> transactionForm = Form.form(Transaction.class);
     	
     	return ok(transaction.render(medLogs, rowLimit, employeeNames, medicinesJson, transactionForm));
-	 }
+	}
     
     public static Result returnMedSupply() {
     	
     	log.info("Returning med");
     	
-    	return getTransactions();
+    	//need txn id and med id to update returned flag
+    	//qty returned to update Medicine inventory + availability flag
+    	
+    	//could return badRequest()
+    	return ok();
+    }
+    
+    public static Result javascriptRoutes() {
+    	response().setContentType("text/javascript");
+    	return ok(
+    			Routes.javascriptRouter("jsRoutes",
+    					// Routes
+    					routes.javascript.TransactionController.returnMedSupply()
+    					)
+    			);
     }
     
     private static String getEmployeeNames(List<Employee> employees) {

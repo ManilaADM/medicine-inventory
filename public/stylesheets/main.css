@@ -173,3 +173,28 @@ ul.nav li a:hover  {
 	color: #c00;
 	background-color: #fff; 
 }
+
+.ui-dialog-titlebar {
+    background: #323832;
+    font-size: 15px;
+    color: white;
+    padding: 6px 5px 0;
+}
+
+.ui-button-text {
+	font-size: 12px;
+}
+
+.ui-widget-content {
+	font-size: 12px;
+}
+
+.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset {
+    float: none;
+	text-align: center;
+}
+
+.ui-widget-overlay {
+	background: #000 ;
+	opacity: .5;
+}
