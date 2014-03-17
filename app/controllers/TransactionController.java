@@ -1,8 +1,10 @@
 package controllers;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -16,8 +18,10 @@ import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import akka.util.Collections;
 import play.Configuration;
 import play.data.Form;
+import play.data.validation.ValidationError;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security;
@@ -48,8 +52,9 @@ public class TransactionController extends Controller {
 		String medicinesJson = getMedicinesJson(medicines);
 		
 		Form<Transaction> transactionForm = Form.form(Transaction.class);
+		List<String> errorKeys = new ArrayList<>();
     	
-    	return ok(transaction.render(medLogs, rowLimit, employeeNames, medicinesJson, transactionForm));
+    	return ok(transaction.render(medLogs, rowLimit, employeeNames, medicinesJson, transactionForm, errorKeys));
 	 }
     
     public static Result returnMedSupply() {
@@ -99,10 +104,11 @@ public class TransactionController extends Controller {
 		
 		Form<Transaction> transactionForm = Form.form(Transaction.class).bindFromRequest();
 		TransactionValidator transactionValidator = new TransactionValidator();
-		transactionValidator.validate(transactionForm, employees, medicines);
+		List<String> errorKeys = new ArrayList<>();
+		transactionValidator.validate(transactionForm, employees, medicines, errorKeys);
 		
 		if(transactionForm.hasErrors()) {
-			return badRequest(transaction.render(medLogs, rowLimit, employeeNames, medicinesJson, transactionForm));
+			return badRequest(transaction.render(medLogs, rowLimit, employeeNames, medicinesJson, transactionForm, errorKeys));
 	    }
 		else {
 			Transaction transactionObj = transactionForm.get();

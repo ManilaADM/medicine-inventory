@@ -14,7 +14,7 @@ public class MedicineValidator
 {
 	private static TransactionDAO transactionDao = new TransactionDAO(Transaction.class);
 	
-	public void validateMedSupQty(Form<Transaction> form, List<Medicine> medicines) 
+	public void validateMedSupQty(Form<Transaction> form, List<Medicine> medicines, List<String> errorKeys) 
 	{
 		Transaction transaction = form.get();
 		String employeeName = form.get().getEmployeeName();
@@ -33,6 +33,7 @@ public class MedicineValidator
     				if (medNames.contains(medSupQtyBrandName)) 
         			{
         				form.reject("medicineInput" + i, Configuration.root().getString("error.medicine.duplicate"));
+        				errorKeys.add("medicineInput" + i);
         			}
     				else
     				{
@@ -48,6 +49,7 @@ public class MedicineValidator
     					{
     						String errorMsg = Configuration.root().getString("error.medSupQty.request.exceed.qtyDailyLimit") + " " + brandName;
     						form.reject("requestMaxLimitError", errorMsg);
+    						errorKeys.add("requestMaxLimitError");
     					}
     				}
     				if (!medBrandNamesThatExceedCount.isEmpty())
@@ -56,12 +58,14 @@ public class MedicineValidator
     					{
     						String errorMsg = Configuration.root().getString("error.medSupQty.request.exceed.inventory") + " " + brandName;
     						form.reject("requestQtyError", errorMsg);
+    						errorKeys.add("requestQtyError");
     					}
     				}
     			}
     			else 
     			{
     				form.reject("medicineInput" + i, Configuration.root().getString("error.medicine.no.matched"));
+    				errorKeys.add("medicineInput" + i);
     			}
     		}
     	}
@@ -69,6 +73,7 @@ public class MedicineValidator
     	if(medListToBeAdded.isEmpty())
     	{
     		form.reject("medSupQty", Configuration.root().getString("error.medSupQty.are.empty"));
+    		errorKeys.add("medSupQty");
     	}
     	else if(!form.hasErrors())
     	{
