@@ -40,7 +40,7 @@ $( document ).ready(function() {
 			}
 		});
 		
-		displayOverlay();
+		displayOverlay('.overlayBox');
 	}
 });
 
