@@ -1,8 +1,10 @@
 package controllers;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -16,9 +18,11 @@ import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import akka.util.Collections;
 import play.Configuration;
 import play.Routes;
 import play.data.Form;
+import play.data.validation.ValidationError;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security;
@@ -49,9 +53,10 @@ public class TransactionController extends Controller {
 		String medicinesJson = getMedicinesJson(medicines);
 		
 		Form<Transaction> transactionForm = Form.form(Transaction.class);
+		List<String> errorKeys = new ArrayList<>();
     	
-    	return ok(transaction.render(medLogs, employeeNames, medicinesJson, transactionForm));
-	}
+    	return ok(transaction.render(medLogs, employeeNames, medicinesJson, transactionForm, errorKeys));
+	 }
     
     public static Result returnMedSupply(String txnId, String medId) {
 
@@ -115,20 +120,26 @@ public class TransactionController extends Controller {
 		List<Medicine> medicines = medicineDao.findAll();
 		String medicinesJson = getMedicinesJson(medicines);
 		
-		
 		Form<Transaction> transactionForm = Form.form(Transaction.class).bindFromRequest();
 		TransactionValidator transactionValidator = new TransactionValidator();
-		transactionValidator.validate(transactionForm, employees, medicines);
-		
+		List<String> errorKeys = new ArrayList<>();
+		transactionValidator.validate(transactionForm, employees, medicines, errorKeys);
 		
 		if(transactionForm.hasErrors()) {
-			return badRequest(transaction.render(medLogs, employeeNames, medicinesJson, transactionForm));
+			return badRequest(transaction.render(medLogs, employeeNames, medicinesJson, transactionForm, errorKeys));
 	    }
 		else {
 			Transaction transactionObj = transactionForm.get();
 			transactionObj.setTimeStamp(new Date());
 			if(transactionObj.getId() == null){
-				transactionDao.save(transactionObj);
+				try 
+				{
+					transactionDao.save(transactionObj);
+				}
+				catch (Exception e)
+				{
+					transactionForm.reject("savingError", Configuration.root().getString("error.generic"));
+				}
 			}else{
 				transactionDao.update(transactionObj.getId(), transactionObj);
 			}

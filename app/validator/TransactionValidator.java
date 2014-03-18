@@ -5,22 +5,30 @@ import java.util.List;
 import models.Employee;
 import models.Medicine;
 import models.Transaction;
+import play.Configuration;
 import play.data.Form;
 
 public class TransactionValidator
 {
 
 	@SuppressWarnings("unchecked")
-	public void validate(Object obj, List<Employee> employees, List<Medicine> medicines) 
+	public void validate(Object obj, List<Employee> employees, List<Medicine> medicines, List<String> errorKeys) 
 	{
 		Form<Transaction> form = (Form<Transaction>) obj;
 		
-		
-		EmployeeNameValidator empNameValidator = new EmployeeNameValidator();
-		empNameValidator.validateEmployeeName(employees, form);
-    	
-		MedicineValidator medicineValidator = new MedicineValidator(); 
-		medicineValidator.validateMedSupQty(form, medicines);
+		try
+		{
+			EmployeeNameValidator empNameValidator = new EmployeeNameValidator();
+			empNameValidator.validateEmployeeName(employees, form, errorKeys);
+	    	
+			MedicineValidator medicineValidator = new MedicineValidator();
+			medicineValidator.validateMedSupQty(form, medicines, errorKeys);
+			
+			
+		}
+		catch (Exception e){
+			form.reject("processingError", Configuration.root().getString("error.generic"));
+		}
 	}
 
 }

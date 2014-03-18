@@ -1,4 +1,4 @@
-@(transactions: List[models.dto.TransactionVO])(employeeNames : String)(medicinesJson : String)(transactionForm: Form[Transaction])
+@(transactions: List[models.dto.TransactionVO])(employeeNames : String)(medicinesJson : String)(transactionForm: Form[Transaction])(errorKeys: List[String])
 @import play.Configuration
 @import controllers.routes.javascript._
 @scripts = {
@@ -76,6 +76,6 @@
 		</div>
 		<div class="bgCover">&nbsp;</div>
 		@returnMedConfirmationOverlay()
-		@transactionOverlay(transactionForm: Form[Transaction])
+		@transactionOverlay(transactionForm: Form[Transaction], errorKeys: List[String])
 	</div>	
 }

@@ -128,7 +128,7 @@ function updateMedicineQty(medicineBrandName, selectMedicineQtyId) {
 					maxQty = medicineCount;
 				}
 				
-				for(i = 0; i< maxQty; i++)
+				for(var i = 0; i <= maxQty; i++)
 				{
 					options = options + '<option value="'+i+'">'+i+'</option>';
 				}
