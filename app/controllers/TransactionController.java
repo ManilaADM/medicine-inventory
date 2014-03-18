@@ -1,10 +1,8 @@
 package controllers;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -18,11 +16,9 @@ import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import akka.util.Collections;
 import play.Configuration;
 import play.Routes;
 import play.data.Form;
-import play.data.validation.ValidationError;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security;
@@ -58,14 +54,11 @@ public class TransactionController extends Controller {
     	return ok(transaction.render(medLogs, employeeNames, medicinesJson, transactionForm, errorKeys));
 	 }
     
-    public static Result returnMedSupply(String txnId, String medId) {
+    public static Result returnMedSupply(String txnId, String medId, int quantity) {
 
-    	log.debug("Revert transaction id: "+ txnId + "+ medsup id: " + medId);
+    	log.debug("Cancelling [transaction id: "+ txnId + ", medsup id: " + medId + ", qty: " + quantity);
     	
-    	//need txn id and med id to update returned flag
-    	//qty returned to update Medicine inventory + availability flag
-    	
-    	transactionDao.cancelMedSupItemRequest(txnId, medId, (String[])null);
+    	transactionDao.cancelMedSupItemRequest(txnId, medId, quantity);
     	
     	return ok();
 //    	return badRequest();

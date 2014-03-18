@@ -9,7 +9,6 @@ import models.Transaction;
 import models.dto.TransactionVO;
 
 import org.bson.types.ObjectId;
-import org.jongo.Update;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -46,11 +45,22 @@ public class TransactionDAO extends JongoDAO<Transaction> {
 	 * medicine inventory. If this succeeds, 'returned' status of medical supply in the transaction is set to true. 
 	 * @param txnId - transaction to be updated
 	 * @param medId - returned medical supply item  
+	 * @param qty - quantity to be returned
 	 * @param param - 
 	 */
-	public void cancelMedSupItemRequest(String txnId, String medId, String... param ) {
-		Update update = collections.update("{_id:#, 'medSupItems.id':#}", new ObjectId(txnId), medId);
-		update.with("{$set: {'medSupItems.$.returned': true}}");
+	public void cancelMedSupItemRequest(String txnId, String medId, int qty) {
+	
+		Object[] criteria = {new ObjectId(txnId), medId};
+		
+		update("_id:#, 'medSupItems.id':#", criteria, "$set: {'medSupItems.$.returned': #}", true);
+		
+		log.debug("Cancelled successfully [transaction id: "+ txnId + ", medsup id: " + medId + ", qty: " + qty);
+		
+//		try {
+		medicineDao.update(new ObjectId(medId),"$inc:{count: #}, $set:{available: #}", qty, true);
+//		} catch (Exception e) {
+//			log.error(e.getMessage());
+//		}
 	}
 	
 	public long countEmpMedDoneRequestInCurrentDate(String employeeName, String medicineName) {

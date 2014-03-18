@@ -23,7 +23,13 @@
 		<div>
 			@if(hasRecords == false){
 				<h4 style="color: red;">@Configuration.root().getString("transaction.table.empty.msg")</h4>
-		    } 
+		    }
+		    <div id="txnMsg" class="ui-state-highlight ui-corner-all" style="padding: 0 1em; width: 524px; margin-bottom: 5px; display:none">
+			    <p style="font-size: 12px">
+			    	<span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>
+			    	<label id="medSupReturned"></label>&nbsp;@Configuration.root().getString("transaction.returnMed.success.message")
+			    </p>
+			</div> 
 			<div id="txnErrorAlert" class="ui-state-error ui-corner-all" style="padding: 0 1em; width: 524px; margin-bottom: 5px">
 			    <p style="font-size: 12px">
 			    	<span class="ui-icon ui-icon-alert" style="float: left; margin-right: .3em;"></span>

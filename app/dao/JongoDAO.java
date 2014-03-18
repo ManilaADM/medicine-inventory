@@ -42,6 +42,16 @@ public class JongoDAO<T extends JongoModel> implements JongoCRUD<T> {
 	}
 	
 	@Override
+	public void update(ObjectId id, String modifier, Object... params){
+		collections.update(id).with("{" + modifier + "}", params);
+	}
+	
+	@Override
+	public void update(String queryTemplate, Object[] qParams, String modifier, Object... mParams){
+		collections.update("{"+ queryTemplate + "}", qParams).with("{" + modifier + "}", mParams);
+	}
+	
+	@Override
 	public void delete(ObjectId id) {
 		collections.remove(id);
 	}
