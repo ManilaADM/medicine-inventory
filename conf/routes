@@ -6,7 +6,7 @@
 GET     /                           controllers.Application.index()
 
 GET		/transaction			    controllers.TransactionController.getTransactions()
-POST	/transaction/return			controllers.TransactionController.returnMedSupply()
+POST	/transaction/return			controllers.TransactionController.returnMedSupply(id: String, medId: String)
 POST	/transaction			    controllers.TransactionController.setTransaction()
 
 GET		/employee					controllers.EmployeeController.getEmployee()

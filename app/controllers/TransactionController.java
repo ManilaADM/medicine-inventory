@@ -30,16 +30,17 @@ import dao.TransactionDAO;
 public class TransactionController extends Controller {
 
 	private static Logger log = LoggerFactory.getLogger(TransactionController.class);
+	private static String TXN_ROW_LIMIT = Configuration.root().getString("transaction.table.rowLimit");;
+	private static String SORT_BY_FIELD = Configuration.root().getString("transaction.table.sortBy");;
 	
 	private static JongoDAO<Employee> employeeDao = new JongoDAO<>(Employee.class);
 	private static TransactionDAO transactionDao = new TransactionDAO(Transaction.class);
 	private static JongoDAO<Medicine> medicineDao = new JongoDAO<>(Medicine.class);
 	
-	
 	@Security.Authenticated(Secured.class)
     public static Result getTransactions() {
-    	int rowLimit = Integer.parseInt(Configuration.root().getString("transaction.table.rowLimit"));
-    	List<TransactionVO> medLogs = transactionDao.sortBy("timeStamp", false, rowLimit);
+
+		List<TransactionVO> medLogs = transactionDao.fetchTransactions(SORT_BY_FIELD, false, TXN_ROW_LIMIT);
     	
     	List<Employee> employees = employeeDao.findAll();
 		String employeeNames = getEmployeeNames(employees);
@@ -49,18 +50,20 @@ public class TransactionController extends Controller {
 		
 		Form<Transaction> transactionForm = Form.form(Transaction.class);
     	
-    	return ok(transaction.render(medLogs, rowLimit, employeeNames, medicinesJson, transactionForm));
+    	return ok(transaction.render(medLogs, employeeNames, medicinesJson, transactionForm));
 	}
     
-    public static Result returnMedSupply() {
-    	
-    	log.info("Returning med");
+    public static Result returnMedSupply(String txnId, String medId) {
+
+    	log.debug("Revert transaction id: "+ txnId + "+ medsup id: " + medId);
     	
     	//need txn id and med id to update returned flag
     	//qty returned to update Medicine inventory + availability flag
     	
-    	//could return badRequest()
+    	transactionDao.cancelMedSupItemRequest(txnId, medId, (String[])null);
+    	
     	return ok();
+//    	return badRequest();
     }
     
     public static Result javascriptRoutes() {
@@ -104,8 +107,7 @@ public class TransactionController extends Controller {
     
     public static Result setTransaction(){
 		
-    	int rowLimit = Integer.parseInt(Configuration.root().getString("transaction.table.rowLimit"));
-    	List<TransactionVO> medLogs = transactionDao.sortBy("timeStamp", false, rowLimit);
+    	List<TransactionVO> medLogs = transactionDao.fetchTransactions(SORT_BY_FIELD, false, TXN_ROW_LIMIT);
     	
     	List<Employee> employees = employeeDao.findAll();
 		String employeeNames = getEmployeeNames(employees);
@@ -120,7 +122,7 @@ public class TransactionController extends Controller {
 		
 		
 		if(transactionForm.hasErrors()) {
-			return badRequest(transaction.render(medLogs, rowLimit, employeeNames, medicinesJson, transactionForm));
+			return badRequest(transaction.render(medLogs, employeeNames, medicinesJson, transactionForm));
 	    }
 		else {
 			Transaction transactionObj = transactionForm.get();

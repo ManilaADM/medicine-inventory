@@ -198,3 +198,7 @@ ul.nav li a:hover  {
 	background: #000 ;
 	opacity: .5;
 }
+
+#txnErrorAlert {
+	display:none;
+}

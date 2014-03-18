@@ -1,4 +1,4 @@
-@(transactions: List[models.dto.TransactionVO])(rowLimit: Integer)(employeeNames : String)(medicinesJson : String)(transactionForm: Form[Transaction])
+@(transactions: List[models.dto.TransactionVO])(employeeNames : String)(medicinesJson : String)(transactionForm: Form[Transaction])
 @import play.Configuration
 @import controllers.routes.javascript._
 @scripts = {
@@ -24,6 +24,12 @@
 			@if(hasRecords == false){
 				<h4 style="color: red;">@Configuration.root().getString("transaction.table.empty.msg")</h4>
 		    } 
+			<div id="txnErrorAlert" class="ui-state-error ui-corner-all" style="padding: 0 1em; width: 524px; margin-bottom: 5px">
+			    <p style="font-size: 12px">
+			    	<span class="ui-icon ui-icon-alert" style="float: left; margin-right: .3em;"></span>
+			    	@Configuration.root().getString("transaction.returnMed.error.message")
+			    </p>
+			</div>
 			<label>Log Transaction For: </label>
 			<button type="button" onclick="displayOverlay('.overlayBox');">Employee</button>
 			&nbsp;
