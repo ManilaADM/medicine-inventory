@@ -92,7 +92,18 @@ function showOverlayBox(id) {
 	});
 }
 
+function slideToggleDiv(id, displayState) {
+	if($(id).css('display') == displayState){
+		$(id).slideToggle() 
+	}
+}
+
 function displayOverlay(id) {
+	
+	//close open msg divs, if any
+	slideToggleDiv('#txnErrorAlert', 'block');
+	slideToggleDiv('#txnMsg', 'block');
+	
 	//set status to open
 	isOpen = true;
 	showOverlayBox(id);
