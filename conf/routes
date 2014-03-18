@@ -6,7 +6,7 @@
 GET     /                           controllers.Application.index()
 
 GET		/transaction			    controllers.TransactionController.getTransactions()
-GET		/transaction			    controllers.TransactionController.returnMedSupply()
+POST	/transaction/return			controllers.TransactionController.returnMedSupply(id: String, medId: String)
 POST	/transaction			    controllers.TransactionController.setTransaction()
 
 GET		/employee					controllers.EmployeeController.getEmployee()
@@ -16,6 +16,10 @@ GET		/employee/:id				controllers.EmployeeController.removeEmployee(id: ObjectId
 GET		/medicine					controllers.MedicineController.getMedicine()
 POST	/medicine					controllers.MedicineController.setMedicine()
 GET		/medicine/:id				controllers.MedicineController.removeMedicine(id: ObjectId)
+
+# Javascript routing
+GET    /assets/javascripts/routes   controllers.TransactionController.javascriptRoutes()
+ 
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)

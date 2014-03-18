@@ -29,6 +29,11 @@
 	    <appender-ref ref="STDOUT"/>
 	    <appender-ref ref="FILE"/>
 	</logger>
+	
+	<logger name="dao" level="debug" additivity="false">
+	    <appender-ref ref="STDOUT"/>
+	    <appender-ref ref="FILE"/>
+	</logger>
 
 	<logger name="play" level="INFO" additivity="false">
 	    <appender-ref ref="STDOUT"/>

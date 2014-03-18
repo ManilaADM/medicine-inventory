@@ -6,11 +6,11 @@ html, body {
 }
 
 header {
-    padding: 10px 30px;
+    padding: 20px 30px 50px;
     font-size: 15px;
 }
 
-footer{
+footer {
 	padding: 10px 30px;
     background: orange;
     position:fixed;
@@ -27,9 +27,27 @@ section {
     padding: 10px 30px;
 }
 
+table {
+	border-collapse:collapse;
+}
+
+#pageTitle {
+	float:left;
+	padding-bottom: 5px;
+}
+
+#pageTitle a {
+	font-size: 20px;
+}
+
 div#user {
 	float:right;
 	width:auto;
+}
+
+div#user a:hover  {
+	color: #c00;
+	background-color: #fff; 
 }
 
 div#userName {
@@ -44,11 +62,6 @@ div#logout {
 	float: right;
  	text-align:right;
 	margin-left: 5px;
-}
-
-table
-{
-border-collapse:collapse;
 }
 
 .logsTable tr th {
@@ -67,8 +80,24 @@ border-collapse:collapse;
 	font-size: 12px;
 }
 
-.bgCover { background:#000; position:absolute; left:0; top:0; display:none; overflow:hidden }
+.bgCover { 
+	background:#000; 
+	position:absolute; 
+	left:0; 
+	top:0; 
+	display: none; 
+	overflow:hidden 
+}
+
 .overlayBox {
+	border:1px solid black;
+	position:absolute;
+	display:none;
+	width:400px;
+	background:#D7D9D7;
+}
+
+.retConfOverlayBox {
 	border:1px solid black;
 	position:absolute;
 	display:none;
@@ -90,22 +119,86 @@ border-collapse:collapse;
 .overlay-text {
 	font-weight:bold;
 }
+
 .ui-menu-item {
 	font-size:12px;
 }
+
 .transactionFields {
 	padding:3px;
 }
-.transactioButtons {
+
+.transactionButtons {
 	padding:5px;
 }
+
 div .error {
     font-weight: bold;
     color: #c00;
 }
+
 .overlayError {
 	border: 2px solid #c00;	    
 }
+
 .medicine-tooltip {
 	padding-left:5px;
+}
+
+ul.nav {
+	list-style-type:none;
+	width: 100%;
+	float:left;
+	margin: 0 0 3em 0;
+	padding:0;
+	background-color: #f2f2f2;
+	border-bottom: 1px solid #ccc; 
+	border-top: 1px solid #ccc;
+}
+
+ul.nav li {
+	float:left;
+}
+
+ul.nav li a {
+	display: block; 
+	padding: 8px 15px;
+	font-weight: bold;
+	text-decoration: none;
+	color: black;	
+	border-right: 1px solid #ccc;
+}
+
+ul.nav li a:hover  {
+	color: #c00;
+	background-color: #fff; 
+}
+
+.ui-dialog-titlebar {
+    background: #323832;
+    font-size: 15px;
+    color: white;
+    padding: 6px 5px 0;
+}
+
+.ui-button-text {
+	font-size: 12px;
+}
+
+.ui-widget-content {
+	font-size: 12px;
+}
+
+.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset {
+    float: none;
+	text-align: center;
+}
+
+.ui-widget-overlay {
+	background: #000 ;
+	opacity: .5;
+}
+
+#txnErrorAlert {
+	display:none;
 }

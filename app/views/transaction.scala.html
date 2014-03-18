@@ -1,7 +1,10 @@
-@(transactions: List[models.dto.TransactionVO])(rowLimit: Integer)(employeeNames : String)(medicinesJson : String)(transactionForm: Form[Transaction])(errorKeys: List[String])
+@(transactions: List[models.dto.TransactionVO])(employeeNames : String)(medicinesJson : String)(transactionForm: Form[Transaction])(errorKeys: List[String])
 @import play.Configuration
+@import controllers.routes.javascript._
 @scripts = {
 	<script src="@routes.Assets.at("javascripts/transaction.js")" type="text/javascript"></script>
+	<script src="@routes.Assets.at("javascripts/transaction.return.js")" type="text/javascript"></script>
+	<script type="text/javascript" src="@routes.TransactionController.javascriptRoutes"></script>
 	<script type="text/javascript">
 	  var employeeNamesObj = $.parseJSON('@employeeNames'.replace(/&quot;/ig,'"'));
 	  var medicineJsonObj = $.parseJSON('@medicinesJson'.replace(/&quot;/ig,'"'));
@@ -17,17 +20,23 @@
 @main(Configuration.root().getString("transaction.title"), scripts) {
 
 	<div name="container" style="width: 100%;">
-		<div id="">
+		<div>
 			@if(hasRecords == false){
 				<h4 style="color: red;">@Configuration.root().getString("transaction.table.empty.msg")</h4>
 		    } 
+			<div id="txnErrorAlert" class="ui-state-error ui-corner-all" style="padding: 0 1em; width: 524px; margin-bottom: 5px">
+			    <p style="font-size: 12px">
+			    	<span class="ui-icon ui-icon-alert" style="float: left; margin-right: .3em;"></span>
+			    	@Configuration.root().getString("transaction.returnMed.error.message")
+			    </p>
+			</div>
 			<label>Log Transaction For: </label>
-			<button type="button" onclick="displayOverlay();">Employee</button>
+			<button type="button" onclick="displayOverlay('.overlayBox');">Employee</button>
 			&nbsp;
-			<button type="button" onclick="displayOverlay();">Visitor</button>
+			<button type="button" onclick="displayOverlay('.overlayBox');">Visitor</button>
 		</div>
 		<br>
-		<div name="transactions"  style="">
+		<div>
 			@if(hasRecords == true){		    
 		    	<table class="logsTable" border="1">
 					  <thead>
@@ -43,14 +52,21 @@
        					 @for((txn,idx) <- transactions.zipWithIndex){
 						  	 <tr>
 						  		<td hidden="true" class="id">@txn.getId</td>
+						  		<td hidden="true" class="medSupId">@txn.getMedSupItems.getId</td>
 						  		<td class="empName">@txn.getEmployeeName</td>
 				  				<td class="medSupply">@txn.getMedSupItems.getBrandName</td>
 						  		<td class="quantity">@txn.getMedSupItems.getQuantity</td>
 						  		<td class="timeStamp">@txn.getFormattedTimeStamp</td>
 						  		@if(txn.getMedSupItems.isReturned) {
-								  <td class="return"><input type="button" value="Return" disabled="disabled"/></td>
+								  <td class="return">
+								  		<input type="button" disabled="disabled"
+								  		value="@Configuration.root().getString("transaction.table.returnButton")"/> 
+								  </td>
 								} else {
-								   <td class="return"><input type="button" value="Return"/></td>
+								   <td>
+								   		<input type="button" class="returnBtn"  
+								   		value="@Configuration.root().getString("transaction.table.returnButton")"/>
+								   </td>
 								}
 						  	 </tr>
           				 }
@@ -58,6 +74,8 @@
 				 </table>
 		      }
 		</div>
+		<div class="bgCover">&nbsp;</div>
+		@returnMedConfirmationOverlay()
 		@transactionOverlay(transactionForm: Form[Transaction], errorKeys: List[String])
 	</div>	
 }

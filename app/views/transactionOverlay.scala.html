@@ -2,13 +2,12 @@
 
 @import play.Configuration
 
-<div class="bgCover">&nbsp;</div>
 <div class="overlayBox">
 	<div class="overlayContent">
 		<!--the close button-->
 		<div class="top">
 			@Configuration.root().getString("transaction.overlay.title")
-			<input type="button" onclick="closeOverlay();" value="X" style="float: right;" />
+			<input type="button" onclick="closeOverlay('.overlayBox');" value="X" style="float: right;" />
 		</div>
 		<!--normal content-->
 		<form action="@controllers.routes.TransactionController.setTransaction()"  method="post" id="transactionForm">
@@ -46,10 +45,10 @@
 				}
 			</div>
 			
-			<div class="transactioButtons">
+			<div class="transactionButtons">
 				<center>
 					<input type="submit" value='@Configuration.root().getString("overlay.save")' id="saveTransactions"/> 
-					<input class="button" type="button" onclick="closeOverlay(); "value='@Configuration.root().getString("overlay.close")' />
+					<input class="button" type="button" onclick="closeOverlay('.overlayBox'); "value='@Configuration.root().getString("overlay.close")' />
 				</center>
 			</div>
 		</div>
