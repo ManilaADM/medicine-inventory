@@ -92,6 +92,11 @@ function showOverlayBox(id) {
 	});
 }
 
+function displayVisitorDetails() {
+	$('#visitorId').css('display', 'inline-block');
+	$('#employeeNameId').attr('placeholder', '');
+}
+
 function displayOverlay(id) {
 	//set status to open
 	isOpen = true;
@@ -108,6 +113,8 @@ function closeOverlay(id) {
 	// now animate the background to fade out to opacity 0
 	// and then hide it after the animation is complete.
 	$('.bgCover').animate( {opacity:0}, null, null, function() { $(this).hide(); } );
+	$('#visitorId').css('display', 'none');
+	$('#employeeNameId').attr('placeholder', 'predictive-text');
 }
 
 function updateMedicineQty(medicineBrandName, selectMedicineQtyId) {

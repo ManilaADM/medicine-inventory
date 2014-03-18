@@ -27,7 +27,7 @@
 			
 			<div class="clear transactionFields">
 				<label class="overlay-text">@Configuration.root().getString("transaction.overlay.empName"):</label>
-				<input name="employeeName" id="employeeNameId" value="@transactionForm("employeeName").value" placeholder="predictive-text"/>
+				<span name="visitorName" id="visitorId" style="display: none;">(Visitor)</span><input name="employeeName" id="employeeNameId" value="@transactionForm("employeeName").value" placeholder="predictive-text"/>
 			</div>
 				
 			<div class="medicineTransactions">
