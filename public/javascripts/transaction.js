@@ -118,6 +118,7 @@ function resetOverlay() {
 	errorMsg.html('');
 	
 	var empField = $('#employeeNameId');
+	empField.val('');
 	if (empField.hasClass('overlayError')) {
 		empField.removeClass('overlayError');
 	}
