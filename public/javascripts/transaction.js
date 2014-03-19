@@ -112,7 +112,18 @@ function displayVisitorDetails() {
 	displayOverlay('.overlayBox');
 }
 
+function slideToggleDiv(id, displayState) {
+	if($(id).css('display') == displayState){
+		$(id).slideToggle() 
+	}
+}
+
 function displayOverlay(id) {
+	
+	//close open msg divs, if any
+	slideToggleDiv('#txnErrorAlert', 'block');
+	slideToggleDiv('#txnMsg', 'block');
+	
 	//set status to open
 	isOpen = true;
 	showOverlayBox(id);
@@ -129,9 +140,33 @@ function closeOverlay(id) {
 	//set status to closed
 	isOpen = false;
 	$(id).css( 'display', 'none' );
+	
+	resetOverlay();
+	
 	// now animate the background to fade out to opacity 0
 	// and then hide it after the animation is complete.
 	$('.bgCover').animate( {opacity:0}, null, null, function() { $(this).hide(); } );
+}
+
+function resetOverlay() {
+	var errorMsg = $('#errorMsg');
+	errorMsg.html('');
+	
+	var empField = $('#employeeNameId');
+	empField.val('');
+	if (empField.hasClass('overlayError')) {
+		empField.removeClass('overlayError');
+	}
+	
+	for(j = 0; j<numberOfMedicineFields;j++)
+	{
+		var field = $('#medicineInput' + j);
+		field.val('');
+		$('#medicineTooltip' + j).attr('title','');
+		if (field.hasClass('overlayError')) {
+			field.removeClass('overlayError');
+		}
+	}
 }
 
 function updateMedicineQty(medicineBrandName, selectMedicineQtyId) {

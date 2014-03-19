@@ -7,10 +7,12 @@ import java.util.List;
 import java.util.Map;
 
 import models.Employee;
+import models.MedSupQty;
 import models.Medicine;
 import models.Transaction;
 import models.dto.TransactionVO;
 
+import org.bson.types.ObjectId;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.slf4j.Logger;
@@ -19,13 +21,19 @@ import org.slf4j.LoggerFactory;
 import play.Configuration;
 import play.Routes;
 import play.data.Form;
+
+import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security;
 import validator.NameValidator;
 import validator.TransactionValidator;
 import views.html.transaction;
+
+import com.fasterxml.jackson.databind.node.ObjectNode;
+
 import dao.JongoDAO;
+import dao.MedicineDAO;
 import dao.TransactionDAO;
 
 public class TransactionController extends Controller {
@@ -36,7 +44,7 @@ public class TransactionController extends Controller {
 	
 	private static JongoDAO<Employee> employeeDao = new JongoDAO<>(Employee.class);
 	private static TransactionDAO transactionDao = new TransactionDAO(Transaction.class);
-	private static JongoDAO<Medicine> medicineDao = new JongoDAO<>(Medicine.class);
+	private static MedicineDAO medicineDao = new MedicineDAO(Medicine.class);
 	
 	@Security.Authenticated(Secured.class)
     public static Result getTransactions() {
@@ -59,16 +67,19 @@ public class TransactionController extends Controller {
 		return employeeName.matches("(.*)Visitor(.*)");
 	}
     
-    public static Result returnMedSupply(String txnId, String medId) {
+    public static Result returnMedSupply(String txnId, String medId, int quantity) {
 
-    	log.debug("Revert transaction id: "+ txnId + "+ medsup id: " + medId);
+    	log.debug("Cancelling [transaction id: "+ txnId + ", medsup id: " + medId + ", qty: " + quantity);
+
+    	ObjectNode result = Json.newObject();
+    	boolean foundRecordToUpdate = false;
     	
-    	//need txn id and med id to update returned flag
-    	//qty returned to update Medicine inventory + availability flag
-    	
-    	transactionDao.cancelMedSupItemRequest(txnId, medId, (String[])null);
-    	
-    	return ok();
+    	if(transactionDao.cancelMedSupItemRequest(txnId, medId)) {
+    		medicineDao.updateMedicalSupply(medId, quantity, true);
+    		foundRecordToUpdate = true;
+    	}
+    	result.put("ok", foundRecordToUpdate);
+    	return ok(result);
 //    	return badRequest();
     }
     
@@ -111,6 +122,20 @@ public class TransactionController extends Controller {
 		return jsonObject.toString();
 	}
     
+    public static List<ObjectId> findRequestedMedicinesIDs(List<MedSupQty> medSupQtyList)
+	{
+    	List<ObjectId> medicineIDs = new ArrayList<ObjectId>();
+    	for (MedSupQty medSupQty : medSupQtyList)
+		{
+    		String medSupId = medSupQty.getId();
+			if (medSupId != "" && medSupId != null && !medSupId.isEmpty())
+			{
+    			medicineIDs.add(new ObjectId(medSupId));
+    		}
+		}
+    	return medicineIDs;
+	}
+    
     public static Result setTransaction(){
 		
     	List<TransactionVO> medLogs = transactionDao.fetchTransactions(SORT_BY_FIELD, false, TXN_ROW_LIMIT);
@@ -118,10 +143,10 @@ public class TransactionController extends Controller {
     	List<Employee> employees = employeeDao.findAll();
 		String employeeNames = getEmployeeNames(employees);
 		
-		List<Medicine> medicines = medicineDao.findAll();
-		String medicinesJson = getMedicinesJson(medicines);
-		
 		Form<Transaction> transactionForm = Form.form(Transaction.class).bindFromRequest();
+		List<ObjectId> medicineIDs = findRequestedMedicinesIDs(transactionForm.get().getMedSupItems());
+		List<Medicine> medicines = medicineDao.findRequestedMedicinesFromDB(medicineIDs);
+		
 		TransactionValidator transactionValidator = new TransactionValidator();
 		List<String> errorKeys = new ArrayList<>();
 		String employeeName = transactionForm.get().getEmployeeName();
@@ -133,6 +158,8 @@ public class TransactionController extends Controller {
 		transactionValidator.validate(transactionForm, employees, medicines, errorKeys);
 		
 		if(transactionForm.hasErrors()) {
+			List<Medicine> allMedicines = medicineDao.findAll();
+			String medicinesJson = getMedicinesJson(allMedicines);
 			return badRequest(transaction.render(medLogs, employeeNames, medicinesJson, transactionForm, errorKeys));
 	    }
 		else {
@@ -141,6 +168,10 @@ public class TransactionController extends Controller {
 			if(transactionObj.getId() == null){
 				try 
 				{
+					for (MedSupQty medReq : transactionObj.getMedSupItems())
+					{
+						medicineDao.updateMedSupUponTransaction(medReq, medicines);
+					}
 					transactionDao.save(transactionObj);
 				}
 				catch (Exception e)

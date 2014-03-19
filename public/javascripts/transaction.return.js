@@ -1,5 +1,5 @@
 $( document ).ready(function() {
-	
+		
     function showDialogBox(actionCall, retBtn) {
 		$(".retConfOverlayBox").dialog({
 			draggable: true, 
@@ -9,9 +9,8 @@ $( document ).ready(function() {
 			hide: {effect: 'fade', duration: 500}, 
 			open: function(event, ui)
 			{
-				if($('#txnErrorAlert').css('display') == 'block'){
-					$('#txnErrorAlert').slideToggle() 
-				}
+				slideToggleDiv('#txnErrorAlert', 'block');
+				slideToggleDiv('#txnMsg', 'block');
 			},
 			buttons: {
 				"OK": function() {
@@ -25,6 +24,12 @@ $( document ).ready(function() {
 		});
 	};
 	
+	function slideToggleDiv(id, displayState) {
+		if($(id).css('display') == displayState){
+			$(id).slideToggle() 
+		}
+	}
+	
 	$('.logsTable').on('click','.returnBtn',function() {
 		
 		var data = $(this).closest('.logsTable tr');
@@ -34,15 +39,17 @@ $( document ).ready(function() {
 		var qty = data.find('.quantity').text();
 		
 		var executeReturn = function(retButton){
-			jsRoutes.controllers.TransactionController.returnMedSupply(txnId, medId).ajax({
+			jsRoutes.controllers.TransactionController.returnMedSupply(txnId, medId, qty).ajax({
 			        success: function(data) {
 			        	 //alert('success action call thru js! meds> ' + brandName);
 			        	 retButton.attr('disabled',true);
+			        	 $('#medSupReturned').html(qty + " pc(s) of " + brandName);
+			        	 if(data.ok) {
+			        		 slideToggleDiv('#txnMsg', 'none');
+			        	 }
 			        },
 			        error: function() {
-			          if($('#txnErrorAlert').css('display') == 'none') {
-			        	  $('#txnErrorAlert').slideToggle();
-			          }
+			             slideToggleDiv('#txnErrorAlert', 'none');
 			        }
 			});
 	    }

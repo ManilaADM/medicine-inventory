@@ -10,6 +10,7 @@ import org.jongo.MongoCollection;
 import uk.co.panaxiom.playjongo.PlayJongo;
 
 import com.google.common.collect.Lists;
+import com.mongodb.WriteResult;
 
 public class JongoDAO<T extends JongoModel> implements JongoCRUD<T> {
 	
@@ -39,6 +40,25 @@ public class JongoDAO<T extends JongoModel> implements JongoCRUD<T> {
 	@Override
 	public void update(ObjectId id, T object){
 		collections.update(id).merge(object);
+	}
+	
+	@Override
+	public void update(ObjectId id, String modifier, Object... params){
+		collections.update(id).with("{" + modifier + "}", params);
+	}
+	
+	/**
+	 *Updates a single record that matches the given criteria.
+	 * @param queryTemplate - query with # placeholder
+	 * @param qParams - values for the placeholder  
+	 * @param modifier - template for the fields to be updated
+	 * @param mParams - values for the modifier template
+	 * @return true if update of a document succeeded
+	 */
+	@Override
+	public boolean update(String queryTemplate, Object[] qParams, String modifier, Object... mParams){
+		WriteResult writeResult = collections.update("{"+ queryTemplate + "}", qParams).with("{" + modifier + "}", mParams);
+		return  writeResult.getN() == 1;
 	}
 	
 	@Override
