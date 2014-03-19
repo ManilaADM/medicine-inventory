@@ -7,10 +7,12 @@ import java.util.List;
 import java.util.Map;
 
 import models.Employee;
+import models.MedSupQty;
 import models.Medicine;
 import models.Transaction;
 import models.dto.TransactionVO;
 
+import org.bson.types.ObjectId;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.slf4j.Logger;
@@ -25,6 +27,7 @@ import play.mvc.Security;
 import validator.TransactionValidator;
 import views.html.transaction;
 import dao.JongoDAO;
+import dao.MedicineDAO;
 import dao.TransactionDAO;
 
 public class TransactionController extends Controller {
@@ -35,7 +38,7 @@ public class TransactionController extends Controller {
 	
 	private static JongoDAO<Employee> employeeDao = new JongoDAO<>(Employee.class);
 	private static TransactionDAO transactionDao = new TransactionDAO(Transaction.class);
-	private static JongoDAO<Medicine> medicineDao = new JongoDAO<>(Medicine.class);
+	private static MedicineDAO medicineDao = new MedicineDAO(Medicine.class);
 	
 	@Security.Authenticated(Secured.class)
     public static Result getTransactions() {
@@ -103,6 +106,20 @@ public class TransactionController extends Controller {
 		return jsonObject.toString();
 	}
     
+    public static List<ObjectId> findRequestedMedicinesIDs(List<MedSupQty> medSupQtyList)
+	{
+    	List<ObjectId> medicineIDs = new ArrayList<ObjectId>();
+    	for (MedSupQty medSupQty : medSupQtyList)
+		{
+    		String medSupId = medSupQty.getId();
+			if (medSupId != "" && medSupId != null && !medSupId.isEmpty())
+			{
+    			medicineIDs.add(new ObjectId(medSupId));
+    		}
+		}
+    	return medicineIDs;
+	}
+    
     public static Result setTransaction(){
 		
     	List<TransactionVO> medLogs = transactionDao.fetchTransactions(SORT_BY_FIELD, false, TXN_ROW_LIMIT);
@@ -110,15 +127,17 @@ public class TransactionController extends Controller {
     	List<Employee> employees = employeeDao.findAll();
 		String employeeNames = getEmployeeNames(employees);
 		
-		List<Medicine> medicines = medicineDao.findAll();
-		String medicinesJson = getMedicinesJson(medicines);
-		
 		Form<Transaction> transactionForm = Form.form(Transaction.class).bindFromRequest();
+		List<ObjectId> medicineIDs = findRequestedMedicinesIDs(transactionForm.get().getMedSupItems());
+		List<Medicine> medicines = medicineDao.findRequestedMedicinesFromDB(medicineIDs);
+		
 		TransactionValidator transactionValidator = new TransactionValidator();
 		List<String> errorKeys = new ArrayList<>();
 		transactionValidator.validate(transactionForm, employees, medicines, errorKeys);
 		
 		if(transactionForm.hasErrors()) {
+			List<Medicine> allMedicines = medicineDao.findAll();
+			String medicinesJson = getMedicinesJson(allMedicines);
 			return badRequest(transaction.render(medLogs, employeeNames, medicinesJson, transactionForm, errorKeys));
 	    }
 		else {
@@ -127,6 +146,10 @@ public class TransactionController extends Controller {
 			if(transactionObj.getId() == null){
 				try 
 				{
+					for (MedSupQty medReq : transactionObj.getMedSupItems())
+					{
+						medicineDao.updateMedSupUponTransaction(medReq, medicines);
+					}
 					transactionDao.save(transactionObj);
 				}
 				catch (Exception e)
