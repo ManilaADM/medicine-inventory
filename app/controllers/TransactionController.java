@@ -1,10 +1,8 @@
 package controllers;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -18,14 +16,13 @@ import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import akka.util.Collections;
 import play.Configuration;
 import play.Routes;
 import play.data.Form;
-import play.data.validation.ValidationError;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security;
+import validator.NameValidator;
 import validator.TransactionValidator;
 import views.html.transaction;
 import dao.JongoDAO;
@@ -57,6 +54,10 @@ public class TransactionController extends Controller {
     	
     	return ok(transaction.render(medLogs, employeeNames, medicinesJson, transactionForm, errorKeys));
 	 }
+
+	private static boolean isVisitor(String employeeName) {
+		return employeeName.matches("(.*)Visitor(.*)");
+	}
     
     public static Result returnMedSupply(String txnId, String medId) {
 
@@ -123,6 +124,12 @@ public class TransactionController extends Controller {
 		Form<Transaction> transactionForm = Form.form(Transaction.class).bindFromRequest();
 		TransactionValidator transactionValidator = new TransactionValidator();
 		List<String> errorKeys = new ArrayList<>();
+		String employeeName = transactionForm.get().getEmployeeName();
+
+		if (isVisitor(employeeName)) {
+			transactionForm.get().setVisitor(true);
+		}
+		
 		transactionValidator.validate(transactionForm, employees, medicines, errorKeys);
 		
 		if(transactionForm.hasErrors()) {

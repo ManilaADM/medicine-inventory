@@ -9,6 +9,7 @@
 	  var employeeNamesObj = $.parseJSON('@employeeNames'.replace(/&quot;/ig,'"'));
 	  var medicineJsonObj = $.parseJSON('@medicinesJson'.replace(/&quot;/ig,'"'));
 	  var transactionFormHasError = @transactionForm.hasErrors;
+	  var isVisitor = false;
 	  var errorFieldIds = [];
 	  @for((key, value) <- transactionForm.errors) {
 		  errorFieldIds.push('@key');
@@ -31,9 +32,9 @@
 			    </p>
 			</div>
 			<label>Log Transaction For: </label>
-			<button type="button" onclick="displayOverlay('.overlayBox');">Employee</button>
+			<button type="button" onclick="displayEmployeeDetails();">Employee</button>
 			&nbsp;
-			<button type="button" onclick="displayOverlay('.overlayBox'); displayVisitorDetails();" >Visitor</button>
+			<button type="button" onclick="displayVisitorDetails();" >Visitor</button>
 		</div>
 		<br>
 		<div>

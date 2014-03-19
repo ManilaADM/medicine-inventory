@@ -4,13 +4,6 @@ var numberOfMedicineFields = 3;
 $(window).bind('resize',showOverlayBox);
 
 $( document ).ready(function() {
-	$("#employeeNameId").autocomplete({
-	    source: employeeNamesObj,
-	    minLength: 0
-	})
-	.focus(function() {
-	    $(this).autocomplete('search', $(this).val())
-	});
 	
 	var medBrandAndGenericName = [];
 	$.each(medicineJsonObj, function(key,value){
@@ -40,6 +33,7 @@ $( document ).ready(function() {
 			}
 		});
 		
+		isVisitor = $('#visitorId').val();
 		displayOverlay('.overlayBox');
 	}
 });
@@ -92,9 +86,30 @@ function showOverlayBox(id) {
 	});
 }
 
+function displayEmployeeDetails() {
+	isVisitor = false;
+	$('#visitorLabelId').css('display', 'none');
+	$('#visitorLabelId').val('');
+	$('#employeeNameId').attr('placeholder', 'predictive-text');
+	$("#employeeNameId").autocomplete({
+	    source: employeeNamesObj,
+	    minLength: 0
+	}).focus(function() {
+		$(this).autocomplete('search', $(this).val())
+	});
+	displayOverlay('.overlayBox');
+}
+
 function displayVisitorDetails() {
-	$('#visitorId').css('display', 'inline-block');
+	$('#visitorLabelId').css('display', 'inline-block');
+	$('#visitorLabelId').attr('value', 'Visitor');
 	$('#employeeNameId').attr('placeholder', '');
+	$('#employeeNameId').autocomplete({
+	    source: '',
+	    minLength: 0
+	}).focus(function() {
+	});
+	displayOverlay('.overlayBox');
 }
 
 function displayOverlay(id) {
@@ -102,6 +117,10 @@ function displayOverlay(id) {
 	isOpen = true;
 	showOverlayBox(id);
 	$('.bgCover').css({opacity:0}).animate( {opacity:0.5, backgroundColor:'#000'} );
+	if (isVisitor) {
+		$('#visitorLabelId').css('display', 'inline-block');
+		$('#employeeNameId').attr('placeholder', '');
+	}
 	// dont follow the link : so return false.
 	return false;
 }
@@ -113,8 +132,6 @@ function closeOverlay(id) {
 	// now animate the background to fade out to opacity 0
 	// and then hide it after the animation is complete.
 	$('.bgCover').animate( {opacity:0}, null, null, function() { $(this).hide(); } );
-	$('#visitorId').css('display', 'none');
-	$('#employeeNameId').attr('placeholder', 'predictive-text');
 }
 
 function updateMedicineQty(medicineBrandName, selectMedicineQtyId) {

@@ -18,9 +18,9 @@ public class TransactionValidator
 		
 		try
 		{
-			EmployeeNameValidator empNameValidator = new EmployeeNameValidator();
-			empNameValidator.validateEmployeeName(employees, form, errorKeys);
-	    	
+			NameValidator nameValidator = new NameValidator();
+			nameValidator.validateName(employees, form, errorKeys);
+			
 			MedicineValidator medicineValidator = new MedicineValidator();
 			medicineValidator.validateMedSupQty(form, medicines, errorKeys);
 			

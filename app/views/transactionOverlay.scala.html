@@ -27,7 +27,8 @@
 			
 			<div class="clear transactionFields">
 				<label class="overlay-text">@Configuration.root().getString("transaction.overlay.empName"):</label>
-				<span name="visitorName" id="visitorId" style="display: none;">(Visitor)</span><input name="employeeName" id="employeeNameId" value="@transactionForm("employeeName").value" placeholder="predictive-text"/>
+				<span name="visitorLabelName" id="visitorLabelId" style="display: none;" />(Visitor)</span><input name="employeeName" id="employeeNameId" value="@transactionForm("employeeName").value" placeholder="predictive-text" />
+				<input type="hidden" name="visitorName" id=visitorId value="@transactionForm("visitor").value" />
 			</div>
 				
 			<div class="medicineTransactions">
@@ -47,7 +48,7 @@
 			
 			<div class="transactionButtons">
 				<center>
-					<input type="submit" value='@Configuration.root().getString("overlay.save")' id="saveTransactions"/> 
+					<input type="submit" value='@Configuration.root().getString("overlay.save")' id="saveTransactions" />
 					<input class="button" type="button" onclick="closeOverlay('.overlayBox'); "value='@Configuration.root().getString("overlay.close")' />
 				</center>
 			</div>

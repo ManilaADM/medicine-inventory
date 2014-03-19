@@ -21,6 +21,8 @@ public class Transaction implements JongoModel{
 	
 	private Date timeStamp;
 	
+	private boolean visitor;
+	
 	public Date getTimeStamp() {
 		return timeStamp;
 	}
@@ -61,5 +63,13 @@ public class Transaction implements JongoModel{
 
 	public void setId(ObjectId id) {
 		this.id = id;
+	}
+
+	public boolean isVisitor() {
+		return visitor;
+	}
+
+	public void setVisitor(boolean visitor) {
+		this.visitor = visitor;
 	}
 }
