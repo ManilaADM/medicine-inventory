@@ -27,6 +27,6 @@ public interface JongoCRUD <T extends JongoModel> {
 
 	void update(ObjectId id, String modifier, Object... params);
 
-	void update(String queryTemplate, Object[] qParams, String modifier,
+	boolean update(String queryTemplate, Object[] qParams, String modifier,
 			Object... mParams);
 }

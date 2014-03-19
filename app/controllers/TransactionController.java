@@ -21,11 +21,15 @@ import org.slf4j.LoggerFactory;
 import play.Configuration;
 import play.Routes;
 import play.data.Form;
+import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security;
 import validator.TransactionValidator;
 import views.html.transaction;
+
+import com.fasterxml.jackson.databind.node.ObjectNode;
+
 import dao.JongoDAO;
 import dao.MedicineDAO;
 import dao.TransactionDAO;
@@ -60,10 +64,16 @@ public class TransactionController extends Controller {
     public static Result returnMedSupply(String txnId, String medId, int quantity) {
 
     	log.debug("Cancelling [transaction id: "+ txnId + ", medsup id: " + medId + ", qty: " + quantity);
+
+    	ObjectNode result = Json.newObject();
+    	boolean foundRecordToUpdate = false;
     	
-    	transactionDao.cancelMedSupItemRequest(txnId, medId, quantity);
-    	
-    	return ok();
+    	if(transactionDao.cancelMedSupItemRequest(txnId, medId)) {
+    		medicineDao.updateMedicalSupply(medId, quantity, true);
+    		foundRecordToUpdate = true;
+    	}
+    	result.put("ok", foundRecordToUpdate);
+    	return ok(result);
 //    	return badRequest();
     }
     

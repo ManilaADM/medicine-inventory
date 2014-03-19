@@ -44,7 +44,9 @@ $( document ).ready(function() {
 			        	 //alert('success action call thru js! meds> ' + brandName);
 			        	 retButton.attr('disabled',true);
 			        	 $('#medSupReturned').html(qty + " pc(s) of " + brandName);
-			        	 slideToggleDiv('#txnMsg', 'none');
+			        	 if(data.ok) {
+			        		 slideToggleDiv('#txnMsg', 'none');
+			        	 }
 			        },
 			        error: function() {
 			             slideToggleDiv('#txnErrorAlert', 'none');

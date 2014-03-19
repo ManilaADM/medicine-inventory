@@ -4,7 +4,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import models.Medicine;
 import models.Transaction;
 import models.dto.TransactionVO;
 
@@ -18,7 +17,6 @@ import com.mongodb.QueryBuilder;
 public class TransactionDAO extends JongoDAO<Transaction> {
 	
 	private static Logger log = LoggerFactory.getLogger(TransactionDAO.class);
-	private static JongoDAO<Medicine> medicineDao = new JongoDAO<>(Medicine.class);
 	
 	public TransactionDAO(Class<Transaction> clazz) {
 		super(clazz);
@@ -41,26 +39,15 @@ public class TransactionDAO extends JongoDAO<Transaction> {
 	}
 	
 	/**
-	 * This operation first adds back a medical supply quantity from a transaction into the 
-	 * medicine inventory. If this succeeds, 'returned' status of medical supply in the transaction is set to true. 
+	 * This operation sets to true the 'returned' status of the medical supply in the transaction. 
 	 * @param txnId - transaction to be updated
 	 * @param medId - returned medical supply item  
-	 * @param qty - quantity to be returned
-	 * @param param - 
 	 */
-	public void cancelMedSupItemRequest(String txnId, String medId, int qty) {
-	
+	public boolean cancelMedSupItemRequest(String txnId, String medId) {
+		String query = "_id:#, medSupItems : {$elemMatch: {id:#, returned:false }}";
 		Object[] criteria = {new ObjectId(txnId), medId};
 		
-		update("_id:#, 'medSupItems.id':#", criteria, "$set: {'medSupItems.$.returned': #}", true);
-		
-		log.debug("Cancelled successfully [transaction id: "+ txnId + ", medsup id: " + medId + ", qty: " + qty);
-		
-//		try {
-		medicineDao.update(new ObjectId(medId),"$inc:{count: #}, $set:{available: #}", qty, true);
-//		} catch (Exception e) {
-//			log.error(e.getMessage());
-//		}
+		return update(query, criteria, "$set: {'medSupItems.$.returned': #}", true);
 	}
 	
 	public long countEmpMedDoneRequestInCurrentDate(String employeeName, String medicineName) {

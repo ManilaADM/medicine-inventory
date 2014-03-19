@@ -52,5 +52,16 @@ public class MedicineDAO extends JongoDAO<Medicine> {
 			}
 		}
 	}
+	
+	/**
+	 * Helper method to update a medicine's inventory count and availability status
+	 * @param medId
+	 * @param quantity
+	 * @param isAvailable
+	 */
+	public void updateMedicalSupply(String medId, int quantity, boolean isAvailable) 
+	{
+		update(new ObjectId(medId),"$inc:{" + COUNT_FIELD +": #}, $set:{" + AVAILABLE_FIELD + ": #}", quantity, isAvailable);
+	}
 
 }
