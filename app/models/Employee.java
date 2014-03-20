@@ -2,6 +2,7 @@ package models;
 
 import org.bson.types.ObjectId;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import dao.JongoModel;
@@ -10,6 +11,9 @@ public class Employee implements JongoModel {
 	
 	@JsonProperty("_id")
 	private ObjectId id;	
+	
+	@JsonIgnore
+	private String objectId;
 	
 	@JsonProperty("empCode")
 	private String employeeCode;		
@@ -91,5 +95,13 @@ public class Employee implements JongoModel {
 	@Override
 	public String getCollectionName() {
 		return "employees";
+	}
+
+	public String getObjectId() {
+		return objectId;
+	}
+
+	public void setObjectId(String objectId) {
+		this.objectId = objectId;
 	}
 }

@@ -4,6 +4,7 @@ import java.util.List;
 
 import models.Employee;
 
+import org.apache.commons.lang3.StringUtils;
 import org.bson.types.ObjectId;
 
 import play.Play;
@@ -22,18 +23,17 @@ public class EmployeeController extends Controller {
 	@Security.Authenticated(Secured.class)
 	public static Result getEmployee() {
 		List<Employee> employees = employeeDao.findAll();
-
 		Play.application().configuration().getString("application.langs");
 
-		return ok(employee.render("Employee List", employees, empForm));
+		return ok(employee.render("Employee Information", employees, empForm));
 	}
 
 	public static Result setEmployee() {
 		Employee employee = Form.form(Employee.class).bindFromRequest().get();
-		if (employee.getId() == null) {
+		if (StringUtils.isEmpty(employee.getObjectId())) {
 			employeeDao.save(employee);
 		} else {
-			employeeDao.update(employee.getId(), employee);
+			employeeDao.update(new ObjectId(employee.getObjectId()), employee);
 		}
 		return redirect(routes.EmployeeController.getEmployee());
 	}

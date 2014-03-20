@@ -38,15 +38,15 @@
 		<div style="float: left; display: inline;">
 			<form action="@controllers.routes.MedicineController.setMedicine()" method="post">
 				<p>
-				    <input type="hidden" id="id" name="id">
-					Medicine Name : <input id="brandName" name="brandName"> </br>
-					Generic Name: <input id="genericName" name="genericName"> </br>
-					Description: <input id="description" name="description"> </br>
-					Stock Count : <input id="count" name="count"> </br>
-					Daily Limit : <input id="dailyQtyLimitPerUser" name="dailyQtyLimitPerUser"> </br>
-					Alert Quantity : <input id="notificationAlertCount" name="notificationAlertCount"> </br>					
-					Available: <input type="checkbox" id="available" name="available" ><br>
-					Quantifiable: <input type="checkbox" id="quantifiable" name="quantifiable" ><br>
+				    <input type="hidden" id="oid" name="objectId" >
+					Medicine Name <input id="brandName" name="brandName"> </br>
+					Generic Name <input id="genericName" name="genericName"> </br>
+					Description  <input id="description" name="description"> </br>
+					Stock Count  <input id="count" name="count"> </br>
+					Daily Limit  <input id="dailyQtyLimitPerUser" name="dailyQtyLimitPerUser"> </br>
+					Alert Quantity  <input id="notificationAlertCount" name="notificationAlertCount"> </br>					
+					Available  <input type="checkbox" id="available" name="available" ><br>
+					Quantifiable  <input type="checkbox" id="quantifiable" name="quantifiable" ><br>
 					
 					<input type="submit" value="Submit">
 					<input type="reset">

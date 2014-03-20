@@ -2,6 +2,7 @@ package models;
 
 import org.bson.types.ObjectId;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import dao.JongoModel;
@@ -10,6 +11,9 @@ public class Medicine implements JongoModel {
 	
 	@JsonProperty("_id")
 	private ObjectId id;
+	
+	@JsonIgnore
+	private String objectId;
 	
 	private String brandName;
 	
@@ -107,5 +111,13 @@ public class Medicine implements JongoModel {
 	@Override
 	public String getCollectionName() {
 		return "medicine";
+	}
+
+	public String getObjectId() {
+		return objectId;
+	}
+
+	public void setObjectId(String objectId) {
+		this.objectId = objectId;
 	}
 }

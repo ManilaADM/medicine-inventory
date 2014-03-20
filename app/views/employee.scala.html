@@ -6,8 +6,22 @@
  	<script src='@routes.Assets.at("javascripts/admin.js")')></script>
 	<h1>@message</h1>
 	<div name="container" style="width: 70%;">
-		<div  name="employeeList" style="float: right; display: inline;">
-			<h2>Employee List</h2>
+		
+		<div style="float: left; display: inline;" >
+			@form(routes.EmployeeController.setEmployee(), 'id -> "empForm"){
+				 	<input type="hidden" id="oid" name="objectId">
+				    <label style="margin-right: 65px">Id</label> <input id="employeeCode" name="employeeCode"><br>
+				    First Name <input id="firstName" name="firstName"> <br>
+				    Last Name <input id="lastName" name="lastName"> <br>
+				    <label style="margin-right: 28px">Gender</label><input id="gender" name="gender"> <br>
+				    <label style="margin-right: 40px">Team</label><input id="team" name="team"> <br>
+				    <label style="margin-right: 12px;">Category</label> <input id="category" name="category"> <br><br>
+					<input type="submit" value="Submit">
+					<input type="reset">
+			}
+		</div>
+		<div style="float:left;margin-left: 80px;">&nbsp;</div>
+		<div  name="employeeList" style="float: left; display: inline;">
 			<table class="dataContainer" border="1">
 				  <tr>
 				    <th>Employee Id</th>
@@ -33,21 +47,6 @@
 				  	</tr>
 				  }	
 			</table>
-		</div>
-		<div style="float: left; display: inline;" >
-			@form(routes.EmployeeController.setEmployee(), 'id -> "empForm"){
-				<p>
-					<h2>Employee Details</h2>
-					@inputText(empForm("employeeCode"))
-					@inputText(empForm("lastName"))
-					@inputText(empForm("firstName"))
-					@inputText(empForm("gender"))
-					@inputText(empForm("team"))
-					@inputText(empForm("category"))
-					<input type="submit" value="Submit">
-					<input type="reset">
-				</p>
-			}
 		</div>
 	</div>
 

@@ -4,6 +4,7 @@ import java.util.List;
 
 import models.Medicine;
 
+import org.apache.commons.lang3.StringUtils;
 import org.bson.types.ObjectId;
 
 import play.data.Form;
@@ -32,10 +33,10 @@ public class MedicineController extends Controller{
 	    }
 		else {
 			Medicine medicineObj = form.get();
-			if(medicineObj.getId() == null){
+			if(StringUtils.isEmpty(medicineObj.getObjectId())){
 				medicineDao.save(medicineObj);
 			}else{
-				medicineDao.update(medicineObj.getId(), medicineObj);
+				medicineDao.update(new ObjectId(medicineObj.getObjectId()), medicineObj);
 			}
 		}
 		return redirect(routes.MedicineController.getMedicine());
