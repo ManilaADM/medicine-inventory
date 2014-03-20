@@ -51,7 +51,8 @@ public class MedicineValidator
         				}
         				if (isMedSupReqExceedCount)
         				{
-    						putFormError(form, errorKeys, "requestQtyError" + i, "");
+        					String errorMsg = Configuration.root().getString("error.medSupQty.request.exceed.qtyDb") + " " + medSupQtyBrandName;
+    						putFormError(form, errorKeys, "requestQtyError" + i, errorMsg);
         				}
         				medListToBeAdded.add(medSupQty);
     				}
