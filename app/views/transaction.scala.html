@@ -64,16 +64,22 @@
 				  				<td class="medSupply">@txn.getMedSupItems.getBrandName</td>
 						  		<td class="quantity">@txn.getMedSupItems.getQuantity</td>
 						  		<td class="timeStamp">@txn.getFormattedTimeStamp</td>
-						  		@if(txn.getMedSupItems.isReturned) {
-								  <td class="return">
-								  		<input type="button" disabled="disabled"
-								  		value="@Configuration.root().getString("transaction.table.returnButton")"/> 
-								  </td>
+							    @if(txn.getMedSupItems.getQuantifiable == "true" || txn.getMedSupItems.getQuantifiable == null) {
+							  		@if(txn.getMedSupItems.isReturned) {
+									  <td class="return">
+									  		<input type="button" disabled="disabled"
+									  		value="@Configuration.root().getString("transaction.table.returnButton")"/> 
+									  </td>
+									} else {
+									   <td>
+									   		<input type="button" class="returnBtn"  
+									   		value="@Configuration.root().getString("transaction.table.returnButton")"/>
+									   </td>
+									}
 								} else {
-								   <td>
-								   		<input type="button" class="returnBtn"  
-								   		value="@Configuration.root().getString("transaction.table.returnButton")"/>
-								   </td>
+									   <td>
+											&nbsp;
+									   </td>
 								}
 						  	 </tr>
           				 }
