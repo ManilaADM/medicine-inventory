@@ -6,6 +6,7 @@ public class MedSupQty {
 	private String brandName;
 	private Integer quantity;
 	private boolean returned;
+	private String quantifiable;
 	
 	public MedSupQty(){
 		
@@ -47,4 +48,13 @@ public class MedSupQty {
 	public void setId(String id) {
 		this.id = id;
 	}
+
+	public String getQuantifiable() {
+		return quantifiable;
+	}
+
+	public void setQuantifiable(String quantifiable) {
+		this.quantifiable = quantifiable;
+	}
+	
 }

@@ -49,6 +49,8 @@ function updateMedicineFields(medBrandAndGenericName, index)
 	    	updateTooltip(index, value);
 	    	var medicineId = medicineJsonObj[value].idAsString;
 	    	$('#medicineId' + index).val(medicineId);
+	    	var medicineQuantifiable = medicineJsonObj[value].quantifiable;
+	    	$('#medicineQuantifiable' + index).val(medicineQuantifiable);
 	   }
 	})
 	.focus(function() {
@@ -62,6 +64,7 @@ function updateMedicineFields(medBrandAndGenericName, index)
 			$('#medicineTooltip' + index).attr('title', '');
 			updateMedicineQty('', '#medicineQty' + index);
 			$('#medicineId' + index).val('');
+			$('#medicineQuantifiable' + index).val('');
 		}
 	});
 }
