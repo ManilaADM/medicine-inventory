@@ -177,6 +177,7 @@ public class TransactionController extends Controller {
 				catch (Exception e)
 				{
 					transactionForm.reject("savingError", Configuration.root().getString("error.generic"));
+					errorKeys.add("savingError");
 				}
 			}else{
 				transactionDao.update(transactionObj.getId(), transactionObj);
