@@ -33,8 +33,12 @@ $( document ).ready(function() {
 			}
 		});
 		
-		isVisitor = $('#visitorId').val();
-		displayOverlay('.overlayBox');
+		if (isVisitor === 'visitor') {
+			displayVisitorDetails();
+		}
+		else {
+			displayEmployeeDetails();
+		}
 	}
 });
 
@@ -89,7 +93,7 @@ function showOverlayBox(id) {
 function displayEmployeeDetails() {
 	isVisitor = false;
 	$('#visitorLabelId').css('display', 'none');
-	$('#visitorLabelId').val('');
+	$('#visitorId').val('');
 	$('#employeeNameId').attr('placeholder', 'predictive-text');
 	$("#employeeNameId").autocomplete({
 	    source: employeeNamesObj,
@@ -102,7 +106,7 @@ function displayEmployeeDetails() {
 
 function displayVisitorDetails() {
 	$('#visitorLabelId').css('display', 'inline-block');
-	$('#visitorLabelId').attr('value', 'Visitor');
+	$('#visitorId').val('visitor');
 	$('#employeeNameId').attr('placeholder', '');
 	$('#employeeNameId').autocomplete({
 	    source: '',
@@ -128,10 +132,6 @@ function displayOverlay(id) {
 	isOpen = true;
 	showOverlayBox(id);
 	$('.bgCover').css({opacity:0}).animate( {opacity:0.5, backgroundColor:'#000'} );
-	if (isVisitor) {
-		$('#visitorLabelId').css('display', 'inline-block');
-		$('#employeeNameId').attr('placeholder', '');
-	}
 	// dont follow the link : so return false.
 	return false;
 }

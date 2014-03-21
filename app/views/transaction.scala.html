@@ -9,11 +9,16 @@
 	  var employeeNamesObj = $.parseJSON('@employeeNames'.replace(/&quot;/ig,'"'));
 	  var medicineJsonObj = $.parseJSON('@medicinesJson'.replace(/&quot;/ig,'"'));
 	  var transactionFormHasError = @transactionForm.hasErrors;
-	  var isVisitor = false;
+	  var isVisitor = '';
 	  var errorFieldIds = [];
 	  @for((key, value) <- transactionForm.errors) {
 		  errorFieldIds.push('@key');
 	  }
+	  
+	  @if(transactionForm("visitorName").value == "visitor") {
+		  isVisitor = 'visitor';
+	  }
+	  
 	</script>
 }
 @hasRecords = @{if(transactions.size() == 0) false else true}

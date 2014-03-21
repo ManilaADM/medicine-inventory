@@ -10,6 +10,7 @@ import play.data.Form;
 public class NameValidator 
 {
 	
+	private static final String VISITOR = "visitor";
 	private static final String NUMERIC_PATTERN = "(.*)([^A-Za-z()\t])(.*)";
 	private static final String EMPLOYEE_NAME_ID = "employeeNameId";
 
@@ -21,37 +22,40 @@ public class NameValidator
     	{
     		form.reject(EMPLOYEE_NAME_ID, Configuration.root().getString("error.empName.is.mandatory"));
     		errorKeys.add(EMPLOYEE_NAME_ID);
-    	} 
-    	else if (transactionForm.isVisitor()) {
-    		validateVisitorName(form, errorKeys, name);
-    	}
-    	else {
-    		validateEmployeeName(employees, form, errorKeys, name);
-    	}
+    	} else {
+			String visitorName = transactionForm.getVisitorName();
+			
+			if (VISITOR.equals(visitorName)) {
+				validateVisitorName(form, errorKeys, name);
+			}
+			else {
+				validateEmployeeName(employees, form, errorKeys, name);
+			}
+		}
     	
 	}
 
-	private void validateEmployeeName(List<Employee> employees, Form<Transaction> form, List<String> errorKeys, String empName) {
-		if(!hasMatchedEmployee(employees, empName))
+	private void validateEmployeeName(List<Employee> employees, Form<Transaction> form, List<String> errorKeys, String name) {
+		if(!hasMatchedEmployee(employees, name))
     	{
     		form.reject(EMPLOYEE_NAME_ID, Configuration.root().getString("error.empName.not.matched"));
     		errorKeys.add(EMPLOYEE_NAME_ID);
     	}
 	}
 
-	private void validateVisitorName(Form<Transaction> form, List<String> errorKeys, String empName) {
-		if(empName.matches(NUMERIC_PATTERN)) {
+	private void validateVisitorName(Form<Transaction> form, List<String> errorKeys, String name) {
+		if(name.matches(NUMERIC_PATTERN)) {
     		form.reject(EMPLOYEE_NAME_ID, Configuration.root().getString("error.empName.invalid.visitor"));
     		errorKeys.add(EMPLOYEE_NAME_ID);
     	}
 	}
 	
-	private boolean hasMatchedEmployee(List<Employee> employees, String empName)
+	private boolean hasMatchedEmployee(List<Employee> employees, String name)
 	{
 		for(Employee employee : employees)
     	{
     		String employeeName = employee.getFirstName() + " " + employee.getLastName();
-    		if(employeeName.equalsIgnoreCase(empName))
+    		if(employeeName.equalsIgnoreCase(name))
     		{
     			return true;
     		}
