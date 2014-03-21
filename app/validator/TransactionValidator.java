@@ -23,11 +23,10 @@ public class TransactionValidator
 			
 			MedicineValidator medicineValidator = new MedicineValidator();
 			medicineValidator.validateMedSupQty(form, medicines, errorKeys);
-			
-			
 		}
 		catch (Exception e){
 			form.reject("processingError", Configuration.root().getString("error.generic"));
+			errorKeys.add("processingError");
 		}
 	}
 

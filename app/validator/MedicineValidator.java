@@ -1,14 +1,15 @@
 package validator;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
-import dao.TransactionDAO;
 import models.MedSupQty;
 import models.Medicine;
 import models.Transaction;
 import play.Configuration;
 import play.data.Form;
+import dao.TransactionDAO;
 
 public class MedicineValidator 
 {
@@ -17,7 +18,6 @@ public class MedicineValidator
 	public void validateMedSupQty(Form<Transaction> form, List<Medicine> medicines, List<String> errorKeys) 
 	{
 		Transaction transaction = form.get();
-		String employeeName = form.get().getEmployeeName();
 		List<MedSupQty> medListToBeAdded = new ArrayList<MedSupQty>();
 		List<String> medNames = new ArrayList<String>();
     	for(int i = 0; i < transaction.getMedSupItems().size(); i++)
@@ -32,54 +32,54 @@ public class MedicineValidator
     			{
     				if (medNames.contains(medSupQtyBrandName)) 
         			{
-        				form.reject("medicineInput" + i, Configuration.root().getString("error.medicine.duplicate"));
-        				errorKeys.add("medicineInput" + i);
+    					if (Collections.frequency(medNames, medSupQtyBrandName) == 1) {
+    						putFormError(form, errorKeys, "medicineInput" + i, Configuration.root().getString("error.medicine.duplicate"));
+    					}
+    					else {
+    						putFormError(form, errorKeys, "medicineInput" + i, "");
+    					}
         			}
     				else
     				{
-    					medListToBeAdded.add(medSupQty);
-    					medNames.add(medSupQtyBrandName);
+    					String employeeName = transaction.getEmployeeName();
+    					boolean isMedSupReqExceedMaxLimit = isMedSupReqExceedMaxLimit(medicines, employeeName, medSupQty);
+        				boolean isMedSupReqExceedCount = isMedSupReqExceedCount(medicines, medSupQty);
+        				if (employeeName != "" && employeeName != null && isMedSupReqExceedMaxLimit)
+        				{
+        					String errorMsg = Configuration.root().getString("error.medSupQty.request.exceed.qtyDailyLimit") + " " + medSupQtyBrandName;
+    						putFormError(form, errorKeys, "requestMaxLimitError" + i, errorMsg);
+        				}
+        				if (isMedSupReqExceedCount)
+        				{
+        					String errorMsg = Configuration.root().getString("error.medSupQty.request.exceed.qtyDb") + " " + medSupQtyBrandName;
+    						putFormError(form, errorKeys, "requestQtyError" + i, errorMsg);
+        				}
+        				medListToBeAdded.add(medSupQty);
     				}
-    				
-    				ArrayList<String> medBrandNamesThatReachedMaxLimit = getMedBrandNamesThatReachedMaxLimit(medicines, medSupQtyBrandName, employeeName);
-    				ArrayList<String> medBrandNamesThatExceedCount = getMedBrandNamesThatExceedCount(medicines, medSupQtyBrandName, medSupQtyQty);
-    				if (employeeName != "" && employeeName != null && !medBrandNamesThatReachedMaxLimit.isEmpty())
-    				{
-    					for (String brandName : medBrandNamesThatReachedMaxLimit)
-    					{
-    						String errorMsg = Configuration.root().getString("error.medSupQty.request.exceed.qtyDailyLimit") + " " + brandName;
-    						form.reject("requestMaxLimitError", errorMsg);
-    						errorKeys.add("requestMaxLimitError");
-    					}
-    				}
-    				if (!medBrandNamesThatExceedCount.isEmpty())
-    				{
-    					for (String brandName : medBrandNamesThatReachedMaxLimit)
-    					{
-    						String errorMsg = Configuration.root().getString("error.medSupQty.request.exceed.inventory") + " " + brandName;
-    						form.reject("requestQtyError", errorMsg);
-    						errorKeys.add("requestQtyError");
-    					}
-    				}
+    				medNames.add(medSupQtyBrandName);
     			}
     			else 
     			{
-    				form.reject("medicineInput" + i, Configuration.root().getString("error.medicine.no.matched"));
-    				errorKeys.add("medicineInput" + i);
+    				putFormError(form, errorKeys, "medicineInput" + i, Configuration.root().getString("error.medicine.no.matched"));
     			}
     		}
     	}
     	
     	if(medListToBeAdded.isEmpty())
     	{
-    		form.reject("medSupQty", Configuration.root().getString("error.medSupQty.are.empty"));
-    		errorKeys.add("medSupQty");
+    		putFormError(form, errorKeys, "medSupQty", Configuration.root().getString("error.medSupQty.are.empty"));
     	}
     	else if(!form.hasErrors())
     	{
     		transaction.getMedSupItems().clear();
     		transaction.getMedSupItems().addAll(medListToBeAdded);
     	}
+	}
+	
+	private void putFormError(Form<Transaction> form, List<String> errorKeys, String errorKey, String errorMessage)
+	{
+		form.reject(errorKey, errorMessage);
+		errorKeys.add(errorKey);
 	}
 	
 	private boolean isValidMedicine(List<Medicine> medicines, String medSupQtyBrandName)
@@ -96,42 +96,46 @@ public class MedicineValidator
 		return false;
 	}
 	
-	private ArrayList<String> getMedBrandNamesThatReachedMaxLimit(List<Medicine> medicines, String medSupQtyBrandName, String employeeName)
+	private boolean isMedSupReqExceedMaxLimit(List<Medicine> medicines, String employeeName, MedSupQty medSupReq)
 	{
-		ArrayList<String> medBrandNamesThatReachedMaxLimit = new ArrayList<String>();
+		boolean isMedSupReqExceedMaxLimit = false;
 		
-		for(Medicine medicine : medicines)
+		medLoop: for(Medicine medicine : medicines)
 		{
-			String medBrandName = medicine.getBrandName();			
-			if(medBrandName.equalsIgnoreCase(medSupQtyBrandName))
+			String medSupId = medicine.getId().toString();
+			String medSupReqId = medSupReq.getId();
+			if(medicine.isQuantifiable() && (medSupId.equals(medSupReqId) || medSupId == medSupReqId))
 			{
-				long todaysDoneRequest = transactionDao.countEmpMedDoneRequestInCurrentDate(employeeName, medSupQtyBrandName);
+				int todaysDoneRequest = transactionDao.countEmpDoneMedRequestInCurrentDate(employeeName, medSupId);
 				int medSupDailyQtyLimitPerUser = medicine.getDailyQtyLimitPerUser();
-				if (todaysDoneRequest >= medSupDailyQtyLimitPerUser)
+				if (todaysDoneRequest + medSupReq.getQuantity() > medSupDailyQtyLimitPerUser)
 				{
-					medBrandNamesThatReachedMaxLimit.add(medSupQtyBrandName);
+					isMedSupReqExceedMaxLimit = true;
 				}
+				break medLoop;
 			}
 		}
-		return medBrandNamesThatReachedMaxLimit;
+		return isMedSupReqExceedMaxLimit;
 	}
 	
-	private ArrayList<String> getMedBrandNamesThatExceedCount(List<Medicine> medicines, String medSupQtyBrandName, int medSupQty)
+	private boolean isMedSupReqExceedCount(List<Medicine> medicines, MedSupQty medSupReq)
 	{
-		ArrayList<String> medBrandNamesThatExceedCount = new ArrayList<String>();
+		boolean isMedSupReqExceedCount = false;
 		
-		for(Medicine medicine : medicines)
+		medLoop: for(Medicine medicine : medicines)
 		{
-			String medBrandName = medicine.getBrandName();			
-			if(medBrandName.equalsIgnoreCase(medSupQtyBrandName))
+			String medSupId = medicine.getId().toString();
+			String medSupReqId = medSupReq.getId();
+			if(medSupId.equals(medSupReqId) || medSupId == medSupReqId)
 			{
-				if (medSupQty > medicine.getCount())
+				if (medSupReq.getQuantity() > medicine.getCount())
 				{
-					medBrandNamesThatExceedCount.add(medSupQtyBrandName);
+					isMedSupReqExceedCount = true;
 				}
+				break medLoop;
 			}
 		}
-		return medBrandNamesThatExceedCount;
+		return isMedSupReqExceedCount;
 	}
 
 }

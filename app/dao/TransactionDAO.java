@@ -4,19 +4,16 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import models.MedReqDailySum;
 import models.Transaction;
 import models.dto.TransactionVO;
 
 import org.bson.types.ObjectId;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.mongodb.DBObject;
 import com.mongodb.QueryBuilder;
 
 public class TransactionDAO extends JongoDAO<Transaction> {
-	
-	private static Logger log = LoggerFactory.getLogger(TransactionDAO.class);
 	
 	public TransactionDAO(Class<Transaction> clazz) {
 		super(clazz);
@@ -50,7 +47,8 @@ public class TransactionDAO extends JongoDAO<Transaction> {
 		return update(query, criteria, "$set: {'medSupItems.$.returned': #}", true);
 	}
 	
-	public long countEmpMedDoneRequestInCurrentDate(String employeeName, String medicineName) {
+	public int countEmpDoneMedRequestInCurrentDate(String employeeName, String medSupId) {
+		int totalReqMed = 0;
 		// TODO: clean this trick for reseting time to 00:00:00
 		Calendar cal = Calendar.getInstance();
 		cal.set(Calendar.HOUR_OF_DAY, 0);  
@@ -61,14 +59,22 @@ public class TransactionDAO extends JongoDAO<Transaction> {
 		cal.add(Calendar.DAY_OF_MONTH, 1);
 		Date nextDate = cal.getTime();
 
-		DBObject query = QueryBuilder.start().put("employeeName").is(employeeName).
+		DBObject searchQuery = QueryBuilder.start().put("employeeName").is(employeeName).
 				and("timeStamp").greaterThanEquals(currentDate).lessThan(nextDate).
-				and("medSupItems.brandName").is(medicineName).
+				and("medSupItems.id").is(medSupId).
 				and("medSupItems.returned").is(false).
-				and("medSupItems.quantity").greaterThan(0).
 				get();
 		
-		return collections.count(query.toString());
+		List<MedReqDailySum> sums = collections.aggregate("{$unwind: '$medSupItems'}").
+				and("{$match: " + searchQuery + "}").
+				and("{$group: { _id: 'sumQty_ID', sum: { $sum: '$medSupItems.quantity' } } }").as(MedReqDailySum.class);
+		
+		for (MedReqDailySum sum : sums)
+		{
+			totalReqMed = sum.getSum();
+		}
+		
+		return totalReqMed;
 	}
 	
 }
