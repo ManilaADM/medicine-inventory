@@ -27,9 +27,73 @@ section {
     padding: 10px 30px;
 }
 
-table {
-	border-collapse:collapse;
+/** Scrollable Table CSS **/
+table.logsTable {
+	font-family: verdana, arial, helvetica, sans-serif;
+	font-size: 12px;
+	cellspacing: 0;
+	border-collapse: collapse;
+	width: 535px;
+	border-right: 1px solid #999;
+	border-left: 1px solid #999;
+	border-bottom: 1px solid #999;
 }
+
+table.logsTable td {
+	border-left: 1px solid #999;
+	border-top: 1px solid #999;
+	padding: 2px 4px;
+	height: 20px;
+}
+
+table.logsTable th {
+	border-left: 1px solid #999;
+	padding: 10px 4px;
+	background: #6b6164;
+	color: white;
+	font-size: 13px;
+}
+
+table.logsTable th.return {
+    border-right: 1px solid #999;
+}
+
+table.logsTable td {
+	background: #eee;
+	overflow: hidden;
+}
+
+table.logsTable .empName     div { width: 108px; }
+table.logsTable .medSupply   div { width: 126px; }
+table.logsTable .quantity    div { width: 76px;  text-align:center; }
+table.logsTable .timeStamp   div { width: 150px;  text-align:center; }
+table.logsTable .return      div { width: 59px; }
+
+table.logsTable tr:hover td {
+  background-color: #0099FF; 
+}
+
+div.scrollableContainer {
+	position: relative;
+	width: 580px;
+	padding-top: 36px;
+	/* border: 1px solid #999;
+	background: #6b6164; */
+}
+
+div.scrollingArea {
+	height: 380px;
+	overflow-y: auto;
+	overflow-x: hidden;
+}
+
+table.scrollable thead tr {
+	left: 0px;
+	top: 0;
+	position: absolute;
+}
+
+/**End Scrollable Table CSS**/
 
 #pageTitle {
 	float:left;
@@ -62,22 +126,6 @@ div#logout {
 	float: right;
  	text-align:right;
 	margin-left: 5px;
-}
-
-.logsTable tr th {
-	padding: 0px 5px 0px 5px;
-	text-align: center;
-	font-family: Arial, Helvetica, sans-serif;
-	font-weight: bold;
-	font-size: 15px;
-}
-
-.logsTable tr td {
-	padding: 0px 10px 0px 10px;
-	text-align: center;
-	font-family: Verdana, Geneva, sans-serif;
-	font-weight: ;
-	font-size: 12px;
 }
 
 .bgCover { 
@@ -201,4 +249,16 @@ ul.nav li a:hover  {
 
 #txnErrorAlert {
 	display:none;
+}
+
+.fancyBtn {
+	-webkit-border-radius: .5em;
+	-moz-border-radius: .5em;
+	border-radius: .5em;
+	-webkit-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+}
+
+.fancyBtn:hover:enabled {
+	background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#dcdcdc));
+	background: -moz-linear-gradient(center top , rgb(255, 255, 255), rgb(220, 220, 220)) repeat scroll 0% 0% transparent;
 }

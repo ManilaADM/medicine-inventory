@@ -3,17 +3,20 @@ $(document).ready(function(){
 	//Update for Employee
 	$('body').on('click','.update',function(){
 		var data = $(this).closest('.dataContainer tr');
-		$('#id').val(data.find('.id').text());
+		$('#oid').val(data.find('.id').text());
 		$('#employeeCode').val(data.find('.employeeCode').text());
 		$('#firstName').val(data.find('.firstName').text());
 		$('#lastName').val(data.find('.lastName').text());
+		$('#gender').val(data.find('.gender').text());
+		$('#team').val(data.find('.team').text());
+		$('#category').val(data.find('.category').text());
 	});
 	
 
 	//Update for Medicine
 	$('body').on('click','.update',function(){
 		var data = $(this).closest('.dataContainer tr');
-		$('#id').val(data.find('.id').text());
+		$('#oid').val(data.find('.id').text());
 		$('#brandName').val(data.find('.brandName').text());
 		$('#genericName').val(data.find('.genericName').text());
 		$('#description').val(data.find('.description').text());

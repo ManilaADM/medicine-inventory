@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import models.ActionDoneType;
 import models.Employee;
 import models.MedSupQty;
 import models.Medicine;
@@ -15,10 +16,9 @@ import models.dto.TransactionVO;
 import org.bson.types.ObjectId;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import play.Configuration;
+import play.Logger;
 import play.Routes;
 import play.data.Form;
 import play.libs.Json;
@@ -37,13 +37,14 @@ import dao.TransactionDAO;
 public class TransactionController extends Controller {
 
 	private static final String VISITOR = "(Visitor)";
-	private static Logger log = LoggerFactory.getLogger(TransactionController.class);
+	
 	private static String TXN_ROW_LIMIT = Configuration.root().getString("transaction.table.rowLimit");;
 	private static String SORT_BY_FIELD = Configuration.root().getString("transaction.table.sortBy");;
 	
 	private static JongoDAO<Employee> employeeDao = new JongoDAO<>(Employee.class);
 	private static TransactionDAO transactionDao = new TransactionDAO(Transaction.class);
 	private static MedicineDAO medicineDao = new MedicineDAO(Medicine.class);
+	private static AuditTrailProcessor auditTrailProcessor = new AuditTrailProcessor();
 	
 	@Security.Authenticated(Secured.class)
     public static Result getTransactions() {
@@ -68,7 +69,7 @@ public class TransactionController extends Controller {
     
     public static Result returnMedSupply(String txnId, String medId, int quantity) {
 
-    	log.debug("Cancelling [transaction id: "+ txnId + ", medsup id: " + medId + ", qty: " + quantity);
+    	Logger.debug("Cancelling [transaction id: "+ txnId + ", medsup id: " + medId + ", qty: " + quantity);
 
     	ObjectNode result = Json.newObject();
     	boolean foundRecordToUpdate = false;
@@ -76,6 +77,8 @@ public class TransactionController extends Controller {
     	if(transactionDao.cancelMedSupItemRequest(txnId, medId)) {
     		medicineDao.updateMedicalSupply(medId, quantity, true);
     		foundRecordToUpdate = true;
+    		Transaction transactionId = transactionDao.findOne(new ObjectId (txnId));
+			auditTrailProcessor.saveTransactionInAuditTrail(transactionId, new ObjectId(medId), ActionDoneType.Returned);
     	}
     	result.put("ok", foundRecordToUpdate);
     	return ok(result);
@@ -173,10 +176,12 @@ public class TransactionController extends Controller {
 						medicineDao.updateMedSupUponTransaction(medReq, medicines);
 					}
 					transactionDao.save(transactionObj);
+					auditTrailProcessor.saveTransactionInAuditTrail(transactionObj, null, ActionDoneType.Taken);
 				}
 				catch (Exception e)
 				{
 					transactionForm.reject("savingError", Configuration.root().getString("error.generic"));
+					errorKeys.add("savingError");
 				}
 			}else{
 				transactionDao.update(transactionObj.getId(), transactionObj);
