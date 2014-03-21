@@ -1,0 +1,47 @@
+#Resource bundle for Transaction Page 
+
+transaction.title=Digital Logbook for Medical Supply
+# Transaction Table
+transaction.table.rowLimit=10
+transaction.table.sortBy=timeStamp
+transaction.table.empty.msg=No Transaction(s) available
+transaction.table.col1=Name
+transaction.table.col2=Medical Supply
+transaction.table.col3=Quantity
+transaction.table.col4=Date/Time
+transaction.table.returnButton=Return
+
+# transaction overlay
+transaction.overlay.title=Get Medical Supply
+transaction.overlay.empName=Name
+transaction.overlay.medName=Medical Supply
+
+# transaction overlay error
+error.empName.is.mandatory=Please enter Employee Name
+error.empName.not.matched=Employee Name not found
+error.empName.invalid.visitor=Invalid visitor name
+error.medicine.duplicate=Dupe medical supplies
+error.medicine.no.matched=Medicine not found
+error.medSupQty.are.empty=Please enter at least one medical supply
+error.medSupQty.request.exceed.qtyDailyLimit=You have reached the limit per day for
+error.medSupQty.request.exceed.qtyDb=There is insufficient stock for your request of 
+error.generic=There was an error in processing your request   
+
+# Return medical supply confirmation overlay
+transaction.overlay.returnMed.title=Return Medical Supply
+transaction.overlay.returnMed.message=Are you sure you want to return
+
+# Messages
+transaction.returnMed.error.message=There was an error processing your request.
+transaction.returnMed.success.message= returned successfully.
+
+overlay.save=Save
+overlay.close=Cancel
+overlay.ok=Ok
+
+email.medicine.brand.name=Medicine brand name
+email.medicine.generic.name=Generic name
+email.medicine.current.quantity=Current Quantity
+email.medicine.quantity.limit=Quantity Limit
+email.medicine.subjet.zero=has 0 left. Buy me now!
+email.medicine.subjet.limit=has {0} left

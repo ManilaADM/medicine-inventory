@@ -31,6 +31,11 @@ public class MedicineDAO extends JongoDAO<Medicine> {
 		return Lists.newArrayList(collections.find("{ _id: { $in: # } }", medicineIDs).as(Medicine.class));
 	}
 	
+	public Medicine findRequestedMedicineFromDB(ObjectId medicineID)
+	{
+		return collections.findOne(medicineID).as(Medicine.class);
+	}
+	
 	/**
 	 * This operation updates "count" and "available" fields of quantifiable medical supply upon transaction.
 	 * @param medReq - requested medical supply

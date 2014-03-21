@@ -18,7 +18,8 @@ libraryDependencies ++= Seq(
   "uk.co.panaxiom" %% "play-jongo" % "0.6.0-jongo0.4",
   "se.radley" %% "play-plugins-salat" % "1.3.0",
   "com.lowagie" % "itext" % "4.2.1",
-  "org.json"%"org.json"%"chargebee-1.0"
+  "org.json"%"org.json"%"chargebee-1.0",
+  "com.typesafe" %% "play-plugins-mailer" % "2.1.0"
 )     
 
 play.Project.playJavaSettings

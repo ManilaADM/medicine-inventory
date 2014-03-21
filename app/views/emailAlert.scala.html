@@ -1,0 +1,12 @@
+@(medicine:Medicine)
+
+@import play.i18n._
+
+<html>
+<body>
+<div>@Messages.get("email.medicine.brand.name"):  @medicine.getBrandName</div>
+<div>@Messages.get("email.medicine.generic.name"):  @medicine.getGenericName</div>
+<div>@Messages.get("email.medicine.current.quantity"):  @medicine.getCount</div>
+<div>@Messages.get("email.medicine.quantity.limit"): @medicine.getNotificationAlertCount</div>
+</body>
+</html>

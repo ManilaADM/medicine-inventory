@@ -27,6 +27,7 @@ import play.mvc.Result;
 import play.mvc.Security;
 import validator.TransactionValidator;
 import views.html.transaction;
+import action.SendEmailAlertAction;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
@@ -45,6 +46,7 @@ public class TransactionController extends Controller {
 	private static TransactionDAO transactionDao = new TransactionDAO(Transaction.class);
 	private static MedicineDAO medicineDao = new MedicineDAO(Medicine.class);
 	private static AuditTrailProcessor auditTrailProcessor = new AuditTrailProcessor();
+	private static SendEmailAlertAction sendEmailAction = new SendEmailAlertAction();
 	
 	@Security.Authenticated(Secured.class)
     public static Result getTransactions() {
@@ -174,6 +176,8 @@ public class TransactionController extends Controller {
 					for (MedSupQty medReq : transactionObj.getMedSupItems())
 					{
 						medicineDao.updateMedSupUponTransaction(medReq, medicines);
+						Medicine updatedMedicine = medicineDao.findRequestedMedicineFromDB(new ObjectId(medReq.getId()));
+						sendEmailAction.sendEmail(updatedMedicine);
 					}
 					transactionDao.save(transactionObj);
 					auditTrailProcessor.saveTransactionInAuditTrail(transactionObj, null, ActionDoneType.Taken);
