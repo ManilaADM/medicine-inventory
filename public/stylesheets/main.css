@@ -62,10 +62,14 @@ table.logsTable .quantity    div { width: 76px;  text-align:center; }
 table.logsTable .timeStamp   div { width: 150px;  text-align:center; }
 table.logsTable .return      div { width: 60px; }
 
-table.logsTable td.empName   { background: #ebcb4d; }
+/* table.logsTable td.empName   { background: #ebcb4d; }
 table.logsTable td.medSupply { background: white; }
 table.logsTable td.quantity  { background: #C7E0C1; }  
-table.logsTable td.timeStamp { background: #B7C3E8; }
+table.logsTable td.timeStamp { background: #B7C3E8; } */
+
+table.logsTable tr:hover td {
+  background-color: #0099FF; 
+}
 
 div.scrollableContainer {
 	position: relative;
