@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import models.ActionDoneType;
 import models.Employee;
 import models.MedSupQty;
 import models.Medicine;
@@ -34,13 +35,14 @@ import dao.MedicineDAO;
 import dao.TransactionDAO;
 
 public class TransactionController extends Controller {
-
+	
 	private static String TXN_ROW_LIMIT = Configuration.root().getString("transaction.table.rowLimit");;
 	private static String SORT_BY_FIELD = Configuration.root().getString("transaction.table.sortBy");;
 	
 	private static JongoDAO<Employee> employeeDao = new JongoDAO<>(Employee.class);
 	private static TransactionDAO transactionDao = new TransactionDAO(Transaction.class);
 	private static MedicineDAO medicineDao = new MedicineDAO(Medicine.class);
+	private static AuditTrailProcessor auditTrailProcessor = new AuditTrailProcessor();
 	
 	@Security.Authenticated(Secured.class)
     public static Result getTransactions() {
@@ -73,6 +75,8 @@ public class TransactionController extends Controller {
     	if(transactionDao.cancelMedSupItemRequest(txnId, medId)) {
     		medicineDao.updateMedicalSupply(medId, quantity, true);
     		foundRecordToUpdate = true;
+    		Transaction transactionId = transactionDao.findOne(new ObjectId (txnId));
+			auditTrailProcessor.saveTransactionInAuditTrail(transactionId, new ObjectId(medId), ActionDoneType.Returned);
     	}
     	result.put("ok", foundRecordToUpdate);
     	return ok(result);
@@ -169,6 +173,7 @@ public class TransactionController extends Controller {
 						medicineDao.updateMedSupUponTransaction(medReq, medicines);
 					}
 					transactionDao.save(transactionObj);
+					auditTrailProcessor.saveTransactionInAuditTrail(transactionObj, null, ActionDoneType.Taken);
 				}
 				catch (Exception e)
 				{
