@@ -38,9 +38,9 @@
 			    </p>
 			</div>
 			<label>Log Transaction For: </label>
-			<button type="button" onclick="displayEmployeeDetails();">Employee</button>
+			<button class="fancyBtn" type="button" onclick="displayEmployeeDetails();">Employee</button>
 			&nbsp;
-			<button type="button" onclick="displayVisitorDetails();" >Visitor</button>
+			<button class="fancyBtn" type="button" onclick="displayVisitorDetails();" >Visitor</button>
 		</div>
 		<br>
 		<div class="scrollableContainer">
@@ -68,12 +68,12 @@
 						  		@if(txn.getMedSupItems.getQuantifiable == "true" || txn.getMedSupItems.getQuantifiable == null) {
 							  		@if(txn.getMedSupItems.isReturned) {
 									  <td class="return">
-									  		<div><input type="button" disabled="disabled"
+									  		<div><input type="button" disabled="disabled" class="fancyBtn"
 									  		value="@Configuration.root().getString("transaction.table.returnButton")"/> </div>
 									  </td>
 									} else {
 									  <td class="return">
-									   		<div><input type="button" class="returnBtn"  
+									   		<div><input type="button" class="returnBtn fancyBtn"  
 									   		value="@Configuration.root().getString("transaction.table.returnButton")"/></div>
 									  </td>
 									}

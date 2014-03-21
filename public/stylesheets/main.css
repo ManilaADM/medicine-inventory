@@ -34,6 +34,9 @@ table.logsTable {
 	cellspacing: 0;
 	border-collapse: collapse;
 	width: 535px;
+	border-right: 1px solid #999;
+	border-left: 1px solid #999;
+	border-bottom: 1px solid #999;
 }
 
 table.logsTable td {
@@ -45,10 +48,14 @@ table.logsTable td {
 
 table.logsTable th {
 	border-left: 1px solid #999;
-	padding: 2px 4px;
+	padding: 10px 4px;
 	background: #6b6164;
 	color: white;
 	font-size: 13px;
+}
+
+table.logsTable th.return {
+    border-right: 1px solid #999;
 }
 
 table.logsTable td {
@@ -60,7 +67,7 @@ table.logsTable .empName     div { width: 108px; }
 table.logsTable .medSupply   div { width: 126px; }
 table.logsTable .quantity    div { width: 76px;  text-align:center; }
 table.logsTable .timeStamp   div { width: 150px;  text-align:center; }
-table.logsTable .return      div { width: 55px; }
+table.logsTable .return      div { width: 59px; }
 
 table.logsTable tr:hover td {
   background-color: #0099FF; 
@@ -69,7 +76,7 @@ table.logsTable tr:hover td {
 div.scrollableContainer {
 	position: relative;
 	width: 580px;
-	padding-top: 18px;
+	padding-top: 36px;
 	/* border: 1px solid #999;
 	background: #6b6164; */
 }
@@ -242,4 +249,16 @@ ul.nav li a:hover  {
 
 #txnErrorAlert {
 	display:none;
+}
+
+.fancyBtn {
+	-webkit-border-radius: .5em;
+	-moz-border-radius: .5em;
+	border-radius: .5em;
+	-webkit-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+}
+
+.fancyBtn:hover:enabled {
+	background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#dcdcdc));
+	background: -moz-linear-gradient(center top , rgb(255, 255, 255), rgb(220, 220, 220)) repeat scroll 0% 0% transparent;
 }
