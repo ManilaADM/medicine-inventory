@@ -15,18 +15,15 @@ import models.dto.TransactionVO;
 import org.bson.types.ObjectId;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import play.Configuration;
+import play.Logger;
 import play.Routes;
 import play.data.Form;
-
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security;
-import validator.NameValidator;
 import validator.TransactionValidator;
 import views.html.transaction;
 
@@ -38,7 +35,6 @@ import dao.TransactionDAO;
 
 public class TransactionController extends Controller {
 
-	private static Logger log = LoggerFactory.getLogger(TransactionController.class);
 	private static String TXN_ROW_LIMIT = Configuration.root().getString("transaction.table.rowLimit");;
 	private static String SORT_BY_FIELD = Configuration.root().getString("transaction.table.sortBy");;
 	
@@ -69,7 +65,7 @@ public class TransactionController extends Controller {
     
     public static Result returnMedSupply(String txnId, String medId, int quantity) {
 
-    	log.debug("Cancelling [transaction id: "+ txnId + ", medsup id: " + medId + ", qty: " + quantity);
+    	Logger.debug("Cancelling [transaction id: "+ txnId + ", medsup id: " + medId + ", qty: " + quantity);
 
     	ObjectNode result = Json.newObject();
     	boolean foundRecordToUpdate = false;

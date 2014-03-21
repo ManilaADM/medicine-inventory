@@ -9,6 +9,7 @@ $( document ).ready(function() {
 			hide: {effect: 'fade', duration: 500}, 
 			open: function(event, ui)
 			{
+				$('.ui-dialog-titlebar-close').focus();
 				slideToggleDiv('#txnErrorAlert', 'block');
 				slideToggleDiv('#txnMsg', 'block');
 			},
