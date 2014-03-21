@@ -43,43 +43,45 @@
 			<button type="button" onclick="displayVisitorDetails();" >Visitor</button>
 		</div>
 		<br>
-		<div>
-			@if(hasRecords == true){		    
-		    	<table class="logsTable" border="1">
+		<div class="scrollableContainer">
+		    <div class="scrollingArea">
+			   @if(hasRecords == true){		    
+		    	<table class="logsTable scrollable" >
 					  <thead>
-						  <tr class="logsHeaders">
-						    <th>@Configuration.root().getString("transaction.table.col1")</th>
-						    <th>@Configuration.root().getString("transaction.table.col2")</th>
-						    <th>@Configuration.root().getString("transaction.table.col3")</th>
-						    <th>@Configuration.root().getString("transaction.table.col4")</th>
-						    <th>&nbsp;</th>
+						  <tr>
+						    <th class="empName" ><div>@Configuration.root().getString("transaction.table.col1")</div></th>
+						    <th class="medSupply"><div>@Configuration.root().getString("transaction.table.col2")</div></th>
+						    <th class="quantity"><div>@Configuration.root().getString("transaction.table.col3")</div></th>
+						    <th class="timeStamp"><div>@Configuration.root().getString("transaction.table.col4")</div></th>
+						    <th class="return"><div></div></th>
 						  </tr>
 					  </thead>
 				      <tbody>  
        					 @for((txn,idx) <- transactions.zipWithIndex){
 						  	 <tr>
-						  		<td hidden="true" class="id">@txn.getId</td>
-						  		<td hidden="true" class="medSupId">@txn.getMedSupItems.getId</td>
-						  		<td class="empName">@txn.getEmployeeName</td>
-				  				<td class="medSupply">@txn.getMedSupItems.getBrandName</td>
-						  		<td class="quantity">@txn.getMedSupItems.getQuantity</td>
-						  		<td class="timeStamp">@txn.getFormattedTimeStamp</td>
+						  		<td hidden="true" class="id"><div>@txn.getId</div></td>
+						  		<td hidden="true" class="medSupId"><div>@txn.getMedSupItems.getId</div></td>
+						  		<td class="empName"><div>@txn.getEmployeeName</div></td>
+				  				<td class="medSupply"><div>@txn.getMedSupItems.getBrandName</div></td>
+						  		<td class="quantity"><div>@txn.getMedSupItems.getQuantity</div></td>
+						  		<td class="timeStamp"><div>@txn.getFormattedTimeStamp</div></td>
 						  		@if(txn.getMedSupItems.isReturned || txn.getMedSupItems.getQuantifiable == "false") {
 									  <td class="return">
-									  		<input type="button" disabled="disabled"
-									  		value="@Configuration.root().getString("transaction.table.returnButton")"/> 
+									  		<div><input type="button" disabled="disabled"
+									  		value="@Configuration.root().getString("transaction.table.returnButton")"/> </div>
 									  </td>
 								} else {
-									   <td>
-									   		<input type="button" class="returnBtn"  
-									   		value="@Configuration.root().getString("transaction.table.returnButton")"/>
-									   </td>
+									  <td class="return">
+									   		<div><input type="button" class="returnBtn"  
+									   		value="@Configuration.root().getString("transaction.table.returnButton")"/></div>
+									  </td>
 								}
 						  	 </tr>
           				 }
 				        </tbody>    
 				 </table>
 		      }
+		     </div>  
 		</div>
 		<div class="bgCover">&nbsp;</div>
 		@returnMedConfirmationOverlay()
