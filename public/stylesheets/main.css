@@ -60,12 +60,7 @@ table.logsTable .empName     div { width: 108px; }
 table.logsTable .medSupply   div { width: 126px; }
 table.logsTable .quantity    div { width: 76px;  text-align:center; }
 table.logsTable .timeStamp   div { width: 150px;  text-align:center; }
-table.logsTable .return      div { width: 60px; }
-
-/* table.logsTable td.empName   { background: #ebcb4d; }
-table.logsTable td.medSupply { background: white; }
-table.logsTable td.quantity  { background: #C7E0C1; }  
-table.logsTable td.timeStamp { background: #B7C3E8; } */
+table.logsTable .return      div { width: 55px; }
 
 table.logsTable tr:hover td {
   background-color: #0099FF; 
@@ -74,8 +69,7 @@ table.logsTable tr:hover td {
 div.scrollableContainer {
 	position: relative;
 	width: 580px;
-	padding-top: 20px;
-	/*margin: 40px;*/
+	padding-top: 18px;
 	/* border: 1px solid #999;
 	background: #6b6164; */
 }
@@ -83,6 +77,7 @@ div.scrollableContainer {
 div.scrollingArea {
 	height: 380px;
 	overflow-y: auto;
+	overflow-x: hidden;
 }
 
 table.scrollable thead tr {
