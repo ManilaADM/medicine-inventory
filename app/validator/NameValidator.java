@@ -11,7 +11,8 @@ public class NameValidator
 {
 	
 	private static final String VISITOR = "visitor";
-	private static final String NUMERIC_PATTERN = "(.*)([^A-Za-z()\t])(.*)";
+//	private static final String ALPHA_PATTERN = "(.*)([^A-Za-z\t])(.*)";
+	private static final String NON_ALPHA_SPACE_PATTERN = "(.*)([^A-Za-z\\s])(.*)";
 	private static final String EMPLOYEE_NAME_ID = "employeeNameId";
 
 	public void validateName(List<Employee> employees, Form<Transaction> form, List<String> errorKeys) 
@@ -44,7 +45,7 @@ public class NameValidator
 	}
 
 	private void validateVisitorName(Form<Transaction> form, List<String> errorKeys, String name) {
-		if(name.matches(NUMERIC_PATTERN)) {
+		if(name.matches(NON_ALPHA_SPACE_PATTERN)) {
     		form.reject(EMPLOYEE_NAME_ID, Configuration.root().getString("error.empName.invalid.visitor"));
     		errorKeys.add(EMPLOYEE_NAME_ID);
     	}
