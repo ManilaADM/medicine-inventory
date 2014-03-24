@@ -1,4 +1,4 @@
-@(transactionForm: Form[Transaction], errorKeys: List[String])
+@(transactionForm: Form[Transaction])
 
 @import play.Configuration
 
@@ -16,10 +16,11 @@
 			<div class="clear">
 				<div id="errorMsg">
 				@if(transactionForm.hasErrors) {
-					@for(errorKey <- errorKeys) {
-					<p class="error">
-						@transactionForm.error(errorKey).message()
-					</p>
+					
+					@for((key, value) <- transactionForm.errors) {
+					    <p class="error">
+					        @transactionForm.error(key).message()
+				    	</p>
 					}
 				}
 				</div>

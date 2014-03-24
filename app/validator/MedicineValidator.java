@@ -15,7 +15,7 @@ public class MedicineValidator
 {
 	private static TransactionDAO transactionDao = new TransactionDAO(Transaction.class);
 	
-	public void validateMedSupQty(Form<Transaction> form, List<Medicine> medicines, List<String> errorKeys) 
+	public void validateMedSupQty(Form<Transaction> form, List<Medicine> medicines) 
 	{
 		Transaction transaction = form.get();
 		List<MedSupQty> medListToBeAdded = new ArrayList<MedSupQty>();
@@ -33,10 +33,10 @@ public class MedicineValidator
     				if (medNames.contains(medSupQtyBrandName)) 
         			{
     					if (Collections.frequency(medNames, medSupQtyBrandName) == 1) {
-    						putFormError(form, errorKeys, "medicineInput" + i, Configuration.root().getString("error.medicine.duplicate"));
+    						putFormError(form, "medicineInput" + i, Configuration.root().getString("error.medicine.duplicate"));
     					}
     					else {
-    						putFormError(form, errorKeys, "medicineInput" + i, "");
+    						putFormError(form, "medicineInput" + i, "");
     					}
         			}
     				else
@@ -47,12 +47,12 @@ public class MedicineValidator
         				if (employeeName != "" && employeeName != null && isMedSupReqExceedMaxLimit)
         				{
         					String errorMsg = Configuration.root().getString("error.medSupQty.request.exceed.qtyDailyLimit") + " " + medSupQtyBrandName;
-    						putFormError(form, errorKeys, "requestMaxLimitError" + i, errorMsg);
+    						putFormError(form, "requestMaxLimitError" + i, errorMsg);
         				}
         				if (isMedSupReqExceedCount)
         				{
         					String errorMsg = Configuration.root().getString("error.medSupQty.request.exceed.qtyDb") + " " + medSupQtyBrandName;
-    						putFormError(form, errorKeys, "requestQtyError" + i, errorMsg);
+    						putFormError(form, "requestQtyError" + i, errorMsg);
         				}
         				medListToBeAdded.add(medSupQty);
     				}
@@ -60,14 +60,14 @@ public class MedicineValidator
     			}
     			else 
     			{
-    				putFormError(form, errorKeys, "medicineInput" + i, Configuration.root().getString("error.medicine.no.matched"));
+    				putFormError(form, "medicineInput" + i, Configuration.root().getString("error.medicine.no.matched"));
     			}
     		}
     	}
     	
     	if(medListToBeAdded.isEmpty())
     	{
-    		putFormError(form, errorKeys, "medSupQty", Configuration.root().getString("error.medSupQty.are.empty"));
+    		putFormError(form, "medSupQty", Configuration.root().getString("error.medSupQty.are.empty"));
     	}
     	else if(!form.hasErrors())
     	{
@@ -76,10 +76,9 @@ public class MedicineValidator
     	}
 	}
 	
-	private void putFormError(Form<Transaction> form, List<String> errorKeys, String errorKey, String errorMessage)
+	private void putFormError(Form<Transaction> form, String errorKey, String errorMessage)
 	{
 		form.reject(errorKey, errorMessage);
-		errorKeys.add(errorKey);
 	}
 	
 	private boolean isValidMedicine(List<Medicine> medicines, String medSupQtyBrandName)

@@ -60,9 +60,8 @@ public class TransactionController extends Controller {
 		String medicinesJson = getMedicinesJson(medicines);
 		
 		Form<Transaction> transactionForm = Form.form(Transaction.class);
-		List<String> errorKeys = new ArrayList<>();
     	
-    	return ok(transaction.render(medLogs, employeeNames, medicinesJson, transactionForm, errorKeys));
+    	return ok(transaction.render(medLogs, employeeNames, medicinesJson, transactionForm));
 	 }
 
 	private static boolean isVisitor(String visitorName) {
@@ -152,10 +151,9 @@ public class TransactionController extends Controller {
 		List<Medicine> medicines = medicineDao.findRequestedMedicinesFromDB(medicineIDs);
 		
 		TransactionValidator transactionValidator = new TransactionValidator();
-		List<String> errorKeys = new ArrayList<>();
 		String vistorName = transactionForm.get().getVisitorName();
 		
-		transactionValidator.validate(transactionForm, employees, medicines, errorKeys);
+		transactionValidator.validate(transactionForm, employees, medicines);
 
 		if (isVisitor(vistorName)) {
 			
@@ -165,7 +163,7 @@ public class TransactionController extends Controller {
 		if(transactionForm.hasErrors()) {
 			List<Medicine> allMedicines = medicineDao.findAll();
 			String medicinesJson = getMedicinesJson(allMedicines);
-			return badRequest(transaction.render(medLogs, employeeNames, medicinesJson, transactionForm, errorKeys));
+			return badRequest(transaction.render(medLogs, employeeNames, medicinesJson, transactionForm));
 	    }
 		else {
 			Transaction transactionObj = transactionForm.get();
@@ -185,7 +183,6 @@ public class TransactionController extends Controller {
 				catch (Exception e)
 				{
 					transactionForm.reject("savingError", Configuration.root().getString("error.generic"));
-					errorKeys.add("savingError");
 				}
 			}else{
 				transactionDao.update(transactionObj.getId(), transactionObj);

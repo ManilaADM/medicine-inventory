@@ -11,43 +11,39 @@ public class NameValidator
 {
 	
 	private static final String VISITOR = "visitor";
-//	private static final String ALPHA_PATTERN = "(.*)([^A-Za-z\t])(.*)";
 	private static final String NON_ALPHA_SPACE_PATTERN = "(.*)([^A-Za-z\\s])(.*)";
 	private static final String EMPLOYEE_NAME_ID = "employeeNameId";
 
-	public void validateName(List<Employee> employees, Form<Transaction> form, List<String> errorKeys) 
+	public void validateName(List<Employee> employees, Form<Transaction> form) 
 	{
 		Transaction transactionForm = form.get();
 		String name = transactionForm.getEmployeeName();
     	if(name.isEmpty())
     	{
     		form.reject(EMPLOYEE_NAME_ID, Configuration.root().getString("error.empName.is.mandatory"));
-    		errorKeys.add(EMPLOYEE_NAME_ID);
     	} else {
 			String visitorName = transactionForm.getVisitorName();
 			
 			if (VISITOR.equals(visitorName)) {
-				validateVisitorName(form, errorKeys, name);
+				validateVisitorName(form, name);
 			}
 			else {
-				validateEmployeeName(employees, form, errorKeys, name);
+				validateEmployeeName(employees, form, name);
 			}
 		}
     	
 	}
 
-	private void validateEmployeeName(List<Employee> employees, Form<Transaction> form, List<String> errorKeys, String name) {
+	private void validateEmployeeName(List<Employee> employees, Form<Transaction> form, String name) {
 		if(!hasMatchedEmployee(employees, name))
     	{
     		form.reject(EMPLOYEE_NAME_ID, Configuration.root().getString("error.empName.not.matched"));
-    		errorKeys.add(EMPLOYEE_NAME_ID);
     	}
 	}
 
-	private void validateVisitorName(Form<Transaction> form, List<String> errorKeys, String name) {
+	private void validateVisitorName(Form<Transaction> form, String name) {
 		if(name.matches(NON_ALPHA_SPACE_PATTERN)) {
     		form.reject(EMPLOYEE_NAME_ID, Configuration.root().getString("error.empName.invalid.visitor"));
-    		errorKeys.add(EMPLOYEE_NAME_ID);
     	}
 	}
 	
