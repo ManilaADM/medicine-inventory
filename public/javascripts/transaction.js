@@ -73,8 +73,7 @@ function updateMedicineFields(medBrandAndGenericName, index)
 	});
 }
 
-//function to display the box 
-//test
+//function to display the box
 
 function showOverlayBox(id) {
 	//if box is not set to open then don't do anything
