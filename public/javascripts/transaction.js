@@ -74,6 +74,7 @@ function updateMedicineFields(medBrandAndGenericName, index)
 }
 
 //function to display the box
+//test
 
 function showOverlayBox(id) {
 	//if box is not set to open then don't do anything
@@ -165,6 +166,7 @@ function resetOverlay() {
 	{
 		var field = $('#medicineInput' + j);
 		field.val('');
+		$('#medicineQty' + j).html('<option value="0">0</option>');
 		$('#medicineTooltip' + j).attr('title','');
 		if (field.hasClass('overlayError')) {
 			field.removeClass('overlayError');
