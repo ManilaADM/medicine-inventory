@@ -9,11 +9,13 @@ import models.Medicine;
 import models.Transaction;
 import play.Configuration;
 import play.data.Form;
+import utilities.MedicineUtility;
 import dao.TransactionDAO;
 
 public class MedicineValidator 
 {
 	private static TransactionDAO transactionDao = new TransactionDAO(Transaction.class);
+	private MedicineUtility medUtility = new MedicineUtility();
 	
 	public void validateMedSupQty(Form<Transaction> form, List<Medicine> medicines) 
 	{
@@ -127,10 +129,7 @@ public class MedicineValidator
 			String medSupReqId = medSupReq.getId();
 			if(medSupId.equals(medSupReqId) || medSupId == medSupReqId)
 			{
-				if (medSupReq.getQuantity() > medicine.getCount())
-				{
-					isMedSupReqExceedCount = true;
-				}
+				isMedSupReqExceedCount = medUtility.isMedReqExceedCount(medSupReq.getQuantity(), medicine.getCount());
 				break medLoop;
 			}
 		}

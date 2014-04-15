@@ -7,9 +7,12 @@ import models.Medicine;
 
 import org.bson.types.ObjectId;
 
+import play.Configuration;
 import utilities.MedicineUtility;
 
 import com.google.common.collect.Lists;
+
+import exceptions.InsufficientCountException;
 
 public class MedicineDAO extends JongoDAO<Medicine> {
 
@@ -40,8 +43,9 @@ public class MedicineDAO extends JongoDAO<Medicine> {
 	 * This operation updates "count" and "available" fields of quantifiable medical supply upon transaction.
 	 * @param medReq - requested medical supply
 	 * @param medicines - filtered list of medicines from database
+	 * @throws InsufficientCountException 
 	 */
-	public void updateMedSupUponTransaction(MedSupQty medReq, List<Medicine> medicines)
+	public void updateMedSupUponTransaction(MedSupQty medReq, List<Medicine> medicines) throws InsufficientCountException
 	{
 		for(Medicine medicine : medicines)
 		{
@@ -50,11 +54,9 @@ public class MedicineDAO extends JongoDAO<Medicine> {
 			if((medIdStr.equals(medReqIdStr) || medIdStr == medReqIdStr) && medicine.isQuantifiable())
 			{
 				Integer medReqQty = medReq.getQuantity();
-				boolean isAvailable = medUtility.isMedAvailable(medReqQty, medicine.getCount());				
-				collections.update(new ObjectId(medReq.getId())).with("{$inc: { " + COUNT_FIELD + ": " + -medReqQty + " }, " +
-						"$set: { " + AVAILABLE_FIELD + ": " + isAvailable + "}}");
-				break;
+				updateMedicalSupply(medReq.getId(), medReqQty, false);
 			}
+			break;
 		}
 	}
 	
@@ -62,11 +64,25 @@ public class MedicineDAO extends JongoDAO<Medicine> {
 	 * Helper method to update a medicine's inventory count and availability status
 	 * @param medId
 	 * @param quantity
-	 * @param isAvailable
+	 * @param isAvailableAfterTransaction
+	 * @throws InsufficientCountException 
 	 */
-	public void updateMedicalSupply(String medId, int quantity, boolean isAvailable) 
+	public synchronized void updateMedicalSupply(String medId, int quantity, boolean isAvailableAfterTransaction) throws InsufficientCountException 
 	{
-		update(new ObjectId(medId),"$inc:{" + COUNT_FIELD +": #}, $set:{" + AVAILABLE_FIELD + ": #}", quantity, isAvailable);
+		if (!isAvailableAfterTransaction)
+		{
+			Medicine med = findRequestedMedicineFromDB(new ObjectId(medId));
+			int medCount = med.getCount();
+			boolean isMedReqExceedCount = medUtility.isMedReqExceedCount(quantity, medCount);
+			if (isMedReqExceedCount)
+			{
+				throw new InsufficientCountException(Configuration.root().getString("error.medSupQty.request.exceed.qtyDb") + " " + med.getBrandName());
+			}
+			isAvailableAfterTransaction = medUtility.isMedAvailableAfterTransaction(quantity, medCount);
+			quantity *= -1;
+		}
+		
+		update(new ObjectId(medId),"$inc:{" + COUNT_FIELD +": #}, $set:{" + AVAILABLE_FIELD + ": #}", quantity, isAvailableAfterTransaction);
 	}
 
 }

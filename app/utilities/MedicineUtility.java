@@ -7,7 +7,7 @@ public class MedicineUtility {
 	 * @param medRequest - number of requested medical supply
 	 * @param medCount - current count of medical supply
 	 */
-	public boolean isMedAvailable(int medRequest, int medCount)
+	public boolean isMedAvailableAfterTransaction(int medRequest, int medCount)
 	{
 		boolean isAvailable = true;
 		if (medCount - medRequest <= 0)
@@ -20,6 +20,17 @@ public class MedicineUtility {
 		}
 		
 		return isAvailable;
+	}
+	
+	public boolean isMedReqExceedCount(int medRequest, int medCount)
+	{
+		boolean isMedSupReqExceedCount = false;
+		if (medRequest > medCount)
+		{
+			isMedSupReqExceedCount = true;
+		}
+		
+		return isMedSupReqExceedCount;
 	}
 
 }

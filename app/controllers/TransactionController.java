@@ -34,6 +34,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import dao.JongoDAO;
 import dao.MedicineDAO;
 import dao.TransactionDAO;
+import exceptions.InsufficientCountException;
 
 public class TransactionController extends Controller {
 
@@ -68,7 +69,7 @@ public class TransactionController extends Controller {
 		return "visitor".equals(visitorName);
 	}
     
-    public static Result returnMedSupply(String txnId, String medId, int quantity) {
+    public static Result returnMedSupply(String txnId, String medId, int quantity) throws InsufficientCountException {
 
     	Logger.debug("Cancelling [transaction id: "+ txnId + ", medsup id: " + medId + ", qty: " + quantity);
 
@@ -180,15 +181,28 @@ public class TransactionController extends Controller {
 					transactionDao.save(transactionObj);
 					auditTrailProcessor.saveTransactionInAuditTrail(transactionObj, null, ActionDoneType.Taken);
 				}
+				catch (InsufficientCountException e)
+				{
+					transactionForm.reject("requestQtyError", e.getMessage());
+					return getBadRequestStatus(medLogs, employeeNames, transactionForm);
+				}
 				catch (Exception e)
 				{
 					transactionForm.reject("savingError", Configuration.root().getString("error.generic"));
+					return getBadRequestStatus(medLogs, employeeNames, transactionForm);
 				}
 			}else{
 				transactionDao.update(transactionObj.getId(), transactionObj);
 			}
 		}
 		return redirect(routes.TransactionController.getTransactions());
+	}
+    
+    private static Result getBadRequestStatus(List<TransactionVO> medLogs, String employeeNames, Form<Transaction> transactionForm)
+	{
+		List<Medicine> allMedicines = medicineDao.findAll();
+		String medicinesJson = getMedicinesJson(allMedicines);
+		return badRequest(transaction.render(medLogs, employeeNames, medicinesJson, transactionForm));
 	}
     
 }
