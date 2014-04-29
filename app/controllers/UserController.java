@@ -5,12 +5,13 @@ import models.User;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
-import dao.JongoDAO;
+import service.UserManager;
+import service.impl.UserManagerImpl;
 import views.html.login;
 
 public class UserController extends Controller {
-
-	static JongoDAO<User> userDao = new JongoDAO<>(User.class);
+	
+	static UserManager userManager = new UserManagerImpl();
 	static Form<LoginForm> loginForm = Form.form(LoginForm.class);
 
 	public static Result login() {
@@ -18,14 +19,14 @@ public class UserController extends Controller {
 	}
 
 	public static boolean isValidUser(String email, String password) {
-		if (userDao.findUser(email, password) != null) {
+		if (userManager.findUser(email, password) != null) {
 			return true;
 		}
 		return false;
 	}
 
 	private static User currentUserEmail(String email) {
-		return userDao.searchOne("email", email);
+		return userManager.searchOne("email", email);
 	}
 
 	public static String name() {

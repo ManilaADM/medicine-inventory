@@ -12,17 +12,19 @@ import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security;
+import service.EmployeeManager;
+import service.impl.EmployeeManagerImpl;
 import views.html.employee;
-import dao.JongoDAO;
 
 public class EmployeeController extends Controller {
 
-	static JongoDAO<Employee> employeeDao = new JongoDAO<>(Employee.class);
+	//static JongoDAO<Employee> employeeDao = new JongoDAO<>(Employee.class);
+	static EmployeeManager employeeManager = new EmployeeManagerImpl();
 	static Form<Employee> empForm = Form.form(Employee.class);
 
 	@Security.Authenticated(Secured.class)
 	public static Result getEmployee() {
-		List<Employee> employees = employeeDao.findAll();
+		List<Employee> employees = employeeManager.findAll();
 		Play.application().configuration().getString("application.langs");
 
 		return ok(employee.render("Employee Information", employees, empForm));
@@ -31,15 +33,15 @@ public class EmployeeController extends Controller {
 	public static Result setEmployee() {
 		Employee employee = Form.form(Employee.class).bindFromRequest().get();
 		if (StringUtils.isEmpty(employee.getObjectId())) {
-			employeeDao.save(employee);
+			employeeManager.save(employee);
 		} else {
-			employeeDao.update(new ObjectId(employee.getObjectId()), employee);
+			employeeManager.update( employee);
 		}
 		return redirect(routes.EmployeeController.getEmployee());
 	}
 
 	public static Result removeEmployee(ObjectId id) {
-		employeeDao.delete(id);
+		employeeManager.delete(id);
 		return redirect(routes.EmployeeController.getEmployee());
 	}
 

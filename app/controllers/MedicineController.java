@@ -11,21 +11,23 @@ import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security;
+import service.MedicineManager;
+import service.impl.MedicineManagerImpl;
 import views.html.medicine;
-import dao.JongoDAO;
 
 public class MedicineController extends Controller{
 	
-	private static JongoDAO<Medicine> medicineDao = new JongoDAO<>(Medicine.class);
+	//private static JongoDAO<Medicine> medicineDao = new JongoDAO<>(Medicine.class);
+	private static MedicineManager medicineManager = new MedicineManagerImpl();
 	
 	@Security.Authenticated(Secured.class)
 	public static Result getMedicine(){
-		List<Medicine> medicines = medicineDao.findAll();
+		List<Medicine> medicines = medicineManager.findAll();
 		return ok(medicine.render("Medicine List",medicines));
 	}
 	
 	public static Result setMedicine(){
-		List<Medicine> medicines = medicineDao.findAll();
+		List<Medicine> medicines = medicineManager.findAll();
 		Form<Medicine> form = Form.form(Medicine.class).bindFromRequest();
 
 		if(form.hasErrors()) {
@@ -34,16 +36,16 @@ public class MedicineController extends Controller{
 		else {
 			Medicine medicineObj = form.get();
 			if(StringUtils.isEmpty(medicineObj.getObjectId())){
-				medicineDao.save(medicineObj);
+				medicineManager.save(medicineObj);
 			}else{
-				medicineDao.update(new ObjectId(medicineObj.getObjectId()), medicineObj);
+				medicineManager.update(new ObjectId(medicineObj.getObjectId()), medicineObj);
 			}
 		}
 		return redirect(routes.MedicineController.getMedicine());
 	}
 	
 	public static Result removeMedicine(ObjectId id) {
-		medicineDao.delete(id);
+		medicineManager.delete(id);
 		return redirect(routes.MedicineController.getMedicine());
 	 }	
 	

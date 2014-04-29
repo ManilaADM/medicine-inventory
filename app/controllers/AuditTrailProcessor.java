@@ -3,18 +3,21 @@ package controllers;
 import models.ActionDoneType;
 import models.AuditTrail;
 import models.MedSupQty;
-import models.Medicine;
 import models.Transaction;
 
 import org.bson.types.ObjectId;
 
-import dao.JongoDAO;
-import dao.MedicineDAO;
+import service.AuditTrailManager;
+import service.MedicineManager;
+import service.impl.AuditTrailManagerImpl;
+import service.impl.MedicineManagerImpl;
 
 public class AuditTrailProcessor {
 	
-	private static JongoDAO<AuditTrail> auditTrailDao = new JongoDAO<>(AuditTrail.class);
-	private static MedicineDAO medicineDao = new MedicineDAO(Medicine.class);
+	//private static JongoDAO<AuditTrail> auditTrailDao = new JongoDAO<>(AuditTrail.class);
+	private static AuditTrailManager auditTrailManager = new AuditTrailManagerImpl();
+	//private static MedicineDAO medicineDao = new MedicineDAO(Medicine.class);
+	private static MedicineManager medicineManager = new MedicineManagerImpl();
 
 	private static String loginUser = UserController.name();
 
@@ -35,7 +38,7 @@ public class AuditTrailProcessor {
 					AuditTrail individualAuditTrail = transactionAuditTrail.clone();
 					individualAuditTrail.setMedSupBrandName(medSup.getBrandName());
 					individualAuditTrail.setMedSupQty(medSup.getQuantity());
-					auditTrailDao.save(individualAuditTrail);
+					auditTrailManager.save(individualAuditTrail);
 				}
 				break;
 			}
@@ -43,11 +46,11 @@ public class AuditTrailProcessor {
 			{
 				medLoop: for (MedSupQty medSup : transaction.getMedSupItems())
 				{
-					if (medSup.getId().equals(medicineDao.findOne(medId).getIdAsString()))
+					if (medSup.getId().equals(medicineManager.findOne(medId).getIdAsString()))
 					{
 						transactionAuditTrail.setMedSupBrandName(medSup.getBrandName());
 						transactionAuditTrail.setMedSupQty(medSup.getQuantity());
-						auditTrailDao.save(transactionAuditTrail);
+						auditTrailManager.save(transactionAuditTrail);
 						break medLoop;
 					}
 				}

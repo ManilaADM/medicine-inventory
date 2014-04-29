@@ -25,15 +25,18 @@ import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security;
+import service.EmployeeManager;
+import service.MedicineManager;
+import service.TransactionManager;
+import service.impl.EmployeeManagerImpl;
+import service.impl.MedicineManagerImpl;
+import service.impl.TransactionManagerImpl;
 import validator.TransactionValidator;
 import views.html.transaction;
 import action.SendEmailAlertAction;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
-import dao.JongoDAO;
-import dao.MedicineDAO;
-import dao.TransactionDAO;
 import exceptions.InsufficientCountException;
 
 public class TransactionController extends Controller {
@@ -43,21 +46,21 @@ public class TransactionController extends Controller {
 	private static String TXN_ROW_LIMIT = Configuration.root().getString("transaction.table.rowLimit");;
 	private static String SORT_BY_FIELD = Configuration.root().getString("transaction.table.sortBy");;
 	
-	private static JongoDAO<Employee> employeeDao = new JongoDAO<>(Employee.class);
-	private static TransactionDAO transactionDao = new TransactionDAO(Transaction.class);
-	private static MedicineDAO medicineDao = new MedicineDAO(Medicine.class);
+	private static EmployeeManager employeeManager = new EmployeeManagerImpl();
+	private static TransactionManager transactionManager = new TransactionManagerImpl();
+	private static MedicineManager medicineManager = new MedicineManagerImpl();
 	private static AuditTrailProcessor auditTrailProcessor = new AuditTrailProcessor();
 	private static SendEmailAlertAction sendEmailAction = new SendEmailAlertAction();
 	
 	@Security.Authenticated(Secured.class)
     public static Result getTransactions() {
 
-		List<TransactionVO> medLogs = transactionDao.fetchTransactions(SORT_BY_FIELD, false, TXN_ROW_LIMIT);
+		List<TransactionVO> medLogs = transactionManager.fetchTransactions(SORT_BY_FIELD, false, TXN_ROW_LIMIT);
     	
-    	List<Employee> employees = employeeDao.findAll();
+    	List<Employee> employees = employeeManager.findAll();
 		String employeeNames = getEmployeeNames(employees);
 		
-		List<Medicine> medicines = medicineDao.findAll();
+		List<Medicine> medicines = medicineManager.findAll();
 		String medicinesJson = getMedicinesJson(medicines);
 		
 		Form<Transaction> transactionForm = Form.form(Transaction.class);
@@ -76,10 +79,10 @@ public class TransactionController extends Controller {
     	ObjectNode result = Json.newObject();
     	boolean foundRecordToUpdate = false;
     	
-    	if(transactionDao.cancelMedSupItemRequest(txnId, medId)) {
-    		medicineDao.updateMedicalSupply(medId, quantity, true);
+    	if(transactionManager.cancelMedSupItemRequest(txnId, medId)) {
+    		medicineManager.updateMedicalSupply(medId, quantity, true);
     		foundRecordToUpdate = true;
-    		Transaction transactionId = transactionDao.findOne(new ObjectId (txnId));
+    		Transaction transactionId = transactionManager.findOne(new ObjectId (txnId));
 			auditTrailProcessor.saveTransactionInAuditTrail(transactionId, new ObjectId(medId), ActionDoneType.Returned);
     	}
     	result.put("ok", foundRecordToUpdate);
@@ -142,14 +145,14 @@ public class TransactionController extends Controller {
     
     public static Result setTransaction(){
 		
-    	List<TransactionVO> medLogs = transactionDao.fetchTransactions(SORT_BY_FIELD, false, TXN_ROW_LIMIT);
+    	List<TransactionVO> medLogs = transactionManager.fetchTransactions(SORT_BY_FIELD, false, TXN_ROW_LIMIT);
     	
-    	List<Employee> employees = employeeDao.findAll();
+    	List<Employee> employees = employeeManager.findAll();
 		String employeeNames = getEmployeeNames(employees);
 		
 		Form<Transaction> transactionForm = Form.form(Transaction.class).bindFromRequest();
 		List<ObjectId> medicineIDs = findRequestedMedicinesIDs(transactionForm.get().getMedSupItems());
-		List<Medicine> medicines = medicineDao.findRequestedMedicinesFromDB(medicineIDs);
+		List<Medicine> medicines = medicineManager.findRequestedMedicinesFromDB(medicineIDs);
 		
 		TransactionValidator transactionValidator = new TransactionValidator();
 		String vistorName = transactionForm.get().getVisitorName();
@@ -162,7 +165,7 @@ public class TransactionController extends Controller {
 		}
 		
 		if(transactionForm.hasErrors()) {
-			List<Medicine> allMedicines = medicineDao.findAll();
+			List<Medicine> allMedicines = medicineManager.findAll();
 			String medicinesJson = getMedicinesJson(allMedicines);
 			return badRequest(transaction.render(medLogs, employeeNames, medicinesJson, transactionForm));
 	    }
@@ -174,11 +177,11 @@ public class TransactionController extends Controller {
 				{
 					for (MedSupQty medReq : transactionObj.getMedSupItems())
 					{
-						medicineDao.updateMedSupUponTransaction(medReq, medicines);
-						Medicine updatedMedicine = medicineDao.findRequestedMedicineFromDB(new ObjectId(medReq.getId()));
+						medicineManager.updateMedSupUponTransaction(medReq, medicines);
+						Medicine updatedMedicine = medicineManager.findRequestedMedicineFromDB(new ObjectId(medReq.getId()));
 						sendEmailAction.sendEmail(updatedMedicine);
 					}
-					transactionDao.save(transactionObj);
+					transactionManager.save(transactionObj);
 					auditTrailProcessor.saveTransactionInAuditTrail(transactionObj, null, ActionDoneType.Taken);
 				}
 				catch (InsufficientCountException e)
@@ -192,7 +195,7 @@ public class TransactionController extends Controller {
 					return getBadRequestStatus(medLogs, employeeNames, transactionForm);
 				}
 			}else{
-				transactionDao.update(transactionObj.getId(), transactionObj);
+				transactionManager.update(transactionObj.getId(), transactionObj);
 			}
 		}
 		return redirect(routes.TransactionController.getTransactions());
@@ -200,7 +203,7 @@ public class TransactionController extends Controller {
     
     private static Result getBadRequestStatus(List<TransactionVO> medLogs, String employeeNames, Form<Transaction> transactionForm)
 	{
-		List<Medicine> allMedicines = medicineDao.findAll();
+		List<Medicine> allMedicines = medicineManager.findAll();
 		String medicinesJson = getMedicinesJson(allMedicines);
 		return badRequest(transaction.render(medLogs, employeeNames, medicinesJson, transactionForm));
 	}
