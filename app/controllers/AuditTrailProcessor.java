@@ -12,7 +12,7 @@ import service.MedicineManager;
 import service.impl.AuditTrailManagerImpl;
 import service.impl.MedicineManagerImpl;
 
-public class AuditTrailProcessor {
+public class AuditTrailProcessor  {
 	
 	//private static JongoDAO<AuditTrail> auditTrailDao = new JongoDAO<>(AuditTrail.class);
 	private static AuditTrailManager auditTrailManager = new AuditTrailManagerImpl();
