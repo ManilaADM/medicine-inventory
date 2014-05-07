@@ -1,5 +1,7 @@
 package action;
 
+import org.apache.commons.mail.EmailException;
+
 import models.Medicine;
 import play.Play;
 import play.i18n.Messages;
@@ -9,7 +11,7 @@ import com.typesafe.plugin.MailerPlugin;
 
 public class SendEmailAlertAction 
 {
-	public void sendEmail(Medicine medicine) 
+	public void sendEmail(Medicine medicine) throws EmailException
 	{
 		MailerAPI mail = play.Play.application().plugin(MailerPlugin.class).email();
 		if (medicine.isQuantifiable() && medicine.getCount() <= medicine.getNotificationAlertCount()) 

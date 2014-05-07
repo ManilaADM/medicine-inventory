@@ -13,6 +13,7 @@ import models.Medicine;
 import models.Transaction;
 import models.dto.TransactionVO;
 
+import org.apache.commons.mail.EmailException;
 import org.bson.types.ObjectId;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -178,8 +179,7 @@ public class TransactionController extends Controller {
 					for (MedSupQty medReq : transactionObj.getMedSupItems())
 					{
 						medicineManager.updateMedSupUponTransaction(medReq, medicines);
-						Medicine updatedMedicine = medicineManager.findRequestedMedicineFromDB(new ObjectId(medReq.getId()));
-						sendEmailAction.sendEmail(updatedMedicine);
+						sendEmailNotification(medReq);
 					}
 					transactionManager.save(transactionObj);
 					auditTrailProcessor.saveTransactionInAuditTrail(transactionObj, null, ActionDoneType.Taken);
@@ -208,4 +208,16 @@ public class TransactionController extends Controller {
 		return badRequest(transaction.render(medLogs, employeeNames, medicinesJson, transactionForm));
 	}
     
+	private static void sendEmailNotification(MedSupQty medReq)
+	{
+		try
+		{
+			Medicine updatedMedicine = medicineManager.findRequestedMedicineFromDB(new ObjectId(medReq.getId()));
+			sendEmailAction.sendEmail(updatedMedicine);
+		}
+		catch (EmailException e)
+		{
+			Logger.warn("Unable to send email notification", e);
+		}
+	}    
 }
