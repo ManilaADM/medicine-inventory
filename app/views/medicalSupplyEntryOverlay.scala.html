@@ -1,0 +1,57 @@
+@import play.Configuration
+
+<div class="overlayBox">
+	<div class="overlayContent">
+		<!--the close button-->
+		<div class="top">
+			@Configuration.root().getString("medicalSupply.overlay.title")
+			<input type="button" onclick="closeOverlay('.overlayBox');" value="X" style="float: right;" />
+		</div>
+		<!--normal content-->
+		<div class="overlay-content">
+			<form action="@controllers.routes.MedicineController.setMedicine()" method="post">
+				<input type="hidden" id="oid" name="objectId" >
+				<table>
+					<tr>
+						<td><label class="overlay-bold">@Configuration.root().getString("medicalSupply.overlay.medName"): </label></td>
+						<td><input id="brandName" name="brandName"></td>
+					</tr>
+					<tr>
+						<td><label class="overlay-bold">@Configuration.root().getString("medicalSupply.overlay.genName"): </label></td>
+						<td><input id="genericName" name="genericName"></td>
+					</tr>
+					<tr>
+						<td><label class="overlay-bold">@Configuration.root().getString("medicalSupply.overlay.desc"): </label></td>
+						<td><input id="description" name="description"></td>
+					</tr>
+					<tr>
+						<td><label class="overlay-bold">@Configuration.root().getString("medicalSupply.overlay.quantifiable"): </label></td>
+						<td><input type="checkbox" id="quantifiable" name="quantifiable"></td>
+					</tr>
+					<tr>
+						<td><label class="overlay-bold">@Configuration.root().getString("medicalSupply.overlay.available"): </label></td>
+						<td><input type="checkbox" id="available" name="available"></td>
+					</tr>
+					<tr>
+						<td><label class="overlay-bold">@Configuration.root().getString("medicalSupply.overlay.stockCnt"): </label></td>
+						<td><input id="count" name="count"></td>
+					</tr>
+					<tr>
+						<td><label class="overlay-bold">@Configuration.root().getString("medicalSupply.overlay.dailyLmt"): </label></td>
+						<td><input id="dailyQtyLimitPerUser" name="dailyQtyLimitPerUser"></td>
+					</tr>
+					<tr>
+						<td><label class="overlay-bold">@Configuration.root().getString("medicalSupply.overlay.alertQty"): </label></td>
+						<td><input id="notificationAlertCount" name="notificationAlertCount"></td>
+					</tr>
+				</table>
+				<div class="transactionButtons">
+					<center>
+						<input type="submit" value='@Configuration.root().getString("overlay.save")' id="saveMedicalSupply" />
+						<input class="button" type="button" onclick="closeOverlay('.overlayBox'); "value='@Configuration.root().getString("overlay.close")' />
+					</center>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>

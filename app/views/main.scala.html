@@ -1,4 +1,6 @@
-@(title: String, scripts: Html = Html(""))(content: Html)
+@(title: String, scripts: Html = Html(""), nav: String = "")(content: Html)
+
+@import play.Configuration
 
 <!DOCTYPE html>
 
@@ -14,20 +16,38 @@
     </head>
     <body>
     	<header>
-			<div id="pageTitle"><a href="#">@title</a></div>
+    		<div id="pageTitle"><a href="#">@title</a></div>
 			<div id="user">
 				<div id="userName">Hello, @UserController.name! </div>
 				<div id="logout">
-					<a href="@routes.UserController.logout()"><em>Logout</em></a>
+					<a href="@routes.UserController.logout()"><em>@Configuration.root().getString("button.logout")</em></a>
 				</div>
 			</div>
+			<br/><br/>
+			<div class="topbar">
+                <ul class="nav">
+                	<!-- TODO: remove hard coded value -->
+                	<li class="@("active".when(nav == "employee"))">
+                		<a href="@routes.EmployeeController.getEmployee()">@Configuration.root().getString("page.title.employee")</a>
+                	</li>
+                	<li class="@("active".when(nav == "medicalSupply"))">
+                		<a href="@routes.MedicineController.getMedicine()">@Configuration.root().getString("page.title.medicalSupply")</a>
+                	</li>
+                	<li class="@("active".when(nav == "reports"))">
+                		<a href="@routes.MedicineController.getMedicine()">@Configuration.root().getString("page.title.report")</a>
+                	</li>
+                	<li class="@("active".when(nav == "transaction"))">
+                		<a href="@routes.TransactionController.getTransactions()">@Configuration.root().getString("page.title.transaction")</a>
+                	</li>
+                </ul>
+        	</div>
 		</header>
         <section>
             @content
         </section>
         <footer>
        		<p id="copyright" style="text-align: center; font-size: small;">
-       			Copyright 2014 NIIT Philippines Inc. All rights reserved.
+       			@Configuration.root().getString("niit.copyright")
        		</p>
  		</footer>	
     </body>

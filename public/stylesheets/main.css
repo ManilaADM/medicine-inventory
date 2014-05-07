@@ -128,6 +128,10 @@ div#logout {
 	margin-left: 5px;
 }
 
+div.topbar {
+	padding:0;
+}
+
 .bgCover { 
 	background:#000; 
 	position:absolute; 
@@ -164,6 +168,10 @@ div#logout {
   padding: 20px 20px 20px 20px;
 }
 
+.overlay-bold {
+	font-weight:bold;
+}
+
 .overlay-text {
 	font-weight:bold;
 }
@@ -195,31 +203,32 @@ div .error {
 
 ul.nav {
 	list-style-type:none;
-	width: 100%;
-	float:left;
-	margin: 0 0 3em 0;
-	padding:0;
-	background-color: #f2f2f2;
-	border-bottom: 1px solid #ccc; 
-	border-top: 1px solid #ccc;
+	padding: 0;
 }
 
 ul.nav li {
 	float:left;
+	background-color: #0e3997;
+	border-bottom: 1px solid #ccc; 
+	border-top: 1px solid #ccc;
 }
 
 ul.nav li a {
 	display: block; 
-	padding: 8px 15px;
+	padding: 8px 30px;
 	font-weight: bold;
 	text-decoration: none;
-	color: black;	
+	color: #ffffff;	
 	border-right: 1px solid #ccc;
 }
 
+ul.nav .active {
+	background-color: #fa6d03;
+}
+
 ul.nav li a:hover  {
-	color: #c00;
-	background-color: #fff; 
+	color: #ffffff;
+	background-color: #2b57a5; 
 }
 
 .ui-dialog-titlebar {
@@ -261,4 +270,55 @@ ul.nav li a:hover  {
 .fancyBtn:hover:enabled {
 	background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#dcdcdc));
 	background: -moz-linear-gradient(center top , rgb(255, 255, 255), rgb(220, 220, 220)) repeat scroll 0% 0% transparent;
+}
+
+.formLabel {
+	font-weight: bold;
+}
+
+input.textbox, textarea.textbox {
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1) inset;
+    border: 1px solid #CCCCCC;
+    border-radius: 5px;
+    color: #808080;
+    display: inline-block;
+    font-size: 13px;
+    height: 18px;
+    line-height: 18px;
+    padding: 4px;
+    width: 210px;
+}
+
+input.button {
+	border-radius: 5px; 
+	color: #ffffff;
+	padding: 4px 5px;
+	width: 100px;
+	font-weight:bold;
+}
+
+input.orangeButton {
+	border: 1px solid #fa6d03;
+	background-color: #fa6d03; 
+}
+
+input.blueButton {
+	border: 1px solid #7fb5da;
+	background-color: #7fb5da;
+}
+
+table.dataContainer, th.dataContainer, td.dataContainer {
+	border-collapse: collapse;
+    border: 1px solid black;
+    padding: 4px;
+}
+
+table th {
+	font-weight:bold;
+	background-color: #faddcf;
+}
+
+.medicineList {
+	padding-top: 30px;
+	float: left
 }

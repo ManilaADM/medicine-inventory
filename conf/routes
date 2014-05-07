@@ -16,6 +16,7 @@ GET		/employee/:id				controllers.EmployeeController.removeEmployee(id: ObjectId
 GET		/medicine					controllers.MedicineController.getMedicine()
 POST	/medicine					controllers.MedicineController.setMedicine()
 GET		/medicine/:id				controllers.MedicineController.removeMedicine(id: ObjectId)
+GET		/medicine					controllers.MedicineController.searchMedicalSupply()
 
 # Javascript routing
 GET    /assets/javascripts/routes   controllers.TransactionController.javascriptRoutes()

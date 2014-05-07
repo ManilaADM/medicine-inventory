@@ -1,13 +1,7 @@
 @(message: String)
 
-@main("Welcome to NIIT Digital Logbook") {
+@import play.Configuration
 
-		<div class="navBox">	
-			<ul class="nav">
-				<li ><a href="/transaction">Transaction</a></li>
-				<li><a href="/employee">Employee</a></li>
-				<li><a href="/medicine">Medical Supply</a></li>
-			</ul>
-		</div>
-	
+@main(Configuration.root().getString("project.title"), nav=Configuration.root().getString("nav.employee")) {
+
 }

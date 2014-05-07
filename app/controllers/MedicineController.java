@@ -47,6 +47,12 @@ public class MedicineController extends Controller{
 	public static Result removeMedicine(ObjectId id) {
 		medicineManager.delete(id);
 		return redirect(routes.MedicineController.getMedicine());
-	 }	
+	 }
+	
+	// TODO: create logic for searching medical supply using their brand or generic name
+	public static Result searchMedicalSupply(){
+		List<Medicine> medicines = medicineManager.findAll();
+		return ok(medicine.render("Medicine List",medicines));
+	}
 	
 }

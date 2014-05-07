@@ -23,7 +23,7 @@
 }
 @hasRecords = @{if(transactions.size() == 0) false else true}
 
-@main(Configuration.root().getString("transaction.title"), scripts) {
+@main(Configuration.root().getString("project.title"), scripts, nav=Configuration.root().getString("nav.transaction")) {
 
 	<div name="container" style="width: 100%;">
 		<div>

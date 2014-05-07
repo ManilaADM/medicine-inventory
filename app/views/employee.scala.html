@@ -1,8 +1,8 @@
 @(message : String)(employees : List[models.Employee])(empForm: Form[Employee])
+@import play.Configuration
 @import helper._
 
-@main("Employee") {
-
+@main(Configuration.root().getString("project.title"), nav=Configuration.root().getString("nav.employee")) {
  	<script src='@routes.Assets.at("javascripts/admin.js")')></script>
 	<h1>@message</h1>
 	<div name="container" style="width: 70%;">
