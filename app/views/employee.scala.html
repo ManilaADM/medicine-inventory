@@ -7,7 +7,7 @@
 	<h1>@message</h1>
 	<div name="container" style="width: 70%;">
 		
-		<div style="float: left; display: inline;" >
+		<div style="display: inline;" >
 			@form(routes.EmployeeController.setEmployee(), 'id -> "empForm"){
 				 	<input type="hidden" id="oid" name="objectId">
 				    <label style="margin-right: 65px">Id</label> <input id="employeeCode" name="employeeCode"><br>
@@ -20,8 +20,8 @@
 					<input type="reset">
 			}
 		</div>
-		<div style="float:left;margin-left: 80px;">&nbsp;</div>
-		<div  name="employeeList" style="float: left; display: inline;">
+		<div style="margin-left: 80px;">&nbsp;</div>
+		<div  name="employeeList" style="display: inline;">
 			<table class="dataContainer" border="1">
 				  <tr>
 				    <th>Employee Id</th>

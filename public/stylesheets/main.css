@@ -2,20 +2,22 @@ html, body {
     padding: 0;
     margin: 0;
     font-family: Helvetica, Arial;
-    color: #3A4244;
+    background-image: url("../images/bg-main.jpg");
+    background-repeat:no-repeat;
+    width:957px;
+   	margin:auto;
 }
 
+
 header {
-    padding: 20px 30px 50px;
+    padding: 110px 30px 50px;
     font-size: 15px;
 }
 
 footer {
 	padding: 10px 30px;
     background: orange;
-    position:fixed;
     bottom:0;
-    width:100%;
 }
 
 header a {
@@ -107,18 +109,30 @@ table.scrollable thead tr {
 div#user {
 	float:right;
 	width:auto;
+	color:#fff;
+	font-weight:bold;
+	font-size: 18px;
+	
+}
+
+div#user a  {
+	color:#fff;
+	text-decoration: underline;
 }
 
 div#user a:hover  {
-	color: #c00;
-	background-color: #fff; 
+	color:#c00;
 }
 
 div#userName {
     width:auto;
     float:left; 
     margin-right: 5px;
-	white-space: nowrap; 
+	white-space: nowrap;
+}
+
+div#userName span{
+	color:yellow;
 }
 
 div#logout {
@@ -320,5 +334,5 @@ table th {
 
 .medicineList {
 	padding-top: 30px;
-	float: left
+	/**float: left**/
 }
