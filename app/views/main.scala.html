@@ -15,13 +15,10 @@
     	@scripts
     </head>
     <body>
-    	
-    		
-    	
     	<header>
-    		<div id="pageTitle"><a href="#">@title</a></div>
+    		<div id="pageTitle" title="@title"></div>
 			<div id="user">
-				<div id="userName">Hello, @UserController.name! </div>
+				<div id="userName">Hello, <span>@UserController.name!</span></div>
 				<div id="logout">
 					<a href="@routes.UserController.logout()"><em>@Configuration.root().getString("button.logout")</em></a>
 				</div>
@@ -29,17 +26,17 @@
 			<br/><br/>
 			<div class="topbar">
                 <ul class="nav">
-                	@if( UserController.role == models.Role.ADMIN){
-	                	<!-- TODO: remove hard coded value -->
-	                	<li class="@("active".when(nav == "employee"))">
-	                		<a href="@routes.EmployeeController.getEmployee()">@Configuration.root().getString("page.title.employee")</a>
-	                	</li>
-	                	<li class="@("active".when(nav == "medicalSupply"))">
-	                		<a href="@routes.MedicineController.getMedicine()">@Configuration.root().getString("page.title.medicalSupply")</a>
-	                	</li>
-	                	<li class="@("active".when(nav == "reports"))">
-	                		<a href="@routes.MedicineController.getMedicine()">@Configuration.root().getString("page.title.report")</a>
-	                	</li>
+	                @if( UserController.role == models.Role.ADMIN){
+                	<!-- TODO: remove hard coded value -->
+                	<li class="@("active".when(nav == "employee"))">
+                		<a href="@routes.EmployeeController.getEmployee()">@Configuration.root().getString("page.title.employee")</a>
+                	</li>
+                	<li class="@("active".when(nav == "medicalSupply"))">
+                		<a href="@routes.MedicineController.getMedicine()">@Configuration.root().getString("page.title.medicalSupply")</a>
+                	</li>
+                	<li class="@("active".when(nav == "reports"))">
+                		<a href="@routes.MedicineController.getMedicine()">@Configuration.root().getString("page.title.report")</a>
+                	</li>
                 	}
                 	<li class="@("active".when(nav == "transaction"))">
                 		<a href="@routes.TransactionController.getTransactions()">@Configuration.root().getString("page.title.transaction")</a>
