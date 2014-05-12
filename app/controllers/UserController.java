@@ -32,6 +32,10 @@ public class UserController extends Controller {
 	public static String name() {
 		return session("name");
 	}
+	
+	public static String role(){
+		return session("role");
+	}
 
 	public static Result authenticate() {
 		Form<LoginForm> loginForm = Form.form(LoginForm.class)
@@ -44,6 +48,7 @@ public class UserController extends Controller {
 			session().clear();
 			session("email", loginForm.get().email);
 			session("name", user.name);
+			session("role",user.getRole());
 			return redirect(routes.TransactionController.getTransactions());
 		}
 	}

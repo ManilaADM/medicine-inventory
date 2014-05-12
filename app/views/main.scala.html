@@ -15,6 +15,9 @@
     	@scripts
     </head>
     <body>
+    	
+    		
+    	
     	<header>
     		<div id="pageTitle"><a href="#">@title</a></div>
 			<div id="user">
@@ -26,16 +29,18 @@
 			<br/><br/>
 			<div class="topbar">
                 <ul class="nav">
-                	<!-- TODO: remove hard coded value -->
-                	<li class="@("active".when(nav == "employee"))">
-                		<a href="@routes.EmployeeController.getEmployee()">@Configuration.root().getString("page.title.employee")</a>
-                	</li>
-                	<li class="@("active".when(nav == "medicalSupply"))">
-                		<a href="@routes.MedicineController.getMedicine()">@Configuration.root().getString("page.title.medicalSupply")</a>
-                	</li>
-                	<li class="@("active".when(nav == "reports"))">
-                		<a href="@routes.MedicineController.getMedicine()">@Configuration.root().getString("page.title.report")</a>
-                	</li>
+                	@if( UserController.role == models.Role.ADMIN){
+	                	<!-- TODO: remove hard coded value -->
+	                	<li class="@("active".when(nav == "employee"))">
+	                		<a href="@routes.EmployeeController.getEmployee()">@Configuration.root().getString("page.title.employee")</a>
+	                	</li>
+	                	<li class="@("active".when(nav == "medicalSupply"))">
+	                		<a href="@routes.MedicineController.getMedicine()">@Configuration.root().getString("page.title.medicalSupply")</a>
+	                	</li>
+	                	<li class="@("active".when(nav == "reports"))">
+	                		<a href="@routes.MedicineController.getMedicine()">@Configuration.root().getString("page.title.report")</a>
+	                	</li>
+                	}
                 	<li class="@("active".when(nav == "transaction"))">
                 		<a href="@routes.TransactionController.getTransactions()">@Configuration.root().getString("page.title.transaction")</a>
                 	</li>
