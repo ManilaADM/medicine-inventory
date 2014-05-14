@@ -37,10 +37,10 @@
                 	<li class="@("active".when(nav == "reports"))">
                 		<a href="@routes.ReportsController.getReports()">@Configuration.root().getString("page.title.report")</a>
                 	</li>
+                	}
                 	<li class="@("active".when(nav == "transaction"))">
                 		<a href="@routes.TransactionController.getTransactions()">@Configuration.root().getString("page.title.transaction")</a>
                 	</li>
-                	}
                 </ul>
         	</div>
 		</header>
