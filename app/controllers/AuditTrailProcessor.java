@@ -19,13 +19,11 @@ public class AuditTrailProcessor  {
 	//private static MedicineDAO medicineDao = new MedicineDAO(Medicine.class);
 	private static MedicineManager medicineManager = new MedicineManagerImpl();
 
-	private static String loginUser = UserController.name();
-
 	public void saveTransactionInAuditTrail(Transaction transaction, ObjectId medId, ActionDoneType actionDone)
 	{
 		AuditTrail transactionAuditTrail = new AuditTrail();
 		transactionAuditTrail.setLogTimeStamp(transaction.getTimeStamp());
-		transactionAuditTrail.setUserName(loginUser);
+		transactionAuditTrail.setUserName(UserController.name());
 		transactionAuditTrail.setRequestorName(transaction.getEmployeeName());
 		transactionAuditTrail.setActionDone(actionDone.toString());
 		
