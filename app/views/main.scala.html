@@ -26,6 +26,7 @@
 			<br/><br/>
 			<div class="topbar">
                 <ul class="nav">
+	                @if( UserController.role == models.Role.ADMIN){
                 	<!-- TODO: remove hard coded value -->
                 	<li class="@("active".when(nav == "employee"))">
                 		<a href="@routes.EmployeeController.getEmployee()">@Configuration.root().getString("page.title.employee")</a>

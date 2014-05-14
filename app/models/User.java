@@ -17,7 +17,9 @@ public class User implements JongoModel {
     public String name;
 	
 	public String password;
-
+	
+	public String role;
+	
 	public User () {
 		
 	}
@@ -60,8 +62,18 @@ public class User implements JongoModel {
       this.password = password;
     }
 
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
+	}
+
 	@Override
 	public String getCollectionName() {
 		return "users";
 	}
+	
+	
 }
