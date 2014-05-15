@@ -5,8 +5,8 @@
 @hasRecords = @{if(medicalSupplies.size() == 0) false else true}
 
 @main(Configuration.root().getString("project.title"), nav=Configuration.root().getString("nav.medicalSupply")) {
- 	<script src='@routes.Assets.at("javascripts/admin.js")' type="text/javascript"></script>
  	<script src='@routes.Assets.at("javascripts/medicalSupply.js")' type="text/javascript"></script>
+ 	<script src='@routes.Assets.at("javascripts/medicalSupplyEntryOverlay.js")' type="text/javascript"></script>
 	<div class="container" style="width: 90%;">
 		@if(hasRecords == false){
 			<h4 style="color: red;">@Configuration.root().getString("medicalSupply.table.empty.msg")</h4>
