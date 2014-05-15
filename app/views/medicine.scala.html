@@ -41,10 +41,14 @@
 				  	<tr>
 				  		<td hidden="true" class="id">@m.getId</td>
 				  		<td class="dataContainer"><input type="checkbox" name="selectMedEntry" value="@m.getId" class="selectMedEntry"></td>
-				  		<td class="dataContainer"><a class="editMedicalSupply" href="#">@m.getBrandName</a></td>
-				  		<td class="dataContainer">@m.getGenericName</td>
-				  		<td class="dataContainer">@m.getDescription</td>
-				  		<td class="dataContainer">@m.getCount</td>
+				  		<td class="dataContainer brandName"><a class="editMedicalSupply" href="#">@m.getBrandName</a></td>
+				  		<td class="dataContainer genericName">@m.getGenericName</td>
+				  		<td class="dataContainer description">@m.getDescription</td>
+				  		<td class="dataContainer count">@m.getCount</td>
+				  		<td hidden="true" class="notificationAlertCount">@m.getNotificationAlertCount</td>
+				  		<td hidden="true" class="dailyQtyLimitPerUser">@m.getDailyQtyLimitPerUser</td>
+				  		<td hidden="true" class="available">@m.isAvailable</td>
+				  		<td hidden="true" class="quantifiable">@m.isQuantifiable</td>
 				  	</tr>
 				  }	
 			</table>

@@ -317,8 +317,13 @@ input.orangeButton {
 }
 
 input.blueButton {
-	border: 1px solid #7fb5da;
-	background-color: #7fb5da;
+	border: 1px solid #1794c4;
+	background-color: #1794c4;
+}
+
+input.blueButton:hover {
+	border: 1px solid #4CB8E2;
+	background-color: #4CB8E2;
 }
 
 table.dataContainer, th.dataContainer, td.dataContainer {

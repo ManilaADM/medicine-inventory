@@ -13,42 +13,42 @@
 				<input type="hidden" id="oid" name="objectId" >
 				<table>
 					<tr>
-						<td><label class="overlay-bold">@Configuration.root().getString("medicalSupply.overlay.medName"): </label></td>
-						<td><input id="brandName" name="brandName"></td>
+						<td><label class="formLabel">@Configuration.root().getString("medicalSupply.overlay.brandName"): </label></td>
+						<td><input id="brandName" name="brandName" class="textbox"></td>
 					</tr>
 					<tr>
-						<td><label class="overlay-bold">@Configuration.root().getString("medicalSupply.overlay.genName"): </label></td>
-						<td><input id="genericName" name="genericName"></td>
+						<td><label class="formLabel">@Configuration.root().getString("medicalSupply.overlay.genName"): </label></td>
+						<td><input id="genericName" name="genericName" class="textbox"></td>
 					</tr>
 					<tr>
-						<td><label class="overlay-bold">@Configuration.root().getString("medicalSupply.overlay.desc"): </label></td>
-						<td><input id="description" name="description"></td>
+						<td><label class="formLabel">@Configuration.root().getString("medicalSupply.overlay.desc"): </label></td>
+						<td><input id="description" name="description" class="textbox"></td>
 					</tr>
 					<tr>
-						<td><label class="overlay-bold">@Configuration.root().getString("medicalSupply.overlay.quantifiable"): </label></td>
-						<td><input type="checkbox" id="quantifiable" name="quantifiable"></td>
-					</tr>
-					<tr>
-						<td><label class="overlay-bold">@Configuration.root().getString("medicalSupply.overlay.available"): </label></td>
+						<td><label class="formLabel">@Configuration.root().getString("medicalSupply.overlay.available"): </label></td>
 						<td><input type="checkbox" id="available" name="available"></td>
 					</tr>
 					<tr>
-						<td><label class="overlay-bold">@Configuration.root().getString("medicalSupply.overlay.stockCnt"): </label></td>
-						<td><input id="count" name="count"></td>
+						<td><label class="formLabel">@Configuration.root().getString("medicalSupply.overlay.quantifiable"): </label></td>
+						<td><input type="checkbox" id="quantifiable" name="quantifiable"></td>
 					</tr>
 					<tr>
-						<td><label class="overlay-bold">@Configuration.root().getString("medicalSupply.overlay.dailyLmt"): </label></td>
-						<td><input id="dailyQtyLimitPerUser" name="dailyQtyLimitPerUser"></td>
+						<td><label class="formLabel">@Configuration.root().getString("medicalSupply.overlay.stockCnt"): </label></td>
+						<td><input id="count" name="count" class="textbox"></td>
 					</tr>
 					<tr>
-						<td><label class="overlay-bold">@Configuration.root().getString("medicalSupply.overlay.alertQty"): </label></td>
-						<td><input id="notificationAlertCount" name="notificationAlertCount"></td>
+						<td><label class="formLabel">@Configuration.root().getString("medicalSupply.overlay.lmtPerPerson"): </label></td>
+						<td><input id="dailyQtyLimitPerUser" name="dailyQtyLimitPerUser" class="textbox"></td>
+					</tr>
+					<tr>
+						<td><label class="formLabel">@Configuration.root().getString("medicalSupply.overlay.alertQty"): </label></td>
+						<td><input id="notificationAlertCount" name="notificationAlertCount" class="textbox"></td>
 					</tr>
 				</table>
 				<div class="transactionButtons">
 					<center>
 						<input type="submit" value='@Configuration.root().getString("overlay.save")' id="saveMedicalSupply" />
-						<input class="button" type="button" onclick="closeOverlay('.overlayBox'); "value='@Configuration.root().getString("overlay.close")' />
+						<input type="button" onclick="closeOverlay('.overlayBox'); "value='@Configuration.root().getString("overlay.close")' />
 					</center>
 				</div>
 			</form>
