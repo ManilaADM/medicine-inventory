@@ -2,17 +2,19 @@ package service;
 
 import java.util.List;
 
+import models.MedSupQty;
+import models.Medicine;
+
 import org.bson.types.ObjectId;
 
 import exceptions.InsufficientCountException;
-
-import models.MedSupQty;
-import models.Medicine;
 
 public interface MedicineManager {
 	public Medicine findOne(ObjectId medId);
 
 	public List<Medicine> findAll();
+	
+	public List<Medicine> fetchMedicalSupplies(int rowLimit);
 
 	public void save(Medicine medicineObj);
 

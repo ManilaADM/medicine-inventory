@@ -9,6 +9,16 @@ $(document).ready(function(){
     
     $('.editMedicalSupply').click(function(){
     	openOverlay();
+    	var data = $(this).closest('.dataContainer tr');
+		$('#oid').val(data.find('.id').text());
+		$('#brandName').val(data.find('.brandName').text());
+		$('#genericName').val(data.find('.genericName').text());
+		$('#description').val(data.find('.description').text());
+		$('#count').val(data.find('.count').text());
+		$('#notificationAlertCount').val(data.find('.notificationAlertCount').text());
+		$('#dailyQtyLimitPerUser').val(data.find('.dailyQtyLimitPerUser').text());
+		$('#available').prop('checked', (data.find('.available').text()==="true"));
+		$('#quantifiable').prop('checked',(data.find('.quantifiable').text()==="true"));
     });
     
     $('#selectAll').click(function() {

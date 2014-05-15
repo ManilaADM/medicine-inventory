@@ -84,5 +84,14 @@ public class MedicineDAO extends JongoDAO<Medicine> {
 		
 		update(new ObjectId(medId),"$inc:{" + COUNT_FIELD +": #}, $set:{" + AVAILABLE_FIELD + ": #}", quantity, isAvailableAfterTransaction);
 	}
+	
+	/**
+	 * Retrieves a list of medical supplies where maximum size of list is the rowLimit.
+	 * @param rowLimit
+	 * @return list of medical supplies
+	 */
+	public List<Medicine> fetchMedicalSupplies(int rowLimit) {
+		return  Lists.newArrayList(collections.find().limit(rowLimit).as(Medicine.class));
+	}
 
 }

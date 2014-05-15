@@ -1,11 +1,16 @@
-@(message : String)(medicine : List[models.Medicine])
+@(message : String)(medicalSupplies: List[models.Medicine])
 
 @import play.Configuration
+
+@hasRecords = @{if(medicalSupplies.size() == 0) false else true}
 
 @main(Configuration.root().getString("project.title"), nav=Configuration.root().getString("nav.medicalSupply")) {
  	<script src='@routes.Assets.at("javascripts/admin.js")' type="text/javascript"></script>
  	<script src='@routes.Assets.at("javascripts/medicalSupply.js")' type="text/javascript"></script>
 	<div class="container" style="width: 90%;">
+		@if(hasRecords == false){
+			<h4 style="color: red;">@Configuration.root().getString("medicalSupply.table.empty.msg")</h4>
+		}
 		<div class="searchMedSup">
 			<form action="@controllers.routes.MedicineController.searchMedicalSupply()" method="get">
 				<label class="formLabel">@Configuration.root().getString("medicalSupply.label.searchMedName"): </label>
@@ -13,8 +18,7 @@
 				<input type="submit" class="button orangeButton" value="@Configuration.root().getString("button.search")">
 			</form>
 		</div>
-		<div class="medicineList">
-			<!-- TODO: move add and delete feature out of medicineList div--> 
+		<div class="medicalSupplyTableContainer">
 			<div style="float: left">
 				<form action="@controllers.routes.MedicineController.searchMedicalSupply()" method="get">		
 				<input type="button" value="@Configuration.root().getString("button.delete")" class="button blueButton">
@@ -23,26 +27,32 @@
 			<div style="float: right">
 				<a class="addMedicalSupply" href="#">@Configuration.root().getString("medicalSupply.link.addMedSup")</a>
 			</div>
+			@if(hasRecords == true){
 			<br/><br/>
 			<table class="dataContainer">
 				  <tr>
 				  	<th class="dataContainer"><input type="checkbox" id="selectAll"></th>
-				    <th class="dataContainer">@Configuration.root().getString("medicalSupply.header.brandName")</th>
-				    <th class="dataContainer">@Configuration.root().getString("medicalSupply.header.genericName")</th>
-				    <th class="dataContainer">@Configuration.root().getString("medicalSupply.header.desc")</th>
+				    <th class="dataContainer headerLabel">@Configuration.root().getString("medicalSupply.header.brandName")</th>
+				    <th class="dataContainer headerLabel">@Configuration.root().getString("medicalSupply.header.genericName")</th>
+				    <th class="dataContainer headerLabel">@Configuration.root().getString("medicalSupply.header.desc")</th>
 				    <th class="dataContainer">@Configuration.root().getString("medicalSupply.header.qty")</th>
 				  </tr>
-				  @for(m <- medicine){
+				  @for(m <- medicalSupplies){
 				  	<tr>
 				  		<td hidden="true" class="id">@m.getId</td>
 				  		<td class="dataContainer"><input type="checkbox" name="selectMedEntry" value="@m.getId" class="selectMedEntry"></td>
-				  		<td class="dataContainer"><a class="editMedicalSupply" href="#">@m.getBrandName</a></td>
-				  		<td class="dataContainer">@m.getGenericName</td>
-				  		<td class="dataContainer">@m.getDescription</td>
-				  		<td class="dataContainer">@m.getCount</td>
+				  		<td class="dataContainer brandName"><a class="editMedicalSupply" href="#">@m.getBrandName</a></td>
+				  		<td class="dataContainer genericName">@m.getGenericName</td>
+				  		<td class="dataContainer description">@m.getDescription</td>
+				  		<td class="dataContainer count">@m.getCount</td>
+				  		<td hidden="true" class="notificationAlertCount">@m.getNotificationAlertCount</td>
+				  		<td hidden="true" class="dailyQtyLimitPerUser">@m.getDailyQtyLimitPerUser</td>
+				  		<td hidden="true" class="available">@m.isAvailable</td>
+				  		<td hidden="true" class="quantifiable">@m.isQuantifiable</td>
 				  	</tr>
 				  }	
 			</table>
+			}
 		</div>
 		<br/>
 		<div class="bgCover">&nbsp;</div>
