@@ -23,6 +23,11 @@ public class MedicineManagerImpl implements MedicineManager{
 		return medicineDao.findAll();
 	}
 	@Override
+	public List<Medicine> fetchMedicalSupplies(int rowLimit) {
+		// TODO Auto-generated method stub
+		return medicineDao.fetchMedicalSupplies(rowLimit);
+	}
+	@Override
 	public void save(Medicine medicineObj) {
 		// TODO Auto-generated method stub
 		medicineDao.save(medicineObj);

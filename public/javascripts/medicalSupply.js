@@ -9,6 +9,16 @@ $(document).ready(function(){
     
     $('.editMedicalSupply').click(function(){
     	openOverlay();
+    	var data = $(this).closest('.dataContainer tr');
+		$('#oid').val(data.find('.id').text());
+		$('#brandName').val(data.find('.brandName').text());
+		$('#genericName').val(data.find('.genericName').text());
+		$('#description').val(data.find('.description').text());
+		$('#count').val(data.find('.count').text());
+		$('#notificationAlertCount').val(data.find('.notificationAlertCount').text());
+		$('#dailyQtyLimitPerUser').val(data.find('.dailyQtyLimitPerUser').text());
+		$('#available').prop('checked', (data.find('.available').text()==="true"));
+		$('#quantifiable').prop('checked',(data.find('.quantifiable').text()==="true"));
     });
     
     $('#selectAll').click(function() {
@@ -17,9 +27,9 @@ $(document).ready(function(){
     
     $(".selectMedEntry").click(function(){
     	if($(".selectMedEntry").length == $(".selectMedEntry:checked").length) {
-    		$("#selectall").prop("checked", "checked");
+    		$("#selectAll").prop("checked", true);
     	} else {
-    	$("#selectall").removeProp("checked");
+    		$("#selectAll").prop("checked", false);
     	}
     });
 })
@@ -69,14 +79,30 @@ function displayOverlay(id) {
 	return false;
 }
 
-function closeOverlay(id) {
+function closeOverlay(id) {	
 	//set status to closed
 	isOpen = false;
 	$(id).css( 'display', 'none' );
 	
-	//resetOverlay();
-	
+	resetOverlayContent();
+
 	// now animate the background to fade out to opacity 0
 	// and then hide it after the animation is complete.
 	$('.bgCover').animate( {opacity:0}, null, null, function() { $(this).hide(); } );
+}
+
+function resetOverlayContent() {
+	var errorMsg = $('#errorMsg');
+	errorMsg.html('');
+	
+	$('#available').prop('checked', true);
+	$('#quantifiable').prop('checked', true);
+
+	$("div.overlay-content input[type=text], input[type=hidden]").each(function(){
+		$(this).val('');
+		$(this).prop('disabled', false);
+		if ($(this).hasClass('overlayError')) {
+			$(this).removeClass('overlayError');
+		}
+	});
 }

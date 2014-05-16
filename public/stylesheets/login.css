@@ -1,0 +1,40 @@
+html, body {
+    padding: 0;
+    margin: 0;
+    font-family: Helvetica, Arial;    
+    width:957px;
+   	margin:auto;
+}
+
+
+header {
+	background-image: url("../images/header.jpg");
+    background-repeat:no-repeat;
+    padding: 110px 30px 40px;
+    font-size: 15px;
+}
+
+footer {
+	padding: 10px 30px;
+    background: orange;
+    bottom:0;
+}
+
+header a {
+    color: #1A1E20;
+    text-decoration: none;
+}
+
+section {
+    background-image: url("../images/body.jpg");
+    background-repeat:no-repeat;
+    padding: 125px 90px 125px 90px;
+}
+
+.loginBox {
+	left: 390px; 
+	right: 150px;
+	top: 125px;
+	position: inherit;
+	margin: 50px;	
+}
