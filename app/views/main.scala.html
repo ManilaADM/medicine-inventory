@@ -34,9 +34,10 @@
                 	<li class="@("active".when(nav == "medicalSupply"))">
                 		<a href="@routes.MedicineController.getMedicine()">@Configuration.root().getString("page.title.medicalSupply")</a>
                 	</li>
-                	<li class="@("active".when(nav == "reports"))">
+                	<li class="@("active".when(nav == "report"))">
                 		<a href="@routes.ReportsController.getReports()">@Configuration.root().getString("page.title.report")</a>
                 	</li>
+                	}
                 	<li class="@("active".when(nav == "transaction"))">
                 		<a href="@routes.TransactionController.getTransactions()">@Configuration.root().getString("page.title.transaction")</a>
                 	</li>
