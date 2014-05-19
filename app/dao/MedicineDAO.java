@@ -25,6 +25,11 @@ public class MedicineDAO extends JongoDAO<Medicine> {
 		super(clazz);
 	}
 	
+	@Override
+	public List<Medicine> findAll(){
+		return Lists.newArrayList(collections.find().sort("{brandName: 1, count: 1,}").as(clazz));
+	}
+	
 	/**
 	 * This operation returns a list of medical supplies from database fetched using a list of objectIds.
 	 * @param medicineIDs - list of medical supplies' objectIds
