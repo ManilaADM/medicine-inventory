@@ -23,7 +23,7 @@ GET		/reports					controllers.ReportsController.getConsumption()
 GET		/reports					controllers.ReportsController.getTopTenMedUsed()
 GET		/reports/inventory			controllers.ReportsController.getMedSupInventory()
 GET		/reports					controllers.ReportsController.getMedSupCritical()
-GET		/reports					controllers.ReportsController.getAuditTrails()
+GET		/reports/audittrails		controllers.ReportsController.getAuditTrails()
 
 
 # Javascript routing

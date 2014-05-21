@@ -1,0 +1,28 @@
+@(message : String)(auditTrails : List[models.AuditTrail])
+@import play.Configuration
+@scripts = {
+}
+
+@main(Configuration.root().getString("project.title"), scripts, nav=Configuration.root().getString("nav.report")) {
+	<h1>@Configuration.root().getString("reports.auditTrails.title")</h1>
+	<div name="container" style="width: 100%;">
+		<table class="dataContainer">
+				  <tr>
+				  	<th class="dataContainer">@Configuration.root().getString("reports.auditTrails.header.logTimeStamp")</th>
+				    <th class="dataContainer">@Configuration.root().getString("reports.auditTrails.header.userName")</th>
+				    <th class="dataContainer">@Configuration.root().getString("reports.auditTrails.header.requestorName")</th>
+				    <th class="dataContainer">@Configuration.root().getString("reports.auditTrails.header.medSupBrandName")</th>
+				    <th class="dataContainer">@Configuration.root().getString("reports.auditTrails.header.actionDone")</th>
+				  </tr>
+				  @for(at <- auditTrails){
+				  	<tr>
+				  		<td class="dataContainer">@at.getLogTimeStamp</td>
+				  		<td class="dataContainer">@at.getUserName</td>
+				  		<td class="dataContainer">@at.getRequestorName</td>
+				  		<td class="dataContainer">@at.getMedSupBrandName</td>
+				  		<td class="dataContainer">@at.getActionDone</td>
+				  	</tr>
+				  }	
+		</table>
+	</div>	
+}

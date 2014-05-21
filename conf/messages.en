@@ -43,5 +43,5 @@ email.medicine.brand.name=Medicine brand name
 email.medicine.generic.name=Generic name
 email.medicine.current.quantity=Current Quantity
 email.medicine.quantity.limit=Quantity Limit
-email.medicine.subjet.zero=has 0 left. Buy me now!
+email.medicine.subjet.zero=has 0 left.
 email.medicine.subjet.limit=has {0} left
