@@ -348,3 +348,10 @@ th.headerLabel {
 	padding-top: 30px;
 	padding-bottom: 30px;
 }
+
+.searchDate{
+	padding-bottom: 15px;
+}
+.searchDate input.textbox {
+    width: 110px;
+}

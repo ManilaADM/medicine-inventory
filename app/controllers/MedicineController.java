@@ -7,7 +7,6 @@ import models.Medicine;
 import org.apache.commons.lang3.StringUtils;
 import org.bson.types.ObjectId;
 
-import play.Configuration;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -18,14 +17,12 @@ import views.html.medicine;
 
 public class MedicineController extends Controller{
 	
-	private static String MEDSUP_ROW_LIMIT = Configuration.root().getString("medicalSupply.table.rowLimit");;
-	
 	//private static JongoDAO<Medicine> medicineDao = new JongoDAO<>(Medicine.class);
 	private static MedicineManager medicineManager = new MedicineManagerImpl();
 	
 	@Security.Authenticated(Secured.class)
 	public static Result getMedicine(){
-		List<Medicine> medicines = medicineManager.fetchMedicalSupplies(Integer.parseInt(MEDSUP_ROW_LIMIT));
+		List<Medicine> medicines = medicineManager.findAll();
 		return ok(medicine.render("Medicine List",medicines));
 	}
 	

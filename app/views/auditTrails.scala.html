@@ -4,8 +4,18 @@
 }
 
 @main(Configuration.root().getString("project.title"), scripts, nav=Configuration.root().getString("nav.report")) {
+	<script src='@routes.Assets.at("javascripts/reports.js")')></script>
 	<h1>@Configuration.root().getString("reports.auditTrails.title")</h1>
 	<div name="container" style="width: 100%;">
+		<div class="searchDate">
+			@helper.form(routes.ReportsController.searchAuditTrails){
+				<label class="formLabel">@Configuration.root().getString("reports.auditTrails.label.from"): </label>
+				<input id="dateFrom" class="textbox" name="dateFrom" value="MM/DD/YYYY">
+				<label class="formLabel">@Configuration.root().getString("reports.auditTrails.label.to"): </label>
+				<input id="dateTo" class="textbox" name="dateTo" value="MM/DD/YYYY">					
+				<input type="submit" class="button orangeButton" value="@Configuration.root().getString("button.search")">
+			}
+		</div>
 		<table class="dataContainer">
 				  <tr>
 				  	<th class="dataContainer">@Configuration.root().getString("reports.auditTrails.header.logTimeStamp")</th>
@@ -16,7 +26,7 @@
 				  </tr>
 				  @for(at <- auditTrails){
 				  	<tr>
-				  		<td class="dataContainer">@at.getLogTimeStamp</td>
+				  		<td class="dataContainer">@("%1$tm/%1$td/%1$tY %1$tH:%1$tM".format(at.getLogTimeStamp))</td>
 				  		<td class="dataContainer">@at.getUserName</td>
 				  		<td class="dataContainer">@at.getRequestorName</td>
 				  		<td class="dataContainer">@at.getMedSupBrandName</td>

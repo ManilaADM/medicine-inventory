@@ -27,7 +27,7 @@ public class MedicineDAO extends JongoDAO<Medicine> {
 	
 	@Override
 	public List<Medicine> findAll(){
-		return Lists.newArrayList(collections.find().sort("{brandName: 1, count: 1,}").as(clazz));
+		return Lists.newArrayList(collections.find().sort("{brandName: 1, count: 1}").as(clazz));
 	}
 	
 	/**
