@@ -27,6 +27,7 @@ import service.impl.MedicineManagerImpl;
 import views.html.employee;
 import views.html.login;
 import views.html.medicineInventory;
+import views.html.medicineCriticalSupply;
 import views.html.reports;
 import views.html.auditTrails;
 
@@ -54,7 +55,8 @@ public class ReportsController extends Controller {
     }
     
     public static Result getMedSupCritical() {
-        return ok(reports.render());
+		List<Medicine> medicines = medicineManager.fetchCriticalMedicalSupplies();
+		return ok(medicineCriticalSupply.render("Critical Supply",medicines));
     }
     
     public static Result getAuditTrails() {

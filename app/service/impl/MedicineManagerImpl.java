@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.bson.types.ObjectId;
 
+import com.google.common.collect.Lists;
+
 import dao.MedicineDAO;
 import exceptions.InsufficientCountException;
 import models.MedSupQty;
@@ -27,6 +29,13 @@ public class MedicineManagerImpl implements MedicineManager{
 		// TODO Auto-generated method stub
 		return medicineDao.fetchMedicalSupplies(rowLimit);
 	}
+	
+	@Override
+	public List<Medicine> fetchCriticalMedicalSupplies() {
+		// TODO Auto-generated method stub
+		return medicineDao.fetchCriticalMedicalSupplies();
+	}
+	
 	@Override
 	public void save(Medicine medicineObj) {
 		// TODO Auto-generated method stub

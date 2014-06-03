@@ -98,5 +98,13 @@ public class MedicineDAO extends JongoDAO<Medicine> {
 	public List<Medicine> fetchMedicalSupplies(int rowLimit) {
 		return  Lists.newArrayList(collections.find().limit(rowLimit).as(Medicine.class));
 	}
+		
+	/**
+	 * Retrieves a list of medical supplies with critical quantity.
+	 * @return list of medical supplies
+	 */
+	public List<Medicine> fetchCriticalMedicalSupplies() {
+		return  Lists.newArrayList(collections.aggregate("{$project: { brandName: 1, genericName: 1, count: 1, notificationAlertCount: 1, isCritical: { $lte:['$count','$notificationAlertCount'] }}}").and("{ $match : { isCritical : true}}").and("{ $sort : { count : -1, brandName : 1}}").as(Medicine.class));
+	}
 
 }

@@ -15,6 +15,8 @@ public interface MedicineManager {
 	public List<Medicine> findAll();
 	
 	public List<Medicine> fetchMedicalSupplies(int rowLimit);
+	
+	public List<Medicine> fetchCriticalMedicalSupplies();
 
 	public void save(Medicine medicineObj);
 

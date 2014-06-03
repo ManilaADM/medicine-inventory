@@ -1,0 +1,26 @@
+@(message : String)(medicine : List[models.Medicine])
+@import play.Configuration
+@scripts = {
+}
+
+@main(Configuration.root().getString("project.title"), scripts, nav=Configuration.root().getString("nav.report")) {
+	<h1>@Configuration.root().getString("reports.criticalMedicalSupply.title")</h1>
+	<div name="container" style="width: 100%;">
+		<table class="dataContainer">
+				  <tr>
+				    <th class="dataContainer">@Configuration.root().getString("medicalSupply.header.brandName")</th>
+				    <th class="dataContainer">@Configuration.root().getString("medicalSupply.header.genericName")</th>
+				    <th class="dataContainer">@Configuration.root().getString("medicalSupply.header.qty")</th>
+				    <th class="dataContainer">@Configuration.root().getString("medicalSupply.header.alertQty")</th>
+				  </tr>
+				  @for(m <- medicine){
+				  	<tr>
+				  		<td class="dataContainer">@m.getBrandName</td>
+				  		<td class="dataContainer">@m.getGenericName</td>
+				  		<td class="dataContainer">@m.getCount</td>
+				  		<td class="dataContainer">@m.getNotificationAlertCount</td>
+				  	</tr>
+				  }	
+		</table>
+	</div>	
+}
