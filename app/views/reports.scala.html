@@ -5,7 +5,7 @@
 @main(Configuration.root().getString("project.title"), scripts, nav=Configuration.root().getString("nav.report")) {
 
 	<div name="container" style="width: 100%;">
-		<p><a href="@routes.ReportsController.getConsumption()">Consumption by Date Range</a></p>
+		<p><a href="@routes.ReportsController.searchConsumptionByDate">Consumption by Date Range</a></p>
 		<p><a href="@routes.ReportsController.getTopTenMedUsed()">Top Ten Medicines Used</a></p>
 		<p><a href="@routes.ReportsController.getMedSupInventory()">Medical Supplies Inventory</a></p>
 		<p><a href="@routes.ReportsController.getMedSupCritical()">Medical Supplies Under Critical Level</a></p>

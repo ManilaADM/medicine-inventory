@@ -19,12 +19,12 @@ GET		/medicine/:id				controllers.MedicineController.removeMedicine(id: ObjectId
 GET		/medicine					controllers.MedicineController.searchMedicalSupply()
 
 GET		/reports					controllers.ReportsController.getReports()
-GET		/reports					controllers.ReportsController.getConsumption()
-GET		/reports					controllers.ReportsController.getTopTenMedUsed()
+GET		/reports/topTen				controllers.ReportsController.getTopTenMedUsed()
 GET		/reports/inventory			controllers.ReportsController.getMedSupInventory()
 GET		/reports/audittrails		controllers.ReportsController.getAuditTrails()
 GET		/reports/audittrails/search	controllers.ReportsController.searchAuditTrails()
 GET		/reports/critical			controllers.ReportsController.getMedSupCritical()
+GET		/reports/consumption		controllers.ReportsController.searchConsumptionByDate()
 
 
 # Javascript routing

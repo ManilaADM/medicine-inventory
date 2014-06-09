@@ -1,0 +1,34 @@
+@(message : String)(consumption : List[models.MedConsumption])
+@import play.Configuration
+@scripts = {
+}
+
+@main(Configuration.root().getString("project.title"), scripts, nav=Configuration.root().getString("nav.report")) {
+	<script src='@routes.Assets.at("javascripts/reports.js")')></script>
+	<h1>@Configuration.root().getString("reports.monthlyConsumption.title")</h1>
+	<div name="container" style="width: 100%;">
+		<div class="searchDate">
+			@helper.form(routes.ReportsController.searchConsumptionByDate){
+				<label class="formLabel">@Configuration.root().getString("reports.auditTrails.label.from"): </label>
+				<input id="dateFrom" class="textbox" name="dateFrom" value="MM/DD/YYYY">
+				<label class="formLabel">@Configuration.root().getString("reports.auditTrails.label.to"): </label>
+				<input id="dateTo" class="textbox" name="dateTo" value="MM/DD/YYYY">					
+				<input type="submit" class="button orangeButton" value="@Configuration.root().getString("button.generate")">
+			}
+		</div>
+		<table class="dataContainer">
+			  <tr>
+			    <th class="dataContainer">@Configuration.root().getString("medicalSupply.header.brandName")</th>
+			    <th class="dataContainer">@Configuration.root().getString("medicalSupply.header.genericName")</th>
+			    <th class="dataContainer">@Configuration.root().getString("medicalSupply.header.qty")</th>
+			  </tr>
+			  @for(m <- consumption){
+			  	<tr>
+			  		<td class="dataContainer">@m.getBrandName</td>
+			  		<td class="dataContainer">@m.getGenericName</td>
+			  		<td class="dataContainer">@m.getConsumedQty</td>
+			  	</tr>
+			  }
+		</table>
+	</div>	
+}

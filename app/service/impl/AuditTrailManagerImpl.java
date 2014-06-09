@@ -4,7 +4,6 @@ import java.util.Date;
 import java.util.List;
 
 import dao.AuditTrailDAO;
-import dao.JongoDAO;
 import models.AuditTrail;
 import service.AuditTrailManager;
 
