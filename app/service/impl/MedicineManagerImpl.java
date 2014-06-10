@@ -4,8 +4,6 @@ import java.util.List;
 
 import org.bson.types.ObjectId;
 
-import com.google.common.collect.Lists;
-
 import dao.MedicineDAO;
 import exceptions.InsufficientCountException;
 import models.MedSupQty;
@@ -71,6 +69,10 @@ public class MedicineManagerImpl implements MedicineManager{
 	public Medicine findRequestedMedicineFromDB(ObjectId objectId) {
 		// TODO Auto-generated method stub
 		return medicineDao.findRequestedMedicineFromDB(objectId);
+	}
+	@Override
+	public List<Medicine> search(String medicine) {
+		return medicineDao.search(medicine);
 	}
 
 }

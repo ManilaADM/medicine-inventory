@@ -17,6 +17,8 @@ public interface MedicineManager {
 	public List<Medicine> fetchMedicalSupplies(int rowLimit);
 	
 	public List<Medicine> fetchCriticalMedicalSupplies();
+	
+	public List<Medicine> search(String medicine);
 
 	public void save(Medicine medicineObj);
 

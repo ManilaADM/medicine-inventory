@@ -106,10 +106,10 @@ public class ReportsController extends Controller {
     	DynamicForm trailForm = Form.form().bindFromRequest();
 		
 		if (trailForm.hasErrors()) {
-			return badRequest(topTenConsumption.render("Top Ten",getSortedConsumption(trails, 20)));
+			return badRequest(topTenConsumption.render("Top Ten",getSortedConsumption(trails, 10)));
 		} else {
 			trails = searchConsumption(trailForm);
-			return ok(topTenConsumption.render("Top Ten",getSortedConsumption(trails, 20)));
+			return ok(topTenConsumption.render("Top Ten",getSortedConsumption(trails, 10)));
 		}
     }
 

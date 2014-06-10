@@ -14,9 +14,9 @@ POST	/employee					controllers.EmployeeController.setEmployee()
 GET		/employee/:id				controllers.EmployeeController.removeEmployee(id: ObjectId)
 
 GET		/medicine					controllers.MedicineController.getMedicine()
+GET		/medicine/search			controllers.MedicineController.searchMedicalSupply()
 POST	/medicine					controllers.MedicineController.setMedicine()
 GET		/medicine/:id				controllers.MedicineController.removeMedicine(id: ObjectId)
-GET		/medicine					controllers.MedicineController.searchMedicalSupply()
 
 GET		/reports					controllers.ReportsController.getReports()
 GET		/reports/topTen				controllers.ReportsController.getTopTenMedUsed()

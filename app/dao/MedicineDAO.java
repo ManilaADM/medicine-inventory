@@ -1,6 +1,7 @@
 package dao;
 
 import java.util.List;
+import java.util.regex.Pattern;
 
 import models.MedSupQty;
 import models.Medicine;
@@ -105,6 +106,10 @@ public class MedicineDAO extends JongoDAO<Medicine> {
 	 */
 	public List<Medicine> fetchCriticalMedicalSupplies() {
 		return  Lists.newArrayList(collections.aggregate("{$project: { brandName: 1, genericName: 1, count: 1, notificationAlertCount: 1, isCritical: { $lte:['$count','$notificationAlertCount'] }}}").and("{ $match : { isCritical : true}}").and("{ $sort : { count : -1, brandName : 1}}").as(Medicine.class));
+	}
+	
+	public List<Medicine> search(String value){
+		return Lists.newArrayList(collections.find("{brandName:#}",Pattern.compile("(?i)(.*)" + value + "(.*)")).sort("{brandName: 1, count: 1}").as(clazz));
 	}
 
 }

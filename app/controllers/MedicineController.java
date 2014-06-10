@@ -7,6 +7,7 @@ import models.Medicine;
 import org.apache.commons.lang3.StringUtils;
 import org.bson.types.ObjectId;
 
+import play.data.DynamicForm;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -52,7 +53,15 @@ public class MedicineController extends Controller{
 	// TODO: create logic for searching medical supply using their brand or generic name
 	public static Result searchMedicalSupply(){
 		List<Medicine> medicines = medicineManager.findAll();
-		return ok(medicine.render("Medicine List",medicines));
+		DynamicForm form = Form.form().bindFromRequest();
+		String medSupName = form.get("medSupName");
+		
+		if (form.hasErrors()) {
+			return badRequest(medicine.render("Medicine List", medicines));
+		} else {
+			medicines = medicineManager.search(medSupName);
+			return ok(medicine.render("Medicine List",medicines));
+		}
 	}
 	
 }
