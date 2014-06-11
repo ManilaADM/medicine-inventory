@@ -60,7 +60,10 @@ public class ReportsController extends Controller {
 		for (Medicine medicine : medicines)
 		{
 			MedConsumption consumption = retrieveConsumptionFromTrail(medicine, trails);
-			medConsumptionList.add(consumption);
+			if (consumption.getConsumedQty() > 0)
+			{
+				medConsumptionList.add(consumption);
+			}
 			
 		}
 		Collections.sort(medConsumptionList, new ConsumptionComparator());
