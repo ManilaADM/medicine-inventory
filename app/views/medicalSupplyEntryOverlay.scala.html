@@ -4,7 +4,8 @@
 	<div class="overlayContent">
 		<!--the close button-->
 		<div class="top">
-			@Configuration.root().getString("medicalSupply.overlay.title.add")
+			<span id="addMedSupply" style="display: none;">@Configuration.root().getString("medicalSupply.overlay.title.add")</span>
+			<span id="editMedSupply" style="display: none;">@Configuration.root().getString("medicalSupply.overlay.title.edit")</span>
 			<input type="button" onclick="closeOverlay('.overlayBox');" value="X" style="float: right;" />
 		</div>
 		<!--normal content-->

@@ -5,10 +5,14 @@ $(window).bind('resize',showOverlayBox);
 $(document).ready(function(){
     $('.addMedicalSupply').click(function(){
     	openOverlay();
+    	$('#editMedSupply').css('display', 'none');
+    	$('#addMedSupply').css('display', '');
     });
     
     $('.editMedicalSupply').click(function(){
     	openOverlay();
+    	$('#addMedSupply').css('display', 'none');
+    	$('#editMedSupply').css('display', '');
     	var data = $(this).closest('.dataContainer tr');
 		$('#oid').val(data.find('.id').text());
 		$('#brandName').val(data.find('.brandName').text());
