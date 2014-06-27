@@ -5,6 +5,8 @@
 
 @main(Configuration.root().getString("project.title"), scripts, nav=Configuration.root().getString("nav.report")) {
 	<script src='@routes.Assets.at("javascripts/reports.js")')></script>
+	<script src='@routes.Assets.at("javascripts/jquery.dataTables.js")')></script>
+	<link rel="stylesheet" type="text/css" href="@routes.Assets.at("stylesheets/jquery.dataTables.css")"/>
 	<h1>@Configuration.root().getString("reports.auditTrails.title")</h1>
 	<div name="container" style="width: 100%;">
 		<div class="searchDate">
@@ -16,7 +18,8 @@
 				<input type="submit" class="button orangeButton" value="@Configuration.root().getString("button.search")">
 			}
 		</div>
-		<table class="dataContainer">
+		<table id="auditTrailsTable">
+			<thead>
 				  <tr>
 				  	<th class="dataContainer">@Configuration.root().getString("reports.auditTrails.header.logTimeStamp")</th>
 				    <th class="dataContainer">@Configuration.root().getString("reports.auditTrails.header.userName")</th>
@@ -24,6 +27,8 @@
 				    <th class="dataContainer">@Configuration.root().getString("reports.auditTrails.header.medSupBrandName")</th>
 				    <th class="dataContainer">@Configuration.root().getString("reports.auditTrails.header.actionDone")</th>
 				  </tr>
+			</thead>
+			<tbody>
 				  @for(at <- auditTrails){
 				  	<tr>
 				  		<td class="dataContainer">@("%1$tm/%1$td/%1$tY %1$tH:%1$tM".format(at.getLogTimeStamp))</td>
@@ -32,7 +37,8 @@
 				  		<td class="dataContainer">@at.getMedSupBrandName</td>
 				  		<td class="dataContainer">@at.getActionDone</td>
 				  	</tr>
-				  }	
+				  }
+			</tbody>
 		</table>
 	</div>	
 }

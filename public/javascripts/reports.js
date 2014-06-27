@@ -1,5 +1,5 @@
 $(document).ready(function(){
-	
+	 $('#auditTrailsTable').DataTable();
 	//Search
 	$('.searchDate .textbox').on({
 	    focus:function(){                   
