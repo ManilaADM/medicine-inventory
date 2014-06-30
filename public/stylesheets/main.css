@@ -154,7 +154,9 @@ div.topbar {
 	left:0; 
 	top:0; 
 	display: none; 
-	overflow:hidden 
+	overflow:hidden;
+	height: 100%;
+	width: 100%;
 }
 
 .overlayBox {

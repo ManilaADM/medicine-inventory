@@ -1,0 +1,51 @@
+@import play.Configuration
+@import play.i18n._
+
+<div class="overlayBox">
+	<div class="overlayContent">
+		<!--the close button-->
+		<div class="top">
+			<span id="addEmployee" style="display: none;">@Messages.get("employee.overlay.title.add")</span>
+			<span id="editEmployee" style="display: none;">@Messages.get("employee.overlay.title.edit")</span>
+			<input type="button" onclick="closeOverlay('.overlayBox');" value="X" style="float: right;" />
+		</div>
+		<!--normal content-->
+		<div class="overlay-content">
+			<form action="@controllers.routes.EmployeeController.setEmployee()" method="post">
+				<input type="hidden" id="oid" name="objectId">
+				<table>
+					<tr>
+						<td><label class="formLabel">@Messages.get("employee.overlay.id"):</label></td>
+						<td><input type=text id="employeeCode" name="employeeCode" class="textbox"></td>
+					</tr>
+					<tr>
+						<td><label class="formLabel">@Messages.get("employee.overlay.firstName"):</label></td>
+						<td><input type=text id="firstName" name="firstName" class="textbox"></td>
+					</tr>
+					<tr>
+						<td><label class="formLabel">@Messages.get("employee.overlay.lastName"):</label></td>
+						<td><input type=text id="lastName" name="lastName" class="textbox"></td>
+					</tr>
+					<tr>
+						<td><label class="formLabel">@Messages.get("employee.overlay.gender"):</label></td>
+						<td><input type=text id="gender" name="gender" class="textbox"></td>
+					</tr>
+					<tr>
+						<td><label class="formLabel">@Messages.get("employee.overlay.team"):</label></td>
+						<td><input type=text id="team" name="team" class="textbox"></td>
+					</tr>
+					<tr>
+						<td><label class="formLabel">@Messages.get("employee.overlay.category"):</label></td>
+						<td><input type=text id="category" name="category" class="textbox"></td>
+					</tr>
+				</table>
+				<div class="transactionButtons">
+					<center>
+						<input type="submit" value='@Configuration.root().getString("overlay.save")'/>
+						<input type="button" onclick="closeOverlay('.overlayBox'); "value='@Configuration.root().getString("overlay.close")' />
+					</center>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>

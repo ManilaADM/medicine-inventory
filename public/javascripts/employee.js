@@ -3,38 +3,24 @@ var isOpen = false;
 $(window).bind('resize',showOverlayBox);
 
 $(document).ready(function(){
-    $('.addMedicalSupply').click(function(){
+    $('.addEmployee').click(function(){
     	openOverlay();
-    	$('#editMedSupply').css('display', 'none');
-    	$('#addMedSupply').css('display', '');
+    	$('#editEmployee').css('display', 'none');
+    	$('#addEmployee').css('display', '');
     });
     
-    $('.editMedicalSupply').click(function(){
+    $('.update').click(function(){
     	openOverlay();
-    	$('#addMedSupply').css('display', 'none');
-    	$('#editMedSupply').css('display', '');
+    	$('#addEmployee').css('display', 'none');
+    	$('#editEmployee').css('display', '');
     	var data = $(this).closest('.dataContainer tr');
 		$('#oid').val(data.find('.id').text());
-		$('#brandName').val(data.find('.brandName').text());
-		$('#genericName').val(data.find('.genericName').text());
-		$('#description').val(data.find('.description').text());
-		$('#count').val(data.find('.count').text());
-		$('#notificationAlertCount').val(data.find('.notificationAlertCount').text());
-		$('#dailyQtyLimitPerUser').val(data.find('.dailyQtyLimitPerUser').text());
-		$('#available').prop('checked', (data.find('.available').text()==="true"));
-		$('#quantifiable').prop('checked',(data.find('.quantifiable').text()==="true"));
-    });
-    
-    $('#selectAll').click(function() {
-    	$('.selectMedEntry').prop('checked', this.checked);
-    });
-    
-    $(".selectMedEntry").click(function(){
-    	if($(".selectMedEntry").length == $(".selectMedEntry:checked").length) {
-    		$("#selectAll").prop("checked", true);
-    	} else {
-    		$("#selectAll").prop("checked", false);
-    	}
+		$('#employeeCode').val(data.find('.employeeCode').text());
+		$('#firstName').val(data.find('.firstName').text());
+		$('#lastName').val(data.find('.lastName').text());
+		$('#gender').val(data.find('.gender').text());
+		$('#team').val(data.find('.team').text());
+		$('#category').val(data.find('.category').text());
     });
 })
 

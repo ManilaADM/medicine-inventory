@@ -84,13 +84,12 @@ function showOverlayBox(id) {
 		display:'block',
 		left:( $(window).width() - $(id).width() )/2,
 		top:( $(window).height() - $(id).height() )/2 -20,
-		position:'absolute'
+		position:'fixed'
 	});
 	// set the window background for the overlay. i.e the body becomes darker
 	$('.bgCover').css({
 		display:'block',
-		width: $(window).width(),
-		height:$(window).height(),
+		position:'fixed'
 	});
 }
 

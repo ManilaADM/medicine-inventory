@@ -45,3 +45,12 @@ email.medicine.current.quantity=Current Quantity
 email.medicine.quantity.limit=Quantity Limit
 email.medicine.subjet.zero=has 0 left.
 email.medicine.subjet.limit=has {0} left
+
+employee.overlay.title.add=Add Employee
+employee.overlay.title.edit=Edit Employee
+employee.overlay.id=Id
+employee.overlay.firstName=First Name
+employee.overlay.lastName=Last Name
+employee.overlay.gender=Gender
+employee.overlay.team=Team
+employee.overlay.category=Category
