@@ -14,6 +14,7 @@ import org.apache.commons.lang3.StringUtils;
 import models.AuditTrail;
 import models.MedConsumption;
 import models.Medicine;
+import play.Configuration;
 import play.data.DynamicForm;
 import play.data.Form;
 import play.mvc.Controller;
@@ -33,6 +34,7 @@ import views.html.topTenConsumption;
 
 public class ReportsController extends Controller {
 	
+	private static String AUDIT_TRAILS_MINUS_CURRENT_DATE = Configuration.root().getString("reports.auditTrails.minus.to.current.date");;
 	private static MedicineManager medicineManager = new MedicineManagerImpl();
 	private static AuditTrailManager auditTrailManager = new AuditTrailManagerImpl();
 
@@ -148,12 +150,18 @@ public class ReportsController extends Controller {
     }
     
     public static Result getAuditTrails() {
-    	List<AuditTrail> trails = auditTrailManager.findAll();
+    	List<AuditTrail> trails = new ArrayList<AuditTrail>();
+    	Calendar cal = Calendar.getInstance();
+    	Date currentDate = cal.getTime();
+    	Integer minusToCurrentDate = Integer.valueOf(AUDIT_TRAILS_MINUS_CURRENT_DATE);
+    	cal.add(Calendar.MONTH, -minusToCurrentDate);
+    	Date startDate = cal.getTime();
+    	trails = auditTrailManager.search(getStartOfDay(startDate),getEndOfDay(currentDate));
 		return ok(auditTrails.render("Audit Trails",trails));
     }
     
     public static Result searchAuditTrails() {
-    	List<AuditTrail> trails = auditTrailManager.findAll();
+    	List<AuditTrail> trails = new ArrayList<AuditTrail>();
     	DynamicForm trailForm = Form.form().bindFromRequest();
 		
 		if (trailForm.hasErrors()) {
